@@ -1,0 +1,5 @@
+[gd_resource type="WwisePlatformInfo" format=3 uid="uid://cgipub3mf8tm5"]
+
+[resource]
+platform_name = "Windows"
+platform_path = "../../../../WwiseProjects/SecuenciaV2/GeneratedSoundBanks/Windows"

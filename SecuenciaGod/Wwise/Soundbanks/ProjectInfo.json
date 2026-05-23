@@ -1,0 +1,36 @@
+{
+ "ProjectInfo": {
+  "Project": {
+   "Name": "SecuenciaV2",
+   "GUID": "{0157D953-9516-4C31-801B-BB7F636CA347}",
+   "Generator": "2025.1.4.9062"
+  },
+  "CacheRoot": "../../../../WwiseProjects/SecuenciaV2/.cache",
+  "Platforms": [
+   {
+    "Name": "Linux",
+    "GUID": "{32E1A74F-52EE-4841-BD72-12D1E7714CCB}",
+    "BasePlatform": "Linux",
+    "BasePlatformGUID": "{BD0BDF13-3125-454F-8BFD-319537169F81}",
+    "Path": "../../../../WwiseProjects/SecuenciaV2/GeneratedSoundBanks/Linux"
+   },
+   {
+    "Name": "Windows",
+    "GUID": "{DEA501D0-75FE-424B-8290-AFBE4C9A943B}",
+    "BasePlatform": "Windows",
+    "BasePlatformGUID": "{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}",
+    "Path": "../../../../WwiseProjects/SecuenciaV2/GeneratedSoundBanks/Windows"
+   }
+  ],
+  "Languages": [
+   {
+    "Name": "English(US)",
+    "Id": "684519430",
+    "GUID": "{A8235AC3-02D7-4A99-95F6-6DF68DCC19F0}",
+    "Default": "true",
+    "UseAsStandIn": "true"
+   }
+  ],
+  "FileHash": "{E45387F2-ED4D-3A1B-5C1E-F3B8E863BF07}"
+ }
+}

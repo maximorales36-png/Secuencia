@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://buly1eva32rq1"]
+
+[ext_resource type="Script" uid="uid://cuegbnucx0jb" path="res://scipts/WebSocketManager.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://cgy7040alsmec" path="res://scipts/PiecesVisualizer.gd" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://co2g43scpovvw" path="res://scipts/ScanlineLogic.gd" id="3"]
+[ext_resource type="Script" uid="uid://wtribbhcn4m2" path="res://scipts/EffectsRenderer.gd" id="4"]
+[ext_resource type="Script" uid="uid://21vpbcs7p64a" path="res://scipts/AudioManager.gd" id="5"]
+
+[node name="Main" type="Node" unique_id=81295403]
+
+[node name="WebSocketManager" type="Node" parent="." unique_id=1204148754]
+script = ExtResource("1_0xm2m")
+
+[node name="ScanlineLogic" type="Node" parent="." unique_id=66086854]
+script = ExtResource("3")
+
+[node name="AudioManager" type="Node" parent="." unique_id=259813811]
+script = ExtResource("5")
+
+[node name="Canvas" type="Node2D" parent="." unique_id=1177142370]
+
+[node name="PiecesVisualizer" type="Node2D" parent="Canvas" unique_id=465233847]
+script = ExtResource("2_h2yge")
+
+[node name="EffectsRenderer" type="Node2D" parent="Canvas" unique_id=950658509]
+script = ExtResource("4")

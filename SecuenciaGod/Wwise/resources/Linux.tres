@@ -1,0 +1,5 @@
+[gd_resource type="WwisePlatformInfo" format=3 uid="uid://byc6r4h5h32au"]
+
+[resource]
+platform_name = "Linux"
+platform_path = "../../../../WwiseProjects/SecuenciaV2/GeneratedSoundBanks/Linux"

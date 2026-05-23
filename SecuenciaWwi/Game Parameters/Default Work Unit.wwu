@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}" SchemaVersion="133">
+	<GameParameters>
+		<WorkUnit Name="Default Work Unit" ID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}" PersistMode="Standalone">
+			<ChildrenList>
+				<GameParameter Name="Timbre" ID="{974648E6-C490-415B-BFC8-CE09D73697DB}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+					</PropertyList>
+				</GameParameter>
+			</ChildrenList>
+		</WorkUnit>
+	</GameParameters>
+</WwiseDocument>

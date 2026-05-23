@@ -1,0 +1,101 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Linux",
+  "BasePlatform": "Linux",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "172",
+  "SoundBanks": [
+   {
+    "Id": "3161908922",
+    "Type": "User",
+    "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
+    "Language": "SFX",
+    "Hash": "{1974E9B1-C454-5477-D783-7858C7CF603C}",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
+    "ShortName": "Main",
+    "Path": "Main.bnk",
+    "Plugins": {
+     "Custom": [
+      {
+       "Id": "208450960",
+       "Name": "PANEL 02",
+       "ObjectPath": "\\Containers\\Factory Synth One\\UI Sounds\\PANEL 02\\PANEL 02",
+       "GUID": "{3799BD58-313B-4717-A251-8669FB180852}",
+       "LibName": "Wwise Synth One",
+       "LibId": "9699330"
+      },
+      {
+       "Id": "553983327",
+       "Name": "BEEP 01",
+       "ObjectPath": "\\Containers\\Factory Synth One\\UI Sounds\\BEEP 01\\BEEP 01",
+       "GUID": "{1B6251E8-9976-4F2C-9899-14965CC06CF8}",
+       "LibName": "Wwise Synth One",
+       "LibId": "9699330"
+      },
+      {
+       "Id": "970241952",
+       "Name": "CONFIRM 01",
+       "ObjectPath": "\\Containers\\Factory Synth One\\UI Sounds\\CONFIRM 01\\CONFIRM 01",
+       "GUID": "{DAE0224A-FBF4-478E-96F0-5987459DEDEE}",
+       "LibName": "Wwise Synth One",
+       "LibId": "9699330"
+      }
+     ]
+    },
+    "Events": [
+     {
+      "Id": "3434539291",
+      "Name": "Play_green",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_green",
+      "GUID": "{02E44637-B6F9-495B-B0F3-B399710C56F2}",
+      "DurationType": "Unknown",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "208450960"
+        }
+       ]
+      }
+     },
+     {
+      "Id": "1568289110",
+      "Name": "Play_pink",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_pink",
+      "GUID": "{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}",
+      "DurationType": "Unknown",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "970241952"
+        }
+       ]
+      }
+     },
+     {
+      "Id": "3406300906",
+      "Name": "Play_yellow",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_yellow",
+      "GUID": "{6ACF5DBF-AD27-4B9B-A93C-1F7FE2634A36}",
+      "DurationType": "Unknown",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "553983327"
+        }
+       ]
+      }
+     }
+    ],
+    "GameParameters": [
+     {
+      "Id": "578698474",
+      "Name": "Timbre",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Timbre",
+      "GUID": "{974648E6-C490-415B-BFC8-CE09D73697DB}"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{A1984562-A109-D018-864E-B57AA61EB68B}"
+ }
+}

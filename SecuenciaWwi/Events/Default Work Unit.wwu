@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}" SchemaVersion="133">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Play_yellow" ID="{6ACF5DBF-AD27-4B9B-A93C-1F7FE2634A36}">
+					<ChildrenList>
+						<Action Name="" ID="{32CCBE77-95E2-4D58-A439-7414DBCB0961}" ShortID="312114672">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BEEP 01" ID="{D4258CB6-01BA-46AE-8924-E5914FDA8A13}" WorkUnitID="{D9329DB3-E4D7-45AA-BD40-6EB28C6C4D39}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_pink" ID="{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}">
+					<ChildrenList>
+						<Action Name="" ID="{7EEA53E2-E487-4F26-9B3A-05BCB54942E7}" ShortID="876936176">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="CONFIRM 01" ID="{0140E852-B3C6-4BC7-9A6C-119EB61BC4E9}" WorkUnitID="{D9329DB3-E4D7-45AA-BD40-6EB28C6C4D39}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}">
+					<ChildrenList>
+						<Action Name="" ID="{1DE154DC-7004-45AD-B397-2CAC67431CD6}" ShortID="782571069">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PANEL 02" ID="{E6D375B5-B75D-4DFC-92A6-EB425A3D926A}" WorkUnitID="{D9329DB3-E4D7-45AA-BD40-6EB28C6C4D39}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

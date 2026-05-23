@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{417AB251-8708-4531-AAF5-929F80D2DDDD}" SchemaVersion="133">
+	<SoundcasterSessions>
+		<WorkUnit Name="Default Work Unit" ID="{417AB251-8708-4531-AAF5-929F80D2DDDD}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="Pruebas" ID="{F475B6CF-8C10-493B-B578-52E7A8CAF461}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Play_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_pink" ID="{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_yellow" ID="{6ACF5DBF-AD27-4B9B-A93C-1F7FE2634A36}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<Position X="2" Y="0"/>
+						</Module>
+					</ModuleList>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundcasterSessions>
+</WwiseDocument>

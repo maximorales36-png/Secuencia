@@ -4,13 +4,6 @@
   "BasePlatform": "Windows",
   "PluginLibs": [
    {
-    "LibName": "Wwise Synth One",
-    "LibId": "9699330",
-    "Type": "Source",
-    "DLL": "AkSynthOne",
-    "StaticLib": "AkSynthOneSource"
-   },
-   {
     "LibName": "System",
     "LibId": "11403271",
     "Type": "AudioDevice"
@@ -21,6 +14,6 @@
     "Type": "AudioDevice"
    }
   ],
-  "FileHash": "{E2467BCD-FD66-8921-B109-95E8A86729CA}"
+  "FileHash": "{71F42CD2-2880-BF0B-D154-F41540A353AF}"
  }
 }

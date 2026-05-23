@@ -2,4 +2,4 @@
 
 [resource]
 platform_name = "Windows"
-platform_path = "../../../../WwiseProjects/SecuenciaV2/GeneratedSoundBanks/Windows"
+platform_path = "../../../SecuenciaWwi/GeneratedSoundBanks/Windows"

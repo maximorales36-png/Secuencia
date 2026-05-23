@@ -3,7 +3,7 @@ class_name ScanlineLogic
 
 signal crossing_detected(piece: WebSocketManager.Piece)
 
-var bpm: float = 120.0
+var bpm: float = 60.0
 var scan_position: float = 0.0
 var prev_scan_position: float = -1.0
 var scan_speed: float = 0.0

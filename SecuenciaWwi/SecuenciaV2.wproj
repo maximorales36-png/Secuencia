@@ -27,7 +27,7 @@
 					</ValueList>
 				</Property>
 				<Property Name="SoundBankGenerateHeaderFile" Type="bool" Value="True"/>
-				<Property Name="SoundBankHeaderFilePath" Type="string" Value="..\..\GodotProjects\secuencia-v-2\Wwise\Soundbanks"/>
+				<Property Name="SoundBankHeaderFilePath" Type="string" Value="..\SecuenciaGod\Wwise\Soundbanks"/>
 				<Property Name="SoundBankPaths" Type="string">
 					<ValueList>
 						<Value Platform="Windows">GeneratedSoundBanks\Windows\</Value>

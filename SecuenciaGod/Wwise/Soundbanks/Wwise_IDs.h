@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_GREEN = 3434539291U;
+        static const AkUniqueID PLAY_ORANGE = 3135821488U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID PLAY_YELLOW = 3406300906U;
     } // namespace EVENTS

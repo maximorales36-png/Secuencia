@@ -4,33 +4,144 @@
 		<WorkUnit Name="Default Work Unit" ID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}" PersistMode="Standalone">
 			<ChildrenList>
 				<Event Name="Play_yellow" ID="{6ACF5DBF-AD27-4B9B-A93C-1F7FE2634A36}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="19"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
 					<ChildrenList>
 						<Action Name="" ID="{32CCBE77-95E2-4D58-A439-7414DBCB0961}" ShortID="312114672">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="BEEP 01" ID="{D4258CB6-01BA-46AE-8924-E5914FDA8A13}" WorkUnitID="{D9329DB3-E4D7-45AA-BD40-6EB28C6C4D39}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
+						<Action Name="" ID="{EFEA5ADF-11ED-4DF0-B50A-7FF76EF7E930}" ShortID="748001833">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="001_Kick_LM1_-_LDTDM_Zenhiser" ID="{763F2931-357C-4F22-A12D-14BDB91519D1}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 					</ChildrenList>
 				</Event>
 				<Event Name="Play_pink" ID="{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="11"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
 					<ChildrenList>
 						<Action Name="" ID="{7EEA53E2-E487-4F26-9B3A-05BCB54942E7}" ShortID="876936176">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="CONFIRM 01" ID="{0140E852-B3C6-4BC7-9A6C-119EB61BC4E9}" WorkUnitID="{D9329DB3-E4D7-45AA-BD40-6EB28C6C4D39}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
+						<Action Name="" ID="{92CCB19E-4390-4518-BEE1-51B18C8E0A69}" ShortID="443040214">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="016_Snare_LM1_-_LDTDM_Zenhiser" ID="{E90AB414-B2B3-48BE-A9C6-38A378FCA513}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{00FB140A-EF9A-4811-9BDA-54ADAE8BB5CA}" ShortID="945843162">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Resonance" ID="{854B885F-8E71-4A4C-8919-519936A91BD3}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 					</ChildrenList>
 				</Event>
 				<Event Name="Play_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="4"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
 					<ChildrenList>
 						<Action Name="" ID="{1DE154DC-7004-45AD-B397-2CAC67431CD6}" ShortID="782571069">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="PANEL 02" ID="{E6D375B5-B75D-4DFC-92A6-EB425A3D926A}" WorkUnitID="{D9329DB3-E4D7-45AA-BD40-6EB28C6C4D39}"/>
+									<ObjectRef Name="PANEL 01" ID="{701A830B-C3D5-49E2-99B9-BEB361516C99}" WorkUnitID="{D9329DB3-E4D7-45AA-BD40-6EB28C6C4D39}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{19024782-867B-4511-8EE5-B1688A82AB23}" ShortID="226647618">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Dripping" ID="{4F7E70EF-8D90-436F-A741-83146E94E7F5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_orange" ID="{EFE086F9-A084-442F-8AA5-F3519CCA2F41}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="8"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Action Name="" ID="{F61071F6-4F15-4801-9F42-142B2012C5DA}" ShortID="661967977">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BEEP 01" ID="{D4258CB6-01BA-46AE-8924-E5914FDA8A13}" WorkUnitID="{D9329DB3-E4D7-45AA-BD40-6EB28C6C4D39}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{281C9A2D-15C2-4CB9-A4A9-38D2B406054A}" ShortID="297285584">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="001_Kick_LM1_-_LDTDM_Zenhiser" ID="{763F2931-357C-4F22-A12D-14BDB91519D1}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{56AAF7D7-1B95-45D8-BDA8-3D4C7A0CB06E}" ShortID="717810808">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Dripping" ID="{4F7E70EF-8D90-436F-A741-83146E94E7F5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

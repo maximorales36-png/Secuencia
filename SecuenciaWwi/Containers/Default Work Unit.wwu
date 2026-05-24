@@ -4,12 +4,22 @@
 		<WorkUnit Name="Default Work Unit" ID="{C494838F-7095-4021-B123-11CE3CB0C6C5}" PersistMode="Standalone">
 			<ChildrenList>
 				<MusicSegment Name="001_Kick_LM1_-_LDTDM_Zenhiser" ID="{763F2931-357C-4F22-A12D-14BDB91519D1}" ShortID="1020657511">
+					<PropertyList>
+						<Property Name="UserAuxSendVolume0" Type="Real64">
+							<ValueList>
+								<Value>3</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{640F1C25-B00E-45F7-9430-D7F95405830D}"/>
 						</Reference>
 						<Reference Name="OutputBus">
 							<ObjectRef Name="Main Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E42B54C-DF21-4DF8-AAB4-475405DCFB5A}"/>
+						</Reference>
+						<Reference Name="UserAuxSend0">
+							<ObjectRef Name="Rev" ID="{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}" WorkUnitID="{9E42B54C-DF21-4DF8-AAB4-475405DCFB5A}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
@@ -45,11 +55,70 @@
 											<ObjectList Name="Clips">
 												<MusicClip Name="001_Kick_LM1_-_LDTDM_Zenhiser" ID="{8FBEC566-27F0-46D6-B162-25E1AF5FE334}">
 													<PropertyList>
-														<Property Name="EndTrimOffset" Type="Real64" Value="556.167800453515"/>
-														<Property Name="FadeInMode" Type="int16" Value="0"/>
-														<Property Name="FadeOutMode" Type="int16" Value="0"/>
+														<Property Name="EndTrimOffset" Type="Real64" Value="556.167800453516"/>
+														<Property Name="FadeInDuration" Type="Real64" Value="56.3380281690139"/>
+														<Property Name="FadeOutDuration" Type="Real64" Value="143.011917659805"/>
 													</PropertyList>
 													<AudioSourceRef Name="001_Kick_LM1_-_LDTDM_Zenhiser" ID="{80BFD7CB-5394-453B-809E-DF154ECF73E6}"/>
+													<PropertyCurveList>
+														<PropertyCurve PropertyName="Highpass">
+															<Curve Name="" ID="{5015AAA4-0B30-4B8C-BDAD-E4D3A38E2FFB}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="1"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>0</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>0.55617</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</PropertyCurve>
+														<PropertyCurve PropertyName="Lowpass">
+															<Curve Name="" ID="{11F50AE1-111F-4B16-8C64-34423EF3BD18}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="1"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>0</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>0.55617</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</PropertyCurve>
+														<PropertyCurve PropertyName="Volume">
+															<Curve Name="" ID="{36C262D2-2A5A-451A-9C06-363A0D1E6B1D}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="3"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>0</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>0.55617</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</PropertyCurve>
+													</PropertyCurveList>
 												</MusicClip>
 											</ObjectList>
 										</ObjectLists>
@@ -64,9 +133,36 @@
 							<MusicCue Name="Exit Cue" ID="{7C5B1141-8D69-4C41-8877-AA3726D5E9F9}">
 								<PropertyList>
 									<Property Name="CueType" Type="int16" Value="1"/>
-									<Property Name="TimeMs" Type="Real64" Value="556.167800453515"/>
+									<Property Name="TimeMs" Type="Real64" Value="1565.91861302123"/>
 								</PropertyList>
 							</MusicCue>
+						</ObjectList>
+						<ObjectList Name="Effects">
+							<EffectSlot Name="" ID="{BF05F3B2-777B-4D6D-B4E1-F1BC3D202795}" ShortID="1011390720">
+								<ReferenceList>
+									<Reference Name="Effect">
+										<Custom>
+											<Effect Name="Parametric EQ (Custom)" ID="{E470C132-E0B8-43A2-BA83-B8A9636346A0}" ShortID="80323076" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
+												<PropertyList>
+													<Property Name="FilterTypeBand3" Type="int32" Value="0"/>
+													<Property Name="FrequencyBand3" Type="Real32" Value="313.8211"/>
+													<Property Name="OnOffBand3" Type="bool" Value="True"/>
+												</PropertyList>
+											</Effect>
+										</Custom>
+									</Reference>
+								</ReferenceList>
+							</EffectSlot>
+							<EffectSlot Name="" ID="{20D09F9F-7C85-4678-8FAB-F54ECB6B9D59}" ShortID="17843638">
+								<PropertyList>
+									<Property Name="Bypass" Type="bool" Value="True"/>
+								</PropertyList>
+								<ReferenceList>
+									<Reference Name="Effect" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+										<ObjectRef Name="New_RoomVerb" ID="{84FB890F-32D9-46C5-92CB-5FDD8CB84C06}" WorkUnitID="{520A089E-3474-4C19-90F7-8116F33BB2FF}"/>
+									</Reference>
+								</ReferenceList>
+							</EffectSlot>
 						</ObjectList>
 					</ObjectLists>
 				</MusicSegment>
@@ -206,7 +302,19 @@
 				</MusicSegment>
 				<MusicSegment Name="Dripping" ID="{4F7E70EF-8D90-436F-A741-83146E94E7F5}" ShortID="42973198">
 					<PropertyList>
+						<Property Name="Color" Type="int16" Value="4"/>
 						<Property Name="EndPosition" Type="Real64" Value="3670.57981838991"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+						<Property Name="UserAuxSendVolume0" Type="Real64">
+							<ValueList>
+								<Value>-9</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-9</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -214,6 +322,9 @@
 						</Reference>
 						<Reference Name="OutputBus">
 							<ObjectRef Name="Main Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E42B54C-DF21-4DF8-AAB4-475405DCFB5A}"/>
+						</Reference>
+						<Reference Name="UserAuxSend0">
+							<ObjectRef Name="Rev" ID="{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}" WorkUnitID="{9E42B54C-DF21-4DF8-AAB4-475405DCFB5A}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
@@ -250,7 +361,7 @@
 												<MusicClip Name="Dripping" ID="{F7F4ABCC-F16A-48A3-93DD-A915D07E4631}">
 													<PropertyList>
 														<Property Name="EndTrimOffset" Type="Real64" Value="3000"/>
-														<Property Name="FadeInDuration" Type="Real64" Value="591.539705303353"/>
+														<Property Name="FadeInDuration" Type="Real64" Value="872.141873203662"/>
 														<Property Name="FadeOutDuration" Type="Real64" Value="1076.90561734713"/>
 													</PropertyList>
 													<AudioSourceRef Name="Dripping" ID="{55D197D7-4E10-4F7D-A26F-13EA3F3C4C04}"/>
@@ -335,7 +446,14 @@
 				</MusicSegment>
 				<MusicSegment Name="Resonance" ID="{854B885F-8E71-4A4C-8919-519936A91BD3}" ShortID="539611628">
 					<PropertyList>
+						<Property Name="Color" Type="int16" Value="11"/>
 						<Property Name="EndPosition" Type="Real64" Value="2747.57732420288"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">

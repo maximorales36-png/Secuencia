@@ -9,6 +9,28 @@
 							<ObjectRef Name="System" ID="{E2C9E60A-B941-4A1C-96D7-1F54A9246488}" WorkUnitID="{595AEE8C-9ABF-4FC6-AB85-B6FA71CF54A6}"/>
 						</Reference>
 					</ReferenceList>
+					<ChildrenList>
+						<AuxBus Name="Rev" ID="{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}">
+							<ObjectLists>
+								<ObjectList Name="Effects">
+									<EffectSlot Name="" ID="{D8EF70EC-ED6C-489D-93AE-A62F7ACF5B34}" ShortID="921501482">
+										<ReferenceList>
+											<Reference Name="Effect">
+												<Custom>
+													<Effect Name="RoomVerb (Custom)" ID="{4BF6737B-BDB3-46C3-9FDA-DF18F22113F1}" ShortID="666457101" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+														<PropertyList>
+															<Property Name="DecayTime" Type="Real32" Value="2.7"/>
+															<Property Name="ERLevel" Type="Real32" Value="-16"/>
+														</PropertyList>
+													</Effect>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</EffectSlot>
+								</ObjectList>
+							</ObjectLists>
+						</AuxBus>
+					</ChildrenList>
 				</Bus>
 			</ChildrenList>
 		</WorkUnit>

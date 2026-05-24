@@ -5,8 +5,14 @@
 [ext_resource type="Script" uid="uid://co2g43scpovvw" path="res://scipts/ScanlineLogic.gd" id="3"]
 [ext_resource type="Script" uid="uid://wtribbhcn4m2" path="res://scipts/EffectsRenderer.gd" id="4"]
 [ext_resource type="Script" uid="uid://21vpbcs7p64a" path="res://scipts/AudioManager.gd" id="5"]
+[ext_resource type="Texture2D" uid="uid://72l5ash431wl" path="res://assets/blue-paint-wall-background-texture.jpg" id="6_7mycd"]
 
 [node name="Main" type="Node" unique_id=81295403]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1714887398]
+position = Vector2(590.4999, 375.24997)
+scale = Vector2(0.16399458, 0.15991451)
+texture = ExtResource("6_7mycd")
 
 [node name="WebSocketManager" type="Node" parent="." unique_id=1204148754]
 script = ExtResource("1_0xm2m")

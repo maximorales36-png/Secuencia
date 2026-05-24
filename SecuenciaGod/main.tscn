@@ -34,3 +34,5 @@ script = ExtResource("2_h2yge")
 
 [node name="EffectsRenderer" type="Node2D" parent="Canvas" unique_id=950658509]
 script = ExtResource("4")
+scan_line_color = Color(1, 0.6156863, 0, 0.6901961)
+scan_line_width = 5.0

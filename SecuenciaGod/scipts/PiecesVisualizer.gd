@@ -20,7 +20,8 @@ var color_map: Dictionary = {
 	"orange": Color(1.0, 0.5, 0.0, 0.6),
 	"pink": Color(1.0, 0.75, 0.8, 0.6),
 	"neon_green": Color(0.0, 1.0, 0.5, 0.6),
-	"unknown": Color.GRAY
+	"unknown": Color.GRAY,
+	"white": Color(1.0, 1.0, 1.0, 0.5)
 }
 
 func _ready() -> void:
@@ -83,7 +84,7 @@ func _draw() -> void:
 		var draw_color = color_map.get(piece.color, color_map["unknown"])
 		
 		draw_circle(pos, piece_radius, draw_color)
-		draw_arc(pos, piece_radius + 2, 0, TAU, 32, Color.WHITE, 2.0)
+		draw_arc(pos, piece_radius + 2, 0, TAU, 32, color_map["white"], 2.0)
 		
 		var label_pos = pos + Vector2(0, piece_radius + 20)
 		draw_string(ThemeDB.fallback_font, label_pos, piece.color, HORIZONTAL_ALIGNMENT_CENTER, -1, 12, text_color)

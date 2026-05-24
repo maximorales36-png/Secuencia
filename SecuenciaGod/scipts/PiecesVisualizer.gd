@@ -16,10 +16,10 @@ var connected: bool = false
 
 # Mapeo de colores a colores Godot
 var color_map: Dictionary = {
-	"yellow": Color.YELLOW,
-	"orange": Color(1.0, 0.5, 0.0),
-	"pink": Color(1.0, 0.75, 0.8),
-	"neon_green": Color(0.0, 1.0, 0.5),
+	"yellow": Color(1.0, 1.0, 0.0, 0.3),
+	"orange": Color(1.0, 0.5, 0.0, 0.6),
+	"pink": Color(1.0, 0.75, 0.8, 0.6),
+	"neon_green": Color(0.0, 1.0, 0.5, 0.6),
 	"unknown": Color.GRAY
 }
 

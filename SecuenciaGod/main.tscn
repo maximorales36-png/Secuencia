@@ -9,7 +9,11 @@
 
 [node name="Main" type="Node" unique_id=81295403]
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1714887398]
+[node name="Background" type="Node" parent="." unique_id=1347177435]
+
+[node name="Parallax2D" type="Parallax2D" parent="Background" unique_id=591179869]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D" unique_id=1714887398]
 position = Vector2(590.4999, 375.24997)
 scale = Vector2(0.16399458, 0.15991451)
 texture = ExtResource("6_7mycd")

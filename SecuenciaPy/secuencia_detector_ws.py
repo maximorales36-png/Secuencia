@@ -50,6 +50,11 @@ COLOR_RANGES = {
         "lower": np.array([35, 100, 100]),
         "upper": np.array([85, 255, 255]),
         "bgr": (0, 255, 127)
+    },
+    "celeste": {
+        "lower": np.array([95, 60, 150]),
+        "upper": np.array([115, 255, 255]),
+        "bgr": (246, 209, 81)
     }
 }
 

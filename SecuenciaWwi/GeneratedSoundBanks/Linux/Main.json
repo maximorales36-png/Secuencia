@@ -10,11 +10,19 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{A514A702-4F45-8542-16D5-DC16DA4133FF}",
+    "Hash": "{C6AF1460-5FBF-714A-444C-5A553FD6D1BE}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
     "Media": [
+     {
+      "Id": "538255378",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "017_Tambourine_-_LDTDM_Zenhiser.wav",
+      "CachePath": "3D/{3D6474DE-7763-7A16-B08E-6C79F32E79F0}.wem"
+     },
      {
       "Id": "907319722",
       "Language": "SFX",
@@ -40,7 +48,52 @@
       "CachePath": "DE/{DEC93901-25F0-FF01-6E16-4FEB6FDBE025}.wem"
      }
     ],
+    "Plugins": {
+     "Custom": [
+      {
+       "Id": "80323076",
+       "Name": "Parametric EQ (Custom)",
+       "ObjectPath": "\\Containers\\Default Work Unit\\001_Kick_LM1_-_LDTDM_Zenhiser\\[Effect Slot [0]: (Parametric EQ)]\\Parametric EQ (Custom)",
+       "GUID": "{E470C132-E0B8-43A2-BA83-B8A9636346A0}",
+       "LibName": "Wwise Parametric EQ",
+       "LibId": "6881283"
+      }
+     ],
+     "ShareSets": [
+      {
+       "Id": "1259256166",
+       "Name": "New_RoomVerb",
+       "ObjectPath": "\\Effects\\Default Work Unit\\New_RoomVerb",
+       "GUID": "{84FB890F-32D9-46C5-92CB-5FDD8CB84C06}",
+       "LibName": "Wwise RoomVerb",
+       "LibId": "7733251"
+      }
+     ]
+    },
     "Events": [
+     {
+      "Id": "392139723",
+      "Name": "Play_celeste",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_celeste",
+      "GUID": "{949737E8-77D8-4A07-8775-5102B43EA667}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0.23174603",
+      "DurationMax": "0.23174603",
+      "MediaRefs": [
+       {
+        "Id": "538255378"
+       }
+      ],
+      "AuxBusRefs": [
+       {
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
+       }
+      ]
+     },
      {
       "Id": "3434539291",
       "Name": "Play_green",
@@ -53,6 +106,14 @@
       "MediaRefs": [
        {
         "Id": "999922548"
+       }
+      ],
+      "AuxBusRefs": [
+       {
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
        }
       ]
      },
@@ -68,6 +129,14 @@
       "MediaRefs": [
        {
         "Id": "999922548"
+       }
+      ],
+      "AuxBusRefs": [
+       {
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
        }
       ]
      },
@@ -93,17 +162,37 @@
       "GUID": "{6ACF5DBF-AD27-4B9B-A93C-1F7FE2634A36}",
       "Color": "19",
       "DurationType": "OneShot",
-      "DurationMin": "0.5561678",
-      "DurationMax": "0.5561678",
+      "DurationMin": "1.5659186",
+      "DurationMax": "1.5659186",
       "MediaRefs": [
        {
         "Id": "960573866"
+       }
+      ],
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "80323076"
+        }
+       ],
+       "ShareSets": [
+        {
+         "Id": "1259256166"
+        }
+       ]
+      },
+      "AuxBusRefs": [
+       {
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
        }
       ]
      }
     ]
    }
   ],
-  "FileHash": "{2527930B-0C00-1D68-0977-83E86B11BC3A}"
+  "FileHash": "{D325352E-C6DD-597E-5596-1D86BA7FC888}"
  }
 }

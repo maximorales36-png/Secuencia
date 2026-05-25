@@ -20,6 +20,7 @@ var color_map: Dictionary = {
 	"orange": Color(1.0, 0.5, 0.0, 0.6),
 	"pink": Color(1.0, 0.75, 0.8, 0.6),
 	"neon_green": Color(0.0, 1.0, 0.5, 0.6),
+	"celeste":Color(0.32, 0.82, 0.96, 0.7),
 	"unknown": Color.GRAY,
 	"white": Color(1.0, 1.0, 1.0, 0.5)
 }

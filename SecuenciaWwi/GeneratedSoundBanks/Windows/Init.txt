@@ -1,6 +1,12 @@
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	2246998526	Main Audio Bus			\Default Work Unit\Main Audio Bus	
 
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	980603520	Rev			\Default Work Unit\Main Audio Bus\Rev	
+
+Effect plug-ins	ID	Name	Type				Notes
+	666457101	RoomVerb (Custom)	Wwise RoomVerb			
+
 Audio Devices	ID	Name	Type				Notes
 	2317455096	No_Output	No Output			
 	3859886410	System	System			

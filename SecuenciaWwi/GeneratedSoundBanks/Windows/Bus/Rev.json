@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "172",
+  "SoundBanks": [
+   {
+    "Id": "980603520",
+    "Type": "Bus",
+    "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}",
+    "Language": "SFX",
+    "Hash": "{72C279B2-B3EF-F76F-AA26-DB0EE8545EBE}",
+    "ObjectPath": "Rev",
+    "ShortName": "Rev",
+    "Path": "Bus/Rev.bnk",
+    "Plugins": {
+     "Custom": [
+      {
+       "Id": "666457101",
+       "Name": "RoomVerb (Custom)",
+       "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev\\[Effect Slot [0]: (RoomVerb)]\\RoomVerb (Custom)",
+       "GUID": "{4BF6737B-BDB3-46C3-9FDA-DF18F22113F1}",
+       "LibName": "Wwise RoomVerb",
+       "LibId": "7733251"
+      }
+     ]
+    },
+    "AuxBusses": [
+     {
+      "Id": "980603520",
+      "Name": "Rev",
+      "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+      "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "666457101"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "FileHash": "{3CE89591-44D7-2164-A6F8-D1AE7B7E8DF4}"
+ }
+}

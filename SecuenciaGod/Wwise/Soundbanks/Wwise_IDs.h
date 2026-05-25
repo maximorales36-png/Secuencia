@@ -13,6 +13,7 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID PLAY_CELESTE = 392139723U;
         static const AkUniqueID PLAY_GREEN = 3434539291U;
         static const AkUniqueID PLAY_ORANGE = 3135821488U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
@@ -44,6 +45,11 @@ namespace AK
     {
         static const AkUniqueID MAIN_AUDIO_BUS = 2246998526U;
     } // namespace BUSSES
+
+    namespace AUX_BUSSES
+    {
+        static const AkUniqueID REV = 980603520U;
+    } // namespace AUX_BUSSES
 
     namespace AUDIO_DEVICES
     {

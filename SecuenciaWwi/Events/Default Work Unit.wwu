@@ -147,6 +147,21 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_celeste" ID="{949737E8-77D8-4A07-8775-5102B43EA667}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="2"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Action Name="" ID="{4A2A4608-98B4-4886-96FE-FEBDBC55010D}" ShortID="928999741">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="017_Tambourine_-_LDTDM_Zenhiser" ID="{470A7DC3-3608-4A46-B570-0CBE1C744117}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

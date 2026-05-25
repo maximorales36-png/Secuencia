@@ -234,12 +234,24 @@
 					</ObjectLists>
 				</MusicSegment>
 				<MusicSegment Name="017_Tambourine_-_LDTDM_Zenhiser" ID="{470A7DC3-3608-4A46-B570-0CBE1C744117}" ShortID="99133951">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="2"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+						<Property Name="UserAuxSendVolume0" Type="Real64">
+							<ValueList>
+								<Value>3</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{640F1C25-B00E-45F7-9430-D7F95405830D}"/>
 						</Reference>
 						<Reference Name="OutputBus">
 							<ObjectRef Name="Main Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E42B54C-DF21-4DF8-AAB4-475405DCFB5A}"/>
+						</Reference>
+						<Reference Name="UserAuxSend0">
+							<ObjectRef Name="Rev" ID="{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}" WorkUnitID="{9E42B54C-DF21-4DF8-AAB4-475405DCFB5A}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>

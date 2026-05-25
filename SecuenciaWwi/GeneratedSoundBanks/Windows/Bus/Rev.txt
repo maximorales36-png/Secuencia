@@ -1,0 +1,6 @@
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	980603520	Rev			\Default Work Unit\Main Audio Bus\Rev	
+
+Effect plug-ins	ID	Name	Type				Notes
+	666457101	RoomVerb (Custom)	Wwise RoomVerb			
+

@@ -1,10 +1,16 @@
 Event	ID	Name			Wwise Object Path	Notes
+	392139723	Play_celeste			\Default Work Unit\Play_celeste	
 	1568289110	Play_pink			\Default Work Unit\Play_pink	
 	3135821488	Play_orange			\Default Work Unit\Play_orange	
 	3406300906	Play_yellow			\Default Work Unit\Play_yellow	
 	3434539291	Play_green			\Default Work Unit\Play_green	
 
+Effect plug-ins	ID	Name	Type				Notes
+	80323076	Parametric EQ (Custom)	Wwise Parametric EQ			
+	1259256166	New_RoomVerb	Wwise RoomVerb			
+
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	538255378	017_Tambourine_-_LDTDM_Zenhiser	.cache\3D\{3D6474DE-7763-7A16-B08E-6C79F32E79F0}.wem		\Containers\Default Work Unit\017_Tambourine_-_LDTDM_Zenhiser\017_Tambourine_-_LDTDM_Zenhiser		40976
 	907319722	Resonance	.cache\15\{154A3C6B-2ED8-7D55-0857-62DA9DD76D01}.wem		\Containers\Default Work Unit\Resonance\Resonance		1411292
 	960573866	001_Kick_LM1_-_LDTDM_Zenhiser	.cache\20\{20BE14FB-BBB6-36E8-5F80-5A805B22DA12}.wem		\Containers\Default Work Unit\001_Kick_LM1_-_LDTDM_Zenhiser\001_Kick_LM1_-_LDTDM_Zenhiser		98204
 	999922548	Dripping	.cache\DE\{DEC93901-25F0-FF01-6E16-4FEB6FDBE025}.wem		\Containers\Default Work Unit\Dripping\Dripping		1234876

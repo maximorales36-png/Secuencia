@@ -14,7 +14,6 @@ enum NoteDivision {
 @export var line_width: float = 2.0
 @export var dash_length: float = 6.0
 @export var gap_length: float = 4.0
-@export var horizontal_rows: int = 4
 
 func _draw() -> void:
 	var viewport = get_viewport_rect().size
@@ -27,11 +26,7 @@ func _draw() -> void:
 		var x = (float(i) / divs) * viewport.x
 		_draw_dashed_line(Vector2(x, 0), Vector2(x, viewport.y), grid_color, line_width, dash_length, gap_length)
 
-	for i in range(horizontal_rows + 1):
-		var y = (float(i) / horizontal_rows) * viewport.y
-		#_draw_dashed_line(Vector2(0, y), Vector2(viewport.x, y), grid_color, line_width, dash_length, gap_length)
-
-
+	
 func _draw_dashed_line(from: Vector2, to: Vector2, color: Color, width: float, dash: float, gap: float) -> void:
 	var direction = (to - from).normalized()
 	var distance = from.distance_to(to)

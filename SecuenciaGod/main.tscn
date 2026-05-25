@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://wtribbhcn4m2" path="res://scipts/EffectsRenderer.gd" id="4"]
 [ext_resource type="Script" uid="uid://21vpbcs7p64a" path="res://scipts/AudioManager.gd" id="5"]
 [ext_resource type="Texture2D" uid="uid://72l5ash431wl" path="res://assets/blue-paint-wall-background-texture.jpg" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://grid12345678" path="res://scipts/GridRenderer.gd" id="7"]
 
 [node name="Main" type="Node" unique_id=81295403]
 
@@ -28,6 +29,9 @@ script = ExtResource("3")
 script = ExtResource("5")
 
 [node name="Canvas" type="Node2D" parent="." unique_id=1177142370]
+
+[node name="GridRenderer" type="Node2D" parent="Canvas" unique_id=1186508188]
+script = ExtResource("7")
 
 [node name="PiecesVisualizer" type="Node2D" parent="Canvas" unique_id=465233847]
 script = ExtResource("2_h2yge")

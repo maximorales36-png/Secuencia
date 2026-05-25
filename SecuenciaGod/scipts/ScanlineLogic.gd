@@ -2,8 +2,10 @@ extends Node
 class_name ScanlineLogic
 
 signal crossing_detected(piece: WebSocketManager.Piece)
+signal beats_per_cycle_changed(new_beats: int)
 
 var bpm: float = 60.0
+@export var beats_per_cycle: int = 8
 var scan_position: float = 0.0
 var prev_scan_position: float = -1.0
 var scan_speed: float = 0.0
@@ -15,7 +17,7 @@ const CYCLE_RESET_THRESHOLD: float = 0.1
 
 
 func _ready() -> void:
-	scan_speed = bpm / 240.0
+	_update_scan_speed()
 
 	websocket_manager = get_tree().root.find_child("WebSocketManager", true, false)
 	if websocket_manager:
@@ -58,4 +60,14 @@ func get_scan_position() -> float:
 
 func set_bpm(new_bpm: float) -> void:
 	bpm = new_bpm
-	scan_speed = bpm / 240.0
+	_update_scan_speed()
+
+
+func set_beats_per_cycle(new_beats: int) -> void:
+	beats_per_cycle = new_beats
+	_update_scan_speed()
+	beats_per_cycle_changed.emit(beats_per_cycle)
+
+
+func _update_scan_speed() -> void:
+	scan_speed = bpm / (60.0 * beats_per_cycle)

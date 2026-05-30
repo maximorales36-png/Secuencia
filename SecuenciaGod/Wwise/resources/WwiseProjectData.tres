@@ -128,8 +128,11 @@ guid = "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
 id = 980603520
 
 [sub_resource type="WwiseTreeObject" id="WwiseTreeObject_geu6g"]
+path = "\\Busses\\Default Work Unit\\Main Audio Bus"
 children = [SubResource("WwiseTreeObject_yyrou")]
+type = 2
 name = "Main Audio Bus"
+guid = "{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"
 id = 2246998526
 
 [sub_resource type="WwiseTreeObject" id="WwiseTreeObject_5n8hf"]

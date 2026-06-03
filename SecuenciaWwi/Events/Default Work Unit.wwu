@@ -162,6 +162,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_New_Music_Playlist_Container" ID="{780C794B-60DE-4698-9076-71ED5FA7901A}">
+					<ChildrenList>
+						<Action Name="" ID="{9BEE1217-8F4D-48AC-B606-1D9EC773EF7C}" ShortID="268055533">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

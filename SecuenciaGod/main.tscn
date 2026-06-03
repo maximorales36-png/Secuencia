@@ -24,6 +24,8 @@ script = ExtResource("1_0xm2m")
 
 [node name="ScanlineLogic" type="Node" parent="." unique_id=66086854]
 script = ExtResource("3")
+bpm = 120.0
+beats_per_cycle = 16
 
 [node name="AudioManager" type="Node" parent="." unique_id=259813811]
 script = ExtResource("5")

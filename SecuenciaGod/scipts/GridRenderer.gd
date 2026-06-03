@@ -1,15 +1,6 @@
 extends Node2D
 class_name GridRenderer
 
-enum NoteDivision {
-	REDONDA,
-	BLANCA,
-	NEGRA,
-	CORCHEA,
-	SEMICORCHEA,
-}
-
-@export var note_division: NoteDivision = NoteDivision.NEGRA
 @export var grid_color: Color = Color(0.81, 0.0, 0.04)
 @export var line_width: float = 2.0
 @export var dash_length: float = 6.0
@@ -31,27 +22,12 @@ func _on_beats_per_cycle_changed(new_beats: int) -> void:
 	queue_redraw()
 
 
-func _get_beat_value() -> float:
-	match note_division:
-		NoteDivision.REDONDA:
-			return 4.0
-		NoteDivision.BLANCA:
-			return 2.0
-		NoteDivision.NEGRA:
-			return 1.0
-		NoteDivision.CORCHEA:
-			return 0.5
-		NoteDivision.SEMICORCHEA:
-			return 0.25
-	return 1.0
-
-
 func _draw() -> void:
 	var viewport = get_viewport_rect().size
 	if viewport.x <= 0 or viewport.y <= 0:
 		return
 
-	var beat_value = _get_beat_value()
+	var beat_value = 1.0
 	var divs = int(beats_per_cycle / beat_value)
 
 	for i in range(divs + 1):

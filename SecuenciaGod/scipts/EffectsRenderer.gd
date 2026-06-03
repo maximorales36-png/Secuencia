@@ -5,18 +5,22 @@ var scanline_logic: ScanlineLogic
 var scan_position: float = 0.0
 
 var active_effects: Array = []
+var sector_pulses: Dictionary = {}
 
 @export var effect_duration: float = 0.5
 @export var max_wave_radius: float = 150.0
 @export var particle_count: int = 20
 @export var scan_line_color: Color = Color.WHITE
 @export var scan_line_width: float = 3.0
+@export var sector_color: Color = Color(1.0, 0.75, 0.8)
+@export var sector_alpha: float = 0.15
 
 
 func _ready() -> void:
 	scanline_logic = get_tree().root.find_child("ScanlineLogic", true, false)
 	if scanline_logic:
 		scanline_logic.crossing_detected.connect(_on_crossing_detected)
+		scanline_logic.sector_activated.connect(_on_sector_activated)
 	else:
 		print("[EffectsRenderer] ERROR: No se encontr\u00f3 ScanlineLogic")
 
@@ -38,6 +42,11 @@ func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
 	print("[EffectsRenderer] Efecto disparado: %s en (%.2f, %.2f)" % [piece.color, piece.x, piece.y])
 
 
+func _on_sector_activated(sector_index: int, y: float) -> void:
+	sector_pulses[sector_index] = Time.get_ticks_msec() / 1000.0
+	print("[EffectsRenderer] Pulso de sector rosa: sector %d" % sector_index)
+
+
 func _update_effects(delta: float) -> void:
 	var now = Time.get_ticks_msec() / 1000.0
 	var keep: Array = []
@@ -48,6 +57,7 @@ func _update_effects(delta: float) -> void:
 
 
 func _draw() -> void:
+	_draw_pink_rectangles()
 	_draw_scanline()
 	_draw_effects()
 
@@ -75,6 +85,32 @@ func _draw_effects() -> void:
 				_draw_pink_effect(center, intensity)
 			"neon_green":
 				_draw_neon_green_effect(center, intensity)
+
+
+func _draw_pink_rectangles() -> void:
+	if scanline_logic == null:
+		return
+	var viewport = get_viewport_rect().size
+	if viewport.x <= 0 or viewport.y <= 0:
+		return
+	var s_count = scanline_logic.get_sector_count()
+	if s_count <= 0:
+		return
+	var sector_width = viewport.x / s_count
+	var now = Time.get_ticks_msec() / 1000.0
+
+	for i in range(s_count):
+		if scanline_logic.is_sector_pink(i):
+			var rect = Rect2(i * sector_width, 0, sector_width, viewport.y)
+			draw_rect(rect, Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha))
+
+			if sector_pulses.has(i):
+				var elapsed = now - sector_pulses[i]
+				if elapsed < 0.3:
+					var pulse_intensity = 1.0 - (elapsed / 0.3)
+					draw_rect(rect, Color(sector_color.r, sector_color.g, sector_color.b, pulse_intensity * 0.3))
+				else:
+					sector_pulses.erase(i)
 
 
 func _draw_yellow_effect(center: Vector2, intensity: float) -> void:

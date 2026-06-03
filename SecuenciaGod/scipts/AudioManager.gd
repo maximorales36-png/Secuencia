@@ -12,12 +12,17 @@ func _ready() -> void:
 	scanline_logic = get_tree().root.find_child("ScanlineLogic", true, false)
 	if scanline_logic:
 		scanline_logic.crossing_detected.connect(_on_crossing_detected)
+		scanline_logic.sector_activated.connect(_on_sector_activated)
 	else:
 		print("[AudioManager] ERROR: No se encontr\u00f3 ScanlineLogic")
 	
 
 func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
 	play_sound(piece.color, piece.y)
+
+
+func _on_sector_activated(sector_index: int, y: float) -> void:
+	play_sound("pink", y)
 
 
 func play_sound(color: String, y_position: float) -> void:

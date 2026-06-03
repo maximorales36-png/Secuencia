@@ -18,6 +18,8 @@ import sys
 
 CAPTURE_WIDTH = 640
 CAPTURE_HEIGHT = 480
+CAMERA_INDEX = 0  # Índice de cámara (0 = primera, 1 = segunda...)
+CAMERA_AUTO_DETECT = True  # Busca automáticamente la primera cámara disponible
 WEBSOCKET_HOST = "localhost"
 WEBSOCKET_PORT = 8765
 WEBSOCKET_URL = f"ws://{WEBSOCKET_HOST}:{WEBSOCKET_PORT}"
@@ -164,15 +166,33 @@ async def websocket_server(websocket):
     finally:
         websocket_clients.discard(websocket)
 
+def find_camera():
+    """Busca la primera cámara disponible (0-9) y retorna el índice."""
+    if not CAMERA_AUTO_DETECT:
+        return CAMERA_INDEX
+    for i in range(10):
+        cap = cv2.VideoCapture(i)
+        if cap.isOpened():
+            cap.release()
+            print(f"[Video] Cámara encontrada en índice {i}")
+            return i
+    print("[Video] No se encontró cámara automáticamente, usando índice por defecto")
+    return CAMERA_INDEX
+
+
 async def video_capture_loop():
     """Loop principal de captura de video y envío de datos."""
     global running, websocket_clients
     
     print("[Video] Iniciando captura...")
     
-    cap = cv2.VideoCapture(0)
+    cam_idx = find_camera()
+    cap = cv2.VideoCapture(cam_idx)
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
     if not cap.isOpened():
-        print("[ERROR] No se pudo abrir la cámara.")
+        print(f"[ERROR] No se pudo abrir la cámara (índice {cam_idx}).")
+        if CAMERA_AUTO_DETECT:
+            print("[ERROR] Prueba desactivando CAMERA_AUTO_DETECT y ajustando CAMERA_INDEX manualmente.")
         return
     
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, CAPTURE_WIDTH)

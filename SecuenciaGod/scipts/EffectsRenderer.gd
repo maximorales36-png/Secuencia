@@ -14,6 +14,7 @@ var sector_pulses: Dictionary = {}
 @export var scan_line_width: float = 3.0
 @export var sector_color: Color = Color(1.0, 0.75, 0.8)
 @export var sector_alpha: float = 0.15
+@export var rect_height: float = 80.0
 
 
 func _ready() -> void:
@@ -97,20 +98,20 @@ func _draw_pink_rectangles() -> void:
 	if s_count <= 0:
 		return
 	var sector_width = viewport.x / s_count
-	var now = Time.get_ticks_msec() / 1000.0
 
 	for i in range(s_count):
-		if scanline_logic.is_sector_pink(i):
-			var rect = Rect2(i * sector_width, 0, sector_width, viewport.y)
-			draw_rect(rect, Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha))
+		var ys = scanline_logic.pink_sectors.get(i)
+		if ys == null or ys.is_empty():
+			continue
 
-			if sector_pulses.has(i):
-				var elapsed = now - sector_pulses[i]
-				if elapsed < 0.3:
-					var pulse_intensity = 1.0 - (elapsed / 0.3)
-					draw_rect(rect, Color(sector_color.r, sector_color.g, sector_color.b, pulse_intensity * 0.3))
-				else:
-					sector_pulses.erase(i)
+		var rect_x = i * sector_width
+		var rect_w = sector_width
+		var rect_h = rect_height
+
+		for y in ys:
+			var center_y = y * viewport.y
+			var rect_y = center_y - rect_h / 2.0
+			draw_rect(Rect2(rect_x, rect_y, rect_w, rect_h), Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha))
 
 
 func _draw_yellow_effect(center: Vector2, intensity: float) -> void:

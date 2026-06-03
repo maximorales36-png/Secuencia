@@ -10,11 +10,51 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{C6AF1460-5FBF-714A-444C-5A553FD6D1BE}",
+    "Hash": "{FA4E3B03-F3DC-3A07-C199-463FBAE62302}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
     "Media": [
+     {
+      "Id": "150619875",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-6.wav",
+      "CachePath": "B8/{B83BA5FE-92CB-ACDA-C272-623CF7BB8A2F}.wem"
+     },
+     {
+      "Id": "295558765",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-4.wav",
+      "CachePath": "C8/{C825C789-94B3-9203-2294-AD16C24C51C8}.wem"
+     },
+     {
+      "Id": "505471656",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-1.wav",
+      "CachePath": "24/{243F651D-134E-B592-0045-0824113B94CC}.wem"
+     },
+     {
+      "Id": "517232673",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-2.wav",
+      "CachePath": "64/{645E9FA4-D558-8D26-19D4-283585F964E8}.wem"
+     },
+     {
+      "Id": "533691421",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-7.wav",
+      "CachePath": "30/{30D6F4C1-9266-9EEB-10C7-21AAED97E2DF}.wem"
+     },
      {
       "Id": "538255378",
       "Language": "SFX",
@@ -24,12 +64,12 @@
       "CachePath": "3D/{3D6474DE-7763-7A16-B08E-6C79F32E79F0}.wem"
      },
      {
-      "Id": "907319722",
+      "Id": "804058050",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
-      "ShortName": "Resonance.wav",
-      "CachePath": "15/{154A3C6B-2ED8-7D55-0857-62DA9DD76D01}.wem"
+      "ShortName": "707-5.wav",
+      "CachePath": "E0/{E0425934-B20E-6468-BEE7-98DF69242620}.wem"
      },
      {
       "Id": "960573866",
@@ -38,6 +78,14 @@
       "Location": "Memory",
       "ShortName": "001_Kick_LM1_-_LDTDM_Zenhiser.wav",
       "CachePath": "20/{20BE14FB-BBB6-36E8-5F80-5A805B22DA12}.wem"
+     },
+     {
+      "Id": "992317781",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-3.wav",
+      "CachePath": "4B/{4B3EAFA1-174A-5317-C0C3-AC48F60EA0B8}.wem"
      },
      {
       "Id": "999922548",
@@ -118,6 +166,38 @@
       ]
      },
      {
+      "Id": "2352987237",
+      "Name": "Play_New_Music_Playlist_Container",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_New_Music_Playlist_Container",
+      "GUID": "{780C794B-60DE-4698-9076-71ED5FA7901A}",
+      "DurationType": "OneShot",
+      "DurationMin": "2.7586167",
+      "DurationMax": "2.7586167",
+      "MediaRefs": [
+       {
+        "Id": "150619875"
+       },
+       {
+        "Id": "295558765"
+       },
+       {
+        "Id": "505471656"
+       },
+       {
+        "Id": "517232673"
+       },
+       {
+        "Id": "533691421"
+       },
+       {
+        "Id": "804058050"
+       },
+       {
+        "Id": "992317781"
+       }
+      ]
+     },
+     {
       "Id": "3135821488",
       "Name": "Play_orange",
       "ObjectPath": "\\Events\\Default Work Unit\\Play_orange",
@@ -147,11 +227,29 @@
       "GUID": "{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}",
       "Color": "11",
       "DurationType": "OneShot",
-      "DurationMin": "2",
-      "DurationMax": "2",
+      "DurationMin": "2.7586167",
+      "DurationMax": "2.7586167",
       "MediaRefs": [
        {
-        "Id": "907319722"
+        "Id": "150619875"
+       },
+       {
+        "Id": "295558765"
+       },
+       {
+        "Id": "505471656"
+       },
+       {
+        "Id": "517232673"
+       },
+       {
+        "Id": "533691421"
+       },
+       {
+        "Id": "804058050"
+       },
+       {
+        "Id": "992317781"
        }
       ]
      },
@@ -193,6 +291,6 @@
     ]
    }
   ],
-  "FileHash": "{313306D0-78C4-2FEE-4845-80986338E367}"
+  "FileHash": "{FAE5A459-76CA-E692-0C43-E7A8447AEA30}"
  }
 }

@@ -15,6 +15,7 @@ namespace AK
     {
         static const AkUniqueID PLAY_CELESTE = 392139723U;
         static const AkUniqueID PLAY_GREEN = 3434539291U;
+        static const AkUniqueID PLAY_NEW_MUSIC_PLAYLIST_CONTAINER = 2352987237U;
         static const AkUniqueID PLAY_ORANGE = 3135821488U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID PLAY_YELLOW = 3406300906U;

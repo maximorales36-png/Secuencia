@@ -21,7 +21,7 @@ func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
 	play_sound(piece.color, piece.y)
 
 
-func _on_sector_activated(sector_index: int, y: float) -> void:
+func _on_sector_activated(_sector_index: int, y: float) -> void:
 	play_sound("pink", y)
 
 

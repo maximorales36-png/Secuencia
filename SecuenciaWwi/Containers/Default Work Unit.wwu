@@ -600,7 +600,7 @@
 					<ChildrenList>
 						<MusicPlaylistContainer Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" ShortID="746803896">
 							<PropertyList>
-								<Property Name="Color" Type="int16" Value="10"/>
+								<Property Name="Color" Type="int16" Value="11"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 								<Property Name="Tempo" Type="Real64" Value="87"/>
 							</PropertyList>
@@ -615,7 +615,7 @@
 									<Custom>
 										<MusicPlaylistItem Name="" ID="{6B2F19DC-2014-4EEE-9756-85A84C738373}" ShortID="898963516">
 											<PropertyList>
-												<Property Name="PlayMode" Type="int16" Value="2"/>
+												<Property Name="PlayMode" Type="int16" Value="3"/>
 											</PropertyList>
 											<ChildrenList>
 												<MusicPlaylistItem Name="" ID="{A0113D6D-68DE-4A9F-B123-B5528D4B0D14}" ShortID="753824192">
@@ -1197,7 +1197,7 @@
 									<Custom>
 										<MusicPlaylistItem Name="" ID="{E4431A72-FDD6-43C4-8D30-3FCBEAD5F6EE}" ShortID="741919863">
 											<PropertyList>
-												<Property Name="PlayMode" Type="int16" Value="2"/>
+												<Property Name="PlayMode" Type="int16" Value="3"/>
 											</PropertyList>
 											<ChildrenList>
 												<MusicPlaylistItem Name="" ID="{230F3243-4BCD-4A9D-9264-5AE123C3B3DC}" ShortID="641883856">
@@ -1546,7 +1546,7 @@
 									<Custom>
 										<MusicPlaylistItem Name="" ID="{2B9767FB-938D-4F61-B34C-33AA4A9C8F48}" ShortID="440555902">
 											<PropertyList>
-												<Property Name="PlayMode" Type="int16" Value="2"/>
+												<Property Name="PlayMode" Type="int16" Value="3"/>
 											</PropertyList>
 											<ChildrenList>
 												<MusicPlaylistItem Name="" ID="{D795D301-81AC-45AB-B582-178EF7745F54}" ShortID="881495763">

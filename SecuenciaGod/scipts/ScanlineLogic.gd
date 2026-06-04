@@ -14,8 +14,8 @@ var pieces: Array = []
 var triggered_keys: Dictionary = {}
 var websocket_manager: WebSocketManager
 
-# Sector logic (1 sector = 4 compases = 16 negras)
-const BEATS_PER_SECTOR: int = 16
+# Sector logic (1 sector = 4 negras = 1 compas)
+const BEATS_PER_SECTOR: int = 4
 var sector_count: int = 0
 var pink_sectors: Dictionary = {}
 var triggered_sectors: Dictionary = {}

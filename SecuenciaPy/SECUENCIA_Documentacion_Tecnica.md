@@ -403,7 +403,21 @@ WwiseGodot: Sound engine initialized successfully.
 
 ---
 
-**Última actualización:** 2026-05-23
+## Changelog
+
+### 2026-06-04 — Zonas de sector para piezas pink
+- **`ScanlineLogic.gd`**: `BEATS_PER_SECTOR` cambiado de `16` a `4`.
+- Con `beats_per_cycle = 16` ahora hay **4 zonas** de 4 negras cada una:
+  - Zona 1: líneas 1-5 (posición 0.0-0.25)
+  - Zona 2: líneas 5-9 (posición 0.25-0.5)
+  - Zona 3: líneas 9-13 (posición 0.5-0.75)
+  - Zona 4: líneas 13-17 (posición 0.75-1.0)
+- El rectángulo pink solo cubre el ancho del sector donde está la pieza (1/4 de pantalla).
+- El evento WWise `Play_pink` se dispara al cruzar los bordes de sector: líneas 1, 5, 9, 13.
+
+---
+
+**Última actualización:** 2026-06-04
 **Responsable:** Maximiliano Morales (Maxi)
 **Institución:** Universidad Maimónides
 **Commit:** `54695d5` — feat: Wwise integration working

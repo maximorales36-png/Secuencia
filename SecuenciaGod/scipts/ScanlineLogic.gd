@@ -60,9 +60,8 @@ func _update_pink_sectors() -> void:
 	for piece in pieces:
 		if piece.color == "pink":
 			var sector = int(piece.x * sector_count)
-			if not pink_sectors.has(sector):
-				pink_sectors[sector] = []
-			pink_sectors[sector].append(piece.y)
+			if not pink_sectors.has(sector) or piece.y > pink_sectors[sector]:
+				pink_sectors[sector] = piece.y
 
 
 func _detect_crossings() -> void:
@@ -85,7 +84,7 @@ func _detect_sector_crossings() -> void:
 		prev_sector = current_sector
 		if pink_sectors.has(current_sector) and not triggered_sectors.has(current_sector):
 			triggered_sectors[current_sector] = true
-			var y = pink_sectors[current_sector][0]
+			var y = pink_sectors[current_sector]
 			print("[ScanlineLogic] SECTOR ROSA activado: sector %d (y=%.2f, ciclo %.1f%%)" % [current_sector, y, scan_position * 100])
 			sector_activated.emit(current_sector, y)
 

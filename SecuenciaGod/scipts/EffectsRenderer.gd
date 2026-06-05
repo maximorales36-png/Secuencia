@@ -34,6 +34,8 @@ func _process(delta: float) -> void:
 
 
 func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
+	if piece.color == "pink":
+		return
 	var viewport = get_viewport_rect().size
 	active_effects.append({
 		piece = piece,
@@ -100,18 +102,16 @@ func _draw_pink_rectangles() -> void:
 	var sector_width = viewport.x / s_count
 
 	for i in range(s_count):
-		var ys = scanline_logic.pink_sectors.get(i)
-		if ys == null or ys.is_empty():
+		var y = scanline_logic.pink_sectors.get(i)
+		if y == null:
 			continue
 
 		var rect_x = i * sector_width
 		var rect_w = sector_width
 		var rect_h = rect_height
-
-		for y in ys:
-			var center_y = y * viewport.y
-			var rect_y = center_y - rect_h / 2.0
-			draw_rect(Rect2(rect_x, rect_y, rect_w, rect_h), Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha))
+		var center_y = y * viewport.y
+		var rect_y = center_y - rect_h / 2.0
+		draw_rect(Rect2(rect_x, rect_y, rect_w, rect_h), Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha))
 
 
 func _draw_yellow_effect(center: Vector2, intensity: float) -> void:

@@ -104,25 +104,28 @@ func _draw_sector_rectangles() -> void:
 	var sector_width = viewport.x / s_count
 
 	for i in range(s_count):
-		var data = scanline_logic.sector_colors.get(i)
-		if data == null:
+		var sector_data = scanline_logic.sector_colors.get(i)
+		if sector_data == null:
 			continue
 
-		var rect_color: Color
-		match data.color:
-			"pink":
-				rect_color = Color(1.0, 0.75, 0.8, sector_alpha)
-			"celeste":
-				rect_color = Color(0.32, 0.82, 0.96, sector_alpha)
-			_:
-				rect_color = Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha)
+		for color in sector_data:
+			var y = sector_data[color]
 
-		var rect_x = i * sector_width
-		var rect_w = sector_width
-		var rect_h = rect_height
-		var center_y = data.y * viewport.y
-		var rect_y = center_y - rect_h / 2.0
-		draw_rect(Rect2(rect_x, rect_y, rect_w, rect_h), rect_color)
+			var rect_color: Color
+			match color:
+				"pink":
+					rect_color = Color(1.0, 0.75, 0.8, sector_alpha)
+				"celeste":
+					rect_color = Color(0.32, 0.82, 0.96, sector_alpha)
+				_:
+					rect_color = Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha)
+
+			var rect_x = i * sector_width
+			var rect_w = sector_width
+			var rect_h = rect_height
+			var center_y = y * viewport.y
+			var rect_y = center_y - rect_h / 2.0
+			draw_rect(Rect2(rect_x, rect_y, rect_w, rect_h), rect_color)
 
 
 func _draw_yellow_effect(center: Vector2, intensity: float) -> void:

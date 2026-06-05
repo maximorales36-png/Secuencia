@@ -415,9 +415,32 @@ WwiseGodot: Sound engine initialized successfully.
 - El rectángulo pink solo cubre el ancho del sector donde está la pieza (1/4 de pantalla).
 - El evento WWise `Play_pink` se dispara al cruzar los bordes de sector: líneas 1, 5, 9, 13.
 
+### 2026-06-05 — Sistema de familias: color "celeste" + cooldown por color
+- **Nuevo color "celeste"**: misma lógica sectorial que "pink".
+  - `ScanlineLogic.gd`: refactor completo del sistema de sectores para ser genérico.
+    - `pink_sectors` → `sector_colors` (diccionario `sector → {color: y, ...}` permite múltiples colores por sector).
+    - Lista `sector_based_colors = ["pink", "celeste"]` — agregar un color aquí lo trata como color sectorial.
+    - Señal `sector_activated` ahora incluye `color: String` como tercer parámetro.
+    - Nueva señal `cycle_reset()` se emite cuando la scanline vuelve a 0.
+    - Nuevo método `get_sector_duration()` basado en BPM.
+  - `EffectsRenderer.gd`:
+    - `_draw_pink_rectangles()` → `_draw_sector_rectangles()`: itera sobre todos los colores del sector y dibuja el rectángulo con el color correspondiente.
+    - `_on_crossing_detected()` salta todos los colores en `sector_based_colors`.
+    - Nueva función `_draw_celeste_effect()` (misma geometría que pink, color celeste).
+  - `AudioManager.gd`:
+    - `"celeste"` agregado a `valid_colors`.
+    - `_on_sector_activated()` recibe el color desde la señal.
+- **Cooldown por color**: mismo color no puede sonar dos veces superpuesto; colores diferentes sí.
+  - `AudioManager.gd`: nuevo sistema `color_cooldowns`. Cada vez que suena un color, se bloquea por `sector_duration` segundos (~2.76s a 87 BPM).
+  - En `cycle_reset()` se limpian todos los cooldowns.
+- **Arquitectura extensible**: para agregar una nueva familia sectorial en el futuro, solo hay que:
+  1. Agregar el color a `sector_based_colors` en `ScanlineLogic.gd`.
+  2. Agregar su color de rectángulo en `_draw_sector_rectangles()` en `EffectsRenderer.gd`.
+  3. Agregar su evento Wwise a `valid_colors` en `AudioManager.gd`.
+
 ---
 
-**Última actualización:** 2026-06-04
+**Última actualización:** 2026-06-05
 **Responsable:** Maximiliano Morales (Maxi)
 **Institución:** Universidad Maimónides
 **Commit:** `54695d5` — feat: Wwise integration working

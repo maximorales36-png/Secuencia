@@ -18,7 +18,7 @@ var websocket_manager: WebSocketManager
 # Sector logic (1 sector = 4 negras = 1 compas)
 const BEATS_PER_SECTOR: int = 4
 var sector_count: int = 0
-var sector_colors: Dictionary = {}  # sector_index -> {color: String, y: float}
+var sector_colors: Dictionary = {}  # sector_index -> {color_name: y, ...}
 var triggered_sectors: Dictionary = {}
 var prev_sector: int = -1
 
@@ -65,8 +65,11 @@ func _update_sector_colors() -> void:
 	for piece in pieces:
 		if piece.color in sector_based_colors:
 			var sector = int(piece.x * sector_count)
-			if not sector_colors.has(sector) or piece.y > sector_colors[sector].y:
-				sector_colors[sector] = {"color": piece.color, "y": piece.y}
+			if not sector_colors.has(sector):
+				sector_colors[sector] = {}
+			var sector_data = sector_colors[sector]
+			if not sector_data.has(piece.color) or piece.y > sector_data[piece.color]:
+				sector_data[piece.color] = piece.y
 
 
 func _detect_crossings() -> void:
@@ -89,9 +92,10 @@ func _detect_sector_crossings() -> void:
 		prev_sector = current_sector
 		if sector_colors.has(current_sector) and not triggered_sectors.has(current_sector):
 			triggered_sectors[current_sector] = true
-			var data = sector_colors[current_sector]
-			print("[ScanlineLogic] Sector %s activado: sector %d (y=%.2f, ciclo %.1f%%)" % [data.color, current_sector, data.y, scan_position * 100])
-			sector_activated.emit(current_sector, data.y, data.color)
+			for color in sector_colors[current_sector]:
+				var y = sector_colors[current_sector][color]
+				print("[ScanlineLogic] Sector %s activado: sector %d (y=%.2f, ciclo %.1f%%)" % [color, current_sector, y, scan_position * 100])
+				sector_activated.emit(current_sector, y, color)
 
 
 func get_scan_position() -> float:
@@ -123,12 +127,14 @@ func get_sector_count() -> int:
 
 
 func is_sector_occupied(sector: int) -> bool:
-	return sector_colors.has(sector)
+	return sector_colors.has(sector) and not sector_colors[sector].is_empty()
 
 
 func get_sector_color(sector: int) -> String:
 	if sector_colors.has(sector):
-		return sector_colors[sector].color
+		var colors = sector_colors[sector].keys()
+		if not colors.is_empty():
+			return colors[0]
 	return ""
 
 

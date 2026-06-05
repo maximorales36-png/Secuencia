@@ -4,6 +4,7 @@ class_name ScanlineLogic
 signal crossing_detected(piece: WebSocketManager.Piece)
 signal beats_per_cycle_changed(new_beats: int)
 signal sector_activated(sector_index: int, y: float, color: String)
+signal cycle_reset()
 
 @export var bpm: float = 87
 @export var beats_per_cycle: int = 32
@@ -45,6 +46,7 @@ func _process(delta: float) -> void:
 		prev_sector = -1
 		triggered_keys.clear()
 		triggered_sectors.clear()
+		cycle_reset.emit()
 
 	_detect_crossings()
 	_detect_sector_crossings()
@@ -128,6 +130,10 @@ func get_sector_color(sector: int) -> String:
 	if sector_colors.has(sector):
 		return sector_colors[sector].color
 	return ""
+
+
+func get_sector_duration() -> float:
+	return (BEATS_PER_SECTOR * 60.0) / bpm
 
 
 func get_sector_for_position(x: float) -> int:

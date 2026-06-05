@@ -10,11 +10,19 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{FA4E3B03-F3DC-3A07-C199-463FBAE62302}",
+    "Hash": "{5EBB4535-023A-6702-17FB-558EF829B31C}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
     "Media": [
+     {
+      "Id": "78081258",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "303-1.wav",
+      "CachePath": "A4/{A49E178E-4473-241F-F69B-17A455F659A8}.wem"
+     },
      {
       "Id": "150619875",
       "Language": "SFX",
@@ -56,12 +64,20 @@
       "CachePath": "30/{30D6F4C1-9266-9EEB-10C7-21AAED97E2DF}.wem"
      },
      {
-      "Id": "538255378",
+      "Id": "585049492",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
-      "ShortName": "017_Tambourine_-_LDTDM_Zenhiser.wav",
-      "CachePath": "3D/{3D6474DE-7763-7A16-B08E-6C79F32E79F0}.wem"
+      "ShortName": "303-3.wav",
+      "CachePath": "D2/{D2226D51-6CF0-78A1-F4F4-23F650A7A537}.wem"
+     },
+     {
+      "Id": "768119798",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "303-2.wav",
+      "CachePath": "D2/{D2F519BF-873C-6F6C-85F7-05028EEC458D}.wem"
      },
      {
       "Id": "804058050",
@@ -70,6 +86,14 @@
       "Location": "Memory",
       "ShortName": "707-5.wav",
       "CachePath": "E0/{E0425934-B20E-6468-BEE7-98DF69242620}.wem"
+     },
+     {
+      "Id": "903860181",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "303-4.wav",
+      "CachePath": "9B/{9B103967-C4B1-1EE1-7F7C-67448D1608C1}.wem"
      },
      {
       "Id": "960573866",
@@ -126,19 +150,20 @@
       "GUID": "{949737E8-77D8-4A07-8775-5102B43EA667}",
       "Color": "2",
       "DurationType": "OneShot",
-      "DurationMin": "0.23174603",
-      "DurationMax": "0.23174603",
+      "DurationMin": "2.7586167",
+      "DurationMax": "2.7586167",
       "MediaRefs": [
        {
-        "Id": "538255378"
-       }
-      ],
-      "AuxBusRefs": [
+        "Id": "78081258"
+       },
        {
-        "Id": "980603520",
-        "Name": "Rev",
-        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
-        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
+        "Id": "585049492"
+       },
+       {
+        "Id": "768119798"
+       },
+       {
+        "Id": "903860181"
        }
       ]
      },
@@ -291,6 +316,6 @@
     ]
    }
   ],
-  "FileHash": "{C6FD8E8B-7FE6-2EE0-A548-4F490AA2B9F6}"
+  "FileHash": "{6ACBA9E4-557F-C9CA-DB13-37B51E4BB7D9}"
  }
 }

@@ -11,13 +11,16 @@ Effect plug-ins	ID	Name	Type				Notes
 	1259256166	New_RoomVerb	Wwise RoomVerb			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	78081258	303-1	.cache\A4\{A49E178E-4473-241F-F69B-17A455F659A8}.wem		\Containers\Default Work Unit\Piezas\303\303-1\303-1		486716
 	150619875	707-6	.cache\B8\{B83BA5FE-92CB-ACDA-C272-623CF7BB8A2F}.wem		\Containers\Default Work Unit\Piezas\707\707-6\707-6		486716
 	295558765	707-4	.cache\C8\{C825C789-94B3-9203-2294-AD16C24C51C8}.wem		\Containers\Default Work Unit\Piezas\707\707-4\707-4		486716
 	505471656	707-1	.cache\24\{243F651D-134E-B592-0045-0824113B94CC}.wem		\Containers\Default Work Unit\Piezas\707\707-1\707-1		486716
 	517232673	707-2	.cache\64\{645E9FA4-D558-8D26-19D4-283585F964E8}.wem		\Containers\Default Work Unit\Piezas\707\707-2\707-2		486716
 	533691421	707-7	.cache\30\{30D6F4C1-9266-9EEB-10C7-21AAED97E2DF}.wem		\Containers\Default Work Unit\Piezas\707\707-7\707-7		486716
-	538255378	017_Tambourine_-_LDTDM_Zenhiser	.cache\3D\{3D6474DE-7763-7A16-B08E-6C79F32E79F0}.wem		\Containers\Default Work Unit\017_Tambourine_-_LDTDM_Zenhiser\017_Tambourine_-_LDTDM_Zenhiser		40976
+	585049492	303-3	.cache\D2\{D2226D51-6CF0-78A1-F4F4-23F650A7A537}.wem		\Containers\Default Work Unit\Piezas\303\303-3\303-3		486716
+	768119798	303-2	.cache\D2\{D2F519BF-873C-6F6C-85F7-05028EEC458D}.wem		\Containers\Default Work Unit\Piezas\303\303-2\303-2		486716
 	804058050	707-5	.cache\E0\{E0425934-B20E-6468-BEE7-98DF69242620}.wem		\Containers\Default Work Unit\Piezas\707\707-5\707-5		486716
+	903860181	303-4	.cache\9B\{9B103967-C4B1-1EE1-7F7C-67448D1608C1}.wem		\Containers\Default Work Unit\Piezas\303\303-4\303-4		486716
 	960573866	001_Kick_LM1_-_LDTDM_Zenhiser	.cache\20\{20BE14FB-BBB6-36E8-5F80-5A805B22DA12}.wem		\Containers\Default Work Unit\001_Kick_LM1_-_LDTDM_Zenhiser\001_Kick_LM1_-_LDTDM_Zenhiser		98204
 	992317781	707-3	.cache\4B\{4B3EAFA1-174A-5317-C0C3-AC48F60EA0B8}.wem		\Containers\Default Work Unit\Piezas\707\707-3\707-3		486716
 	999922548	Dripping	.cache\DE\{DEC93901-25F0-FF01-6E16-4FEB6FDBE025}.wem		\Containers\Default Work Unit\Dripping\Dripping		1234876

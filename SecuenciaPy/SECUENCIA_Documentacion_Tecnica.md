@@ -415,7 +415,18 @@ WwiseGodot: Sound engine initialized successfully.
 - El rectángulo pink solo cubre el ancho del sector donde está la pieza (1/4 de pantalla).
 - El evento WWise `Play_pink` se dispara al cruzar los bordes de sector: líneas 1, 5, 9, 13.
 
-### 2026-06-05 — Sistema de familias: color "celeste" + cooldown por color
+### 2026-06-05a — neon_green como color sectorial + estabilización de detección
+- **`ScanlineLogic.gd`**: `"neon_green"` agregado a `sector_based_colors`. Ahora usa detección sectorial (rectángulo) en vez de cruce por pieza.
+- **`EffectsRenderer.gd`**: caso `"neon_green"` en `_draw_sector_rectangles()` con `Color(0.0, 1.0, 0.5)`. Saltado en `_on_crossing_detected()`.
+- **Sistema de memoria / estabilización de piezas** (`ScanlineLogic.gd`):
+  - `piece_memory` con timeout de 0.35s — si la cámara deja de ver una pieza momentáneamente, se retiene en memoria.
+  - `STABILIZE_SNAP = 0.015` — piezas que oscilan ±0.015 en X se agrupan como la misma.
+  - `SMOOTHING_FACTOR = 0.35` — posición suavizada con `lerp()` para evitar saltos bruscos.
+- **Sector catch-up** (`ScanlineLogic.gd`):
+  - `_detect_sector_crossings()` ahora maneja saltos de múltiples sectores (frame drops).
+  - `_catch_up_sectors()` corre cada frame como safety net: si un sector ya fue alcanzado por la scanline pero nunca disparó, lo dispara en el próximo frame.
+
+### 2026-06-05b — Sistema de familias: color "celeste" + cooldown por color
 - **Nuevo color "celeste"**: misma lógica sectorial que "pink".
   - `ScanlineLogic.gd`: refactor completo del sistema de sectores para ser genérico.
     - `pink_sectors` → `sector_colors` (diccionario `sector → {color: y, ...}` permite múltiples colores por sector).
@@ -437,6 +448,22 @@ WwiseGodot: Sound engine initialized successfully.
   1. Agregar el color a `sector_based_colors` en `ScanlineLogic.gd`.
   2. Agregar su color de rectángulo en `_draw_sector_rectangles()` en `EffectsRenderer.gd`.
   3. Agregar su evento Wwise a `valid_colors` en `AudioManager.gd`.
+
+---
+
+### 2026-06-05c — Yellow como instrumento melódico monofónico + sombra conectiva
+- **Nuevo comportamiento yellow** (`AudioManager.gd`):
+  - Yellow ya no usa `play_sound()` genérico. Manejo especial en `_on_crossing_detected()` → `_handle_yellow()`.
+  - **Monofónico**: solo un yellow puede sonar a la vez. Al cruzar el primer yellow se postea `Play_yellow`. Los cruces siguientes solo actualizan el switch sin re-disparar.
+  - **Switch de 8 notas** (`yellow_switch`): Y dividido en 8 secciones. Y=1 (abajo) → I, Y=0 (arriba) → VIII.
+  - `_on_cycle_reset()` postea `Stop_yellow` si estaba activo.
+- **Prioridad en misma X** (`ScanlineLogic.gd`): si dos yellows están en la misma coordenada X, solo se emite crossing para el más alto (menor Y).
+- **Nueva función `get_yellow_pieces()`** (`ScanlineLogic.gd`): expone posición de todas las piezas amarillas para el renderer.
+- **Sombra amarilla conectiva** (`EffectsRenderer.gd`):
+  - Reemplaza el efecto por-pieza de yellow (ahora saltado en `_on_crossing_detected`).
+  - **1 pieza**: banda amarilla translúcida que cubre de x=0 a x=viewport.width centrada en la Y de la pieza.
+  - **Múltiples piezas**: polígono en forma de cinta ("soga") que conecta todas las piezas amarillas, manteniendo el ancho `rect_height`.
+  - Nuevo export: `yellow_shadow_alpha = 0.15`.
 
 ---
 

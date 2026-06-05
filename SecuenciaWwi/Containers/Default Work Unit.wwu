@@ -2423,7 +2423,7 @@
 									<PluginInnerObject Name="" ID="{172C9C94-945A-4F4A-A94A-4FFBF58690D7}" PluginName="MusicArgumentsSlot" CompanyID="0" PluginID="89">
 										<ReferenceList>
 											<Reference Name="Argument">
-												<ObjectRef Name="timbrico" ID="{4878B015-0DF9-484A-A176-0B70F2CE8009}" WorkUnitID="{43AF88BE-581B-4B5B-BFFE-5DBAFD31828E}"/>
+												<ObjectRef Name="yellow_switch" ID="{4878B015-0DF9-484A-A176-0B70F2CE8009}" WorkUnitID="{43AF88BE-581B-4B5B-BFFE-5DBAFD31828E}"/>
 											</Reference>
 										</ReferenceList>
 									</PluginInnerObject>
@@ -2663,45 +2663,6 @@
 									</Reference>
 								</ReferenceList>
 							</EffectSlot>
-						</ObjectList>
-						<ObjectList Name="RTPC">
-							<RTPC Name="" ID="{208ABEBD-DBCD-424B-A952-F50F861C7845}" ShortID="257200669">
-								<PropertyList>
-									<Property Name="PropertyName" Type="string" Value="MidiTransposition"/>
-								</PropertyList>
-								<ReferenceList/>
-							</RTPC>
-							<RTPC Name="" ID="{5FAAC812-E79E-4A6C-8831-94F0AE40886B}" ShortID="1063500158">
-								<PropertyList>
-									<Property Name="PropertyName" Type="string" Value="Lowpass"/>
-								</PropertyList>
-								<ReferenceList>
-									<Reference Name="ControlInput">
-										<ObjectRef Name="MIDI note frequency" ID="{B618CC40-04FA-4149-A36B-37B8A1F2B642}"/>
-									</Reference>
-									<Reference Name="Curve">
-										<Custom>
-											<Curve Name="" ID="{1FFF4C6E-376E-4D55-96CD-CC5E7069E750}">
-												<PropertyList>
-													<Property Name="Flags" Type="int32" Value="65537"/>
-												</PropertyList>
-												<PointList>
-													<Point>
-														<XPos>20</XPos>
-														<YPos>0</YPos>
-														<Flags>5</Flags>
-													</Point>
-													<Point>
-														<XPos>20000</XPos>
-														<YPos>0</YPos>
-														<Flags>37</Flags>
-													</Point>
-												</PointList>
-											</Curve>
-										</Custom>
-									</Reference>
-								</ReferenceList>
-							</RTPC>
 						</ObjectList>
 					</ObjectLists>
 					<ActiveSourceList>

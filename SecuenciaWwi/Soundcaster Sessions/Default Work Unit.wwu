@@ -14,11 +14,7 @@
 							<Position X="1" Y="0"/>
 						</Module>
 						<Module>
-							<ObjectRef Name="Play_yellow" ID="{6ACF5DBF-AD27-4B9B-A93C-1F7FE2634A36}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
-							<Position X="2" Y="0"/>
-						</Module>
-						<Module>
-							<ObjectRef Name="Play_midi_Sw" ID="{C6CA5608-0D65-477A-B8CF-4E3A5FB47858}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<ObjectRef Name="Play_yellow" ID="{C6CA5608-0D65-477A-B8CF-4E3A5FB47858}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
 							<Position X="3" Y="0"/>
 						</Module>
 					</ModuleList>

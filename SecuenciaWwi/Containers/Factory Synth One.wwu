@@ -109,37 +109,6 @@ Content provided by Vincent Gagnon
 													</Reference>
 												</ReferenceList>
 											</RTPC>
-											<RTPC Name="" ID="{CF3C34E0-99A3-4A02-B4D1-0BAE0C495EE7}" ShortID="612547401">
-												<PropertyList>
-													<Property Name="PropertyName" Type="string" Value="Osc2Transpose"/>
-												</PropertyList>
-												<ReferenceList>
-													<Reference Name="ControlInput">
-														<ObjectRef Name="Timbre" ID="{974648E6-C490-415B-BFC8-CE09D73697DB}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
-													</Reference>
-													<Reference Name="Curve">
-														<Custom>
-															<Curve Name="" ID="{098B3179-0A5C-4F27-88B3-EF663543FCAB}">
-																<PropertyList>
-																	<Property Name="Flags" Type="int32" Value="65537"/>
-																</PropertyList>
-																<PointList>
-																	<Point>
-																		<XPos>0</XPos>
-																		<YPos>0</YPos>
-																		<Flags>5</Flags>
-																	</Point>
-																	<Point>
-																		<XPos>100</XPos>
-																		<YPos>7200</YPos>
-																		<Flags>37</Flags>
-																	</Point>
-																</PointList>
-															</Curve>
-														</Custom>
-													</Reference>
-												</ReferenceList>
-											</RTPC>
 										</ObjectList>
 									</ObjectLists>
 									<Language>SFX</Language>
@@ -1243,37 +1212,6 @@ Content provided by Vincent Gagnon
 													</Reference>
 												</ReferenceList>
 											</RTPC>
-											<RTPC Name="" ID="{962C6746-F892-45B1-ACB9-194A6415A8EF}" ShortID="489888004">
-												<PropertyList>
-													<Property Name="PropertyName" Type="string" Value="Osc2Transpose"/>
-												</PropertyList>
-												<ReferenceList>
-													<Reference Name="ControlInput">
-														<ObjectRef Name="Timbre" ID="{974648E6-C490-415B-BFC8-CE09D73697DB}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
-													</Reference>
-													<Reference Name="Curve">
-														<Custom>
-															<Curve Name="" ID="{B8CC3CDC-82F2-4FD7-AE7F-208F8DA30114}">
-																<PropertyList>
-																	<Property Name="Flags" Type="int32" Value="65537"/>
-																</PropertyList>
-																<PointList>
-																	<Point>
-																		<XPos>0</XPos>
-																		<YPos>0</YPos>
-																		<Flags>5</Flags>
-																	</Point>
-																	<Point>
-																		<XPos>100</XPos>
-																		<YPos>1939</YPos>
-																		<Flags>37</Flags>
-																	</Point>
-																</PointList>
-															</Curve>
-														</Custom>
-													</Reference>
-												</ReferenceList>
-											</RTPC>
 										</ObjectList>
 									</ObjectLists>
 									<Language>SFX</Language>
@@ -1539,37 +1477,6 @@ Content provided by Vincent Gagnon
 																	<Point>
 																		<XPos>127</XPos>
 																		<YPos>0</YPos>
-																		<Flags>37</Flags>
-																	</Point>
-																</PointList>
-															</Curve>
-														</Custom>
-													</Reference>
-												</ReferenceList>
-											</RTPC>
-											<RTPC Name="" ID="{CB181D49-5BE4-4C74-A05C-A9F76B759266}" ShortID="593482063">
-												<PropertyList>
-													<Property Name="PropertyName" Type="string" Value="Osc2Transpose"/>
-												</PropertyList>
-												<ReferenceList>
-													<Reference Name="ControlInput">
-														<ObjectRef Name="Timbre" ID="{974648E6-C490-415B-BFC8-CE09D73697DB}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
-													</Reference>
-													<Reference Name="Curve">
-														<Custom>
-															<Curve Name="" ID="{14EEF409-22AD-4A5F-9B16-EA2DCE19B15D}">
-																<PropertyList>
-																	<Property Name="Flags" Type="int32" Value="65537"/>
-																</PropertyList>
-																<PointList>
-																	<Point>
-																		<XPos>0</XPos>
-																		<YPos>0</YPos>
-																		<Flags>5</Flags>
-																	</Point>
-																	<Point>
-																		<XPos>100</XPos>
-																		<YPos>635</YPos>
 																		<Flags>37</Flags>
 																	</Point>
 																</PointList>

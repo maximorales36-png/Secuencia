@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{A1B74B84-1F78-A4A1-B3C5-D8F7C5A7B908}",
+    "Hash": "{81E46D15-C7D4-3D03-1461-51681EF301E8}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -68,12 +68,6 @@
      }
     ],
     "GameParameters": [
-     {
-      "Id": "578698474",
-      "Name": "Timbre",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Timbre",
-      "GUID": "{974648E6-C490-415B-BFC8-CE09D73697DB}"
-     },
      {
       "Id": "822163944",
       "Name": "SS_Air_RPM",
@@ -133,6 +127,64 @@
       "Name": "SS_Air_Turbulence",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Turbulence",
       "GUID": "{EDA87B19-73AA-40A0-9F19-2073606DB710}"
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "4133533608",
+      "Name": "yellow_switch",
+      "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch",
+      "GUID": "{4878B015-0DF9-484A-A176-0B70F2CE8009}",
+      "Switches": [
+       {
+        "Id": "84696425",
+        "Name": "V",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\V",
+        "GUID": "{A2F78C76-2404-4B8F-9F74-98143393E8A5}"
+       },
+       {
+        "Id": "84696438",
+        "Name": "I",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\I",
+        "GUID": "{2B86FF34-C690-48E2-A33C-A509BB674F94}"
+       },
+       {
+        "Id": "510138863",
+        "Name": "VII",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VII",
+        "GUID": "{4707DFE0-C196-40C0-BD1D-16E11EBE95BD}"
+       },
+       {
+        "Id": "512257368",
+        "Name": "III",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\III",
+        "GUID": "{4D75717F-6B79-4081-BA7D-53B820D1E8DB}"
+       },
+       {
+        "Id": "1534528546",
+        "Name": "VI",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VI",
+        "GUID": "{BC3CE909-3247-4709-9A42-8D5672F6F395}"
+       },
+       {
+        "Id": "1752637611",
+        "Name": "II",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\II",
+        "GUID": "{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"
+       },
+       {
+        "Id": "1752637620",
+        "Name": "IV",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\IV",
+        "GUID": "{45FCA14E-C811-4BB0-B897-8EA07E23A5E0}"
+       },
+       {
+        "Id": "3437286228",
+        "Name": "VIII",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VIII",
+        "GUID": "{98573E9C-D27F-47D5-9AD5-7DFF79316DE9}"
+       }
+      ]
      }
     ],
     "AcousticTextures": [
@@ -614,6 +666,6 @@
     ]
    }
   ],
-  "FileHash": "{A67887E6-AE00-CF70-09A5-E35086639FB8}"
+  "FileHash": "{4D44197A-27F8-6D3C-70EE-81AA2A157B9A}"
  }
 }

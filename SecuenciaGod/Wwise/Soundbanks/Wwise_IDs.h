@@ -14,12 +14,31 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_CELESTE = 392139723U;
-        static const AkUniqueID PLAY_GREEN = 3434539291U;
-        static const AkUniqueID PLAY_NEW_MUSIC_PLAYLIST_CONTAINER = 2352987237U;
-        static const AkUniqueID PLAY_ORANGE = 3135821488U;
+        static const AkUniqueID PLAY_NEON_GREEN = 3153919642U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID PLAY_YELLOW = 3406300906U;
     } // namespace EVENTS
+
+    namespace SWITCHES
+    {
+        namespace YELLOW_SWITCH
+        {
+            static const AkUniqueID GROUP = 4133533608U;
+
+            namespace SWITCH
+            {
+                static const AkUniqueID I = 84696438U;
+                static const AkUniqueID II = 1752637611U;
+                static const AkUniqueID III = 512257368U;
+                static const AkUniqueID IV = 1752637620U;
+                static const AkUniqueID V = 84696425U;
+                static const AkUniqueID VI = 1534528546U;
+                static const AkUniqueID VII = 510138863U;
+                static const AkUniqueID VIII = 3437286228U;
+            } // namespace SWITCH
+        } // namespace YELLOW_SWITCH
+
+    } // namespace SWITCHES
 
     namespace GAME_PARAMETERS
     {
@@ -33,7 +52,6 @@ namespace AK
         static const AkUniqueID SS_AIR_STORM = 3715662592U;
         static const AkUniqueID SS_AIR_TIMEOFDAY = 3203397129U;
         static const AkUniqueID SS_AIR_TURBULENCE = 4160247818U;
-        static const AkUniqueID TIMBRE = 578698474U;
     } // namespace GAME_PARAMETERS
 
     namespace BANKS

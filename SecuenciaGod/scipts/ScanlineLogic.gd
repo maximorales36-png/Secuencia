@@ -50,13 +50,52 @@ func _process(delta: float) -> void:
 
 	_detect_crossings()
 	_detect_sector_crossings()
+	_catch_up_sectors()
 
 
-var sector_based_colors: Array = ["pink", "celeste"]
+var sector_based_colors: Array = ["pink", "celeste", "neon_green"]
+
+# Piece memory / stabilization
+const PIECE_TIMEOUT: float = 0.35
+const STABILIZE_SNAP: float = 0.015
+const SMOOTHING_FACTOR: float = 0.35
+var piece_memory: Dictionary = {}
 
 
 func _on_pieces_updated(new_pieces: Array) -> void:
-	pieces = new_pieces
+	var now = Time.get_ticks_msec() / 1000.0
+
+	# Update memory with new detections
+	for p in new_pieces:
+		var key = str(p.color, "_", snapped(p.x, STABILIZE_SNAP))
+		if piece_memory.has(key):
+			var mem = piece_memory[key]
+			mem.x = lerp(mem.x, p.x, SMOOTHING_FACTOR)
+			mem.y = lerp(mem.y, p.y, SMOOTHING_FACTOR)
+			mem.last_seen = now
+		else:
+			piece_memory[key] = {
+				color = p.color,
+				x = p.x,
+				y = p.y,
+				last_seen = now
+			}
+
+	# Remove expired entries
+	var expired := []
+	for key in piece_memory:
+		if now - piece_memory[key].last_seen > PIECE_TIMEOUT:
+			expired.append(key)
+	for key in expired:
+		piece_memory.erase(key)
+
+	# Build stabilized pieces from memory
+	pieces.clear()
+	for key in piece_memory:
+		var mem = piece_memory[key]
+		var piece = WebSocketManager.Piece.new(mem.color, mem.x, mem.y)
+		pieces.append(piece)
+
 	_update_sector_colors()
 
 
@@ -76,26 +115,67 @@ func _detect_crossings() -> void:
 	for piece in pieces:
 		if piece.color in sector_based_colors:
 			continue
+
+		if not prev_scan_position < piece.x or not scan_position >= piece.x:
+			continue
+
+		# For yellow at same X, only use the highest piece
+		if piece.color == "yellow":
+			var skip := false
+			for other in pieces:
+				if other.color == "yellow" and other != piece:
+					if snapped(other.x, 0.01) == snapped(piece.x, 0.01) and other.y < piece.y:
+						skip = true
+						break
+			if skip:
+				continue
+
 		var key: String = str(piece.color, "_", snapped(piece.x, 0.01))
 		if triggered_keys.has(key):
 			continue
 
-		if prev_scan_position < piece.x and scan_position >= piece.x:
-			triggered_keys[key] = true
-			print("[ScanlineLogic] CRUCE: %s en x=%.2f, y=%.2f (ciclo %.1f%%)" % [piece.color, piece.x, piece.y, scan_position * 100])
-			crossing_detected.emit(piece)
+		triggered_keys[key] = true
+		print("[ScanlineLogic] CRUCE: %s en x=%.2f, y=%.2f (ciclo %.1f%%)" % [piece.color, piece.x, piece.y, scan_position * 100])
+		crossing_detected.emit(piece)
 
 
 func _detect_sector_crossings() -> void:
 	var current_sector = int(scan_position * sector_count)
 	if current_sector != prev_sector:
+		var start = prev_sector + 1
+		var end = current_sector
+		if current_sector < prev_sector or prev_sector < 0:
+			if prev_sector >= 0:
+				for s in range(prev_sector + 1, sector_count):
+					_trigger_sector(s)
+			start = 0
+			end = current_sector
+		for s in range(start, end + 1):
+			_trigger_sector(s)
 		prev_sector = current_sector
-		if sector_colors.has(current_sector) and not triggered_sectors.has(current_sector):
-			triggered_sectors[current_sector] = true
-			for color in sector_colors[current_sector]:
-				var y = sector_colors[current_sector][color]
-				print("[ScanlineLogic] Sector %s activado: sector %d (y=%.2f, ciclo %.1f%%)" % [color, current_sector, y, scan_position * 100])
-				sector_activated.emit(current_sector, y, color)
+
+
+func _trigger_sector(sector: int) -> void:
+	if sector_colors.has(sector) and not triggered_sectors.has(sector):
+		triggered_sectors[sector] = true
+		for color in sector_colors[sector]:
+			var y = sector_colors[sector][color]
+			print("[ScanlineLogic] Sector %s activado: sector %d (y=%.2f, ciclo %.1f%%)" % [color, sector, y, scan_position * 100])
+			sector_activated.emit(sector, y, color)
+
+
+func _catch_up_sectors() -> void:
+	var current_sector = int(scan_position * sector_count)
+	for s in range(current_sector + 1):
+		_trigger_sector(s)
+
+
+func get_yellow_pieces() -> Array:
+	var result := []
+	for piece in pieces:
+		if piece.color == "yellow":
+			result.append({"x": piece.x, "y": piece.y})
+	return result
 
 
 func get_scan_position() -> float:

@@ -1,6 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{43AF88BE-581B-4B5B-BFFE-5DBAFD31828E}" SchemaVersion="133">
 	<Switches>
-		<WorkUnit Name="Default Work Unit" ID="{43AF88BE-581B-4B5B-BFFE-5DBAFD31828E}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{43AF88BE-581B-4B5B-BFFE-5DBAFD31828E}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="timbrico" ID="{4878B015-0DF9-484A-A176-0B70F2CE8009}">
+					<ChildrenList>
+						<Switch Name="I" ID="{2B86FF34-C690-48E2-A33C-A509BB674F94}"/>
+						<Switch Name="II" ID="{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"/>
+						<Switch Name="III" ID="{4D75717F-6B79-4081-BA7D-53B820D1E8DB}"/>
+						<Switch Name="IV" ID="{45FCA14E-C811-4BB0-B897-8EA07E23A5E0}"/>
+						<Switch Name="V" ID="{A2F78C76-2404-4B8F-9F74-98143393E8A5}"/>
+						<Switch Name="VI" ID="{BC3CE909-3247-4709-9A42-8D5672F6F395}"/>
+						<Switch Name="VII" ID="{4707DFE0-C196-40C0-BD1D-16E11EBE95BD}"/>
+						<Switch Name="VIII" ID="{98573E9C-D27F-47D5-9AD5-7DFF79316DE9}"/>
+					</ChildrenList>
+					<SwitchOnRTPC>
+						<GameParameterRef Name="Timbre" ID="{974648E6-C490-415B-BFC8-CE09D73697DB}"/>
+						<Curve Name="" ID="{663FB38E-474E-4944-8833-9469F2B562C6}">
+							<PropertyList>
+								<Property Name="Flags" Type="int32" Value="65537"/>
+							</PropertyList>
+							<PointList>
+								<Point>
+									<XPos>0</XPos>
+									<YPos>0</YPos>
+									<Flags>5</Flags>
+								</Point>
+								<Point>
+									<XPos>9.65092</XPos>
+									<YPos>0</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>9.65192</XPos>
+									<YPos>1</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>20.02053</XPos>
+									<YPos>1</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>20.02153</XPos>
+									<YPos>2</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>29.77413</XPos>
+									<YPos>2</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>29.77513</XPos>
+									<YPos>3</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>39.73306</XPos>
+									<YPos>3</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>39.73406</XPos>
+									<YPos>4</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>49.692</XPos>
+									<YPos>4</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>49.693</XPos>
+									<YPos>5</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>59.54825</XPos>
+									<YPos>5</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>59.54925</XPos>
+									<YPos>6</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>70.1232</XPos>
+									<YPos>6</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>70.1242</XPos>
+									<YPos>7</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>80.3901437371663</XPos>
+									<YPos>7</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>80.39114</XPos>
+									<YPos>8</YPos>
+									<Flags>0</Flags>
+								</Point>
+								<Point>
+									<XPos>100</XPos>
+									<YPos>8</YPos>
+									<Flags>37</Flags>
+								</Point>
+							</PointList>
+						</Curve>
+					</SwitchOnRTPC>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
 	</Switches>
 </WwiseDocument>

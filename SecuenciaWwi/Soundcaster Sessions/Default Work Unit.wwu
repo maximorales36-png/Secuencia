@@ -6,7 +6,7 @@
 				<SoundcasterSession Name="Pruebas" ID="{F475B6CF-8C10-493B-B578-52E7A8CAF461}">
 					<ModuleList>
 						<Module>
-							<ObjectRef Name="Play_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<ObjectRef Name="Play_neon_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
 							<Position X="0" Y="0"/>
 						</Module>
 						<Module>
@@ -16,6 +16,10 @@
 						<Module>
 							<ObjectRef Name="Play_yellow" ID="{6ACF5DBF-AD27-4B9B-A93C-1F7FE2634A36}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
 							<Position X="2" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_midi_Sw" ID="{C6CA5608-0D65-477A-B8CF-4E3A5FB47858}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<Position X="3" Y="0"/>
 						</Module>
 					</ModuleList>
 				</SoundcasterSession>

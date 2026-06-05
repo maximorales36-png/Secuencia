@@ -10,11 +10,35 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{5EBB4535-023A-6702-17FB-558EF829B31C}",
+    "Hash": "{2688FFE2-CA98-F28D-059D-138B98C6357B}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
     "Media": [
+     {
+      "Id": "52741130",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "MIDI1C.mid",
+      "CachePath": "FA/{FADBE1C7-CC93-2BC3-BC0A-D9BF5DF6BBA4}.wem"
+     },
+     {
+      "Id": "70615269",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "MIDI1A.mid",
+      "CachePath": "07/{0709C63A-9769-D3AE-2507-CF6210287178}.wem"
+     },
+     {
+      "Id": "77226494",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "MIDI1B.mid",
+      "CachePath": "E7/{E7FE5B68-F257-4BC9-7D45-1D68BDCFBCDD}.wem"
+     },
      {
       "Id": "78081258",
       "Language": "SFX",
@@ -22,6 +46,14 @@
       "Location": "Memory",
       "ShortName": "303-1.wav",
       "CachePath": "A4/{A49E178E-4473-241F-F69B-17A455F659A8}.wem"
+     },
+     {
+      "Id": "92740378",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "MIDI1E.mid",
+      "CachePath": "E3/{E3C23697-9455-06E2-1274-8C1457F7593F}.wem"
      },
      {
       "Id": "150619875",
@@ -40,6 +72,30 @@
       "CachePath": "C8/{C825C789-94B3-9203-2294-AD16C24C51C8}.wem"
      },
      {
+      "Id": "327823820",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "MIDI2D.mid",
+      "CachePath": "BE/{BEAF443C-6979-28E3-6533-E30A2F943DEE}.wem"
+     },
+     {
+      "Id": "353041505",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Pad-1.wav",
+      "CachePath": "AA/{AA57B6C1-9BA2-18BB-9A8E-17F450AE0AB3}.wem"
+     },
+     {
+      "Id": "381532029",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "MIDI1.mid",
+      "CachePath": "06/{06267F6D-EF17-39A6-F877-36317A9DE4A3}.wem"
+     },
+     {
       "Id": "505471656",
       "Language": "SFX",
       "Streaming": "false",
@@ -56,6 +112,14 @@
       "CachePath": "64/{645E9FA4-D558-8D26-19D4-283585F964E8}.wem"
      },
      {
+      "Id": "527820135",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Pad-3.wav",
+      "CachePath": "8E/{8E042AF5-607C-E689-C920-876F5371DB8C}.wem"
+     },
+     {
       "Id": "533691421",
       "Language": "SFX",
       "Streaming": "false",
@@ -64,12 +128,36 @@
       "CachePath": "30/{30D6F4C1-9266-9EEB-10C7-21AAED97E2DF}.wem"
      },
      {
+      "Id": "554507038",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "MIDI1G.mid",
+      "CachePath": "BC/{BCC41454-AA82-120A-AA56-631BE897CDC4}.wem"
+     },
+     {
       "Id": "585049492",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "303-3.wav",
       "CachePath": "D2/{D2226D51-6CF0-78A1-F4F4-23F650A7A537}.wem"
+     },
+     {
+      "Id": "693338827",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Pad-2.wav",
+      "CachePath": "8A/{8A02A9EC-4139-351B-A9FE-809F9A230F0D}.wem"
+     },
+     {
+      "Id": "697493682",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "MIDI1F.mid",
+      "CachePath": "92/{92FF0F54-AF1E-278D-FD49-E5434DEBFEE0}.wem"
      },
      {
       "Id": "768119798",
@@ -96,12 +184,12 @@
       "CachePath": "9B/{9B103967-C4B1-1EE1-7F7C-67448D1608C1}.wem"
      },
      {
-      "Id": "960573866",
+      "Id": "966541592",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
-      "ShortName": "001_Kick_LM1_-_LDTDM_Zenhiser.wav",
-      "CachePath": "20/{20BE14FB-BBB6-36E8-5F80-5A805B22DA12}.wem"
+      "ShortName": "Pad-4.wav",
+      "CachePath": "12/{12D19B4B-E5AE-28E9-C64F-D621DC57B210}.wem"
      },
      {
       "Id": "992317781",
@@ -110,35 +198,27 @@
       "Location": "Memory",
       "ShortName": "707-3.wav",
       "CachePath": "4B/{4B3EAFA1-174A-5317-C0C3-AC48F60EA0B8}.wem"
-     },
-     {
-      "Id": "999922548",
-      "Language": "SFX",
-      "Streaming": "false",
-      "Location": "Memory",
-      "ShortName": "Dripping.wav",
-      "CachePath": "DE/{DEC93901-25F0-FF01-6E16-4FEB6FDBE025}.wem"
      }
     ],
     "Plugins": {
      "Custom": [
       {
-       "Id": "80323076",
-       "Name": "Parametric EQ (Custom)",
-       "ObjectPath": "\\Containers\\Default Work Unit\\001_Kick_LM1_-_LDTDM_Zenhiser\\[Effect Slot [0]: (Parametric EQ)]\\Parametric EQ (Custom)",
-       "GUID": "{E470C132-E0B8-43A2-BA83-B8A9636346A0}",
-       "LibName": "Wwise Parametric EQ",
-       "LibId": "6881283"
+       "Id": "103395564",
+       "Name": "Synth One",
+       "ObjectPath": "\\Containers\\Default Work Unit\\New Synth One\\Synth One",
+       "GUID": "{D142CAA1-AE42-4B26-BA5B-8B0EF753551B}",
+       "LibName": "Wwise Synth One",
+       "LibId": "9699330"
       }
      ],
      "ShareSets": [
       {
-       "Id": "1259256166",
-       "Name": "New_RoomVerb",
-       "ObjectPath": "\\Effects\\Default Work Unit\\New_RoomVerb",
-       "GUID": "{84FB890F-32D9-46C5-92CB-5FDD8CB84C06}",
-       "LibName": "Wwise RoomVerb",
-       "LibId": "7733251"
+       "Id": "3657550167",
+       "Name": "New_Parametric_EQ",
+       "ObjectPath": "\\Effects\\Default Work Unit\\New_Parametric_EQ",
+       "GUID": "{F72D4E86-A39C-4831-AA91-8E387E6B57C3}",
+       "LibName": "Wwise Parametric EQ",
+       "LibId": "6881283"
       }
      ]
     },
@@ -168,80 +248,26 @@
       ]
      },
      {
-      "Id": "3434539291",
-      "Name": "Play_green",
-      "ObjectPath": "\\Events\\Default Work Unit\\Play_green",
+      "Id": "3153919642",
+      "Name": "Play_neon_green",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_neon_green",
       "GUID": "{02E44637-B6F9-495B-B0F3-B399710C56F2}",
       "Color": "4",
       "DurationType": "OneShot",
-      "DurationMin": "3",
-      "DurationMax": "3",
+      "DurationMin": "5.5172563",
+      "DurationMax": "5.5172563",
       "MediaRefs": [
        {
-        "Id": "999922548"
-       }
-      ],
-      "AuxBusRefs": [
-       {
-        "Id": "980603520",
-        "Name": "Rev",
-        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
-        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
-       }
-      ]
-     },
-     {
-      "Id": "2352987237",
-      "Name": "Play_New_Music_Playlist_Container",
-      "ObjectPath": "\\Events\\Default Work Unit\\Play_New_Music_Playlist_Container",
-      "GUID": "{780C794B-60DE-4698-9076-71ED5FA7901A}",
-      "DurationType": "OneShot",
-      "DurationMin": "2.7586167",
-      "DurationMax": "2.7586167",
-      "MediaRefs": [
-       {
-        "Id": "150619875"
+        "Id": "353041505"
        },
        {
-        "Id": "295558765"
+        "Id": "527820135"
        },
        {
-        "Id": "505471656"
+        "Id": "693338827"
        },
        {
-        "Id": "517232673"
-       },
-       {
-        "Id": "533691421"
-       },
-       {
-        "Id": "804058050"
-       },
-       {
-        "Id": "992317781"
-       }
-      ]
-     },
-     {
-      "Id": "3135821488",
-      "Name": "Play_orange",
-      "ObjectPath": "\\Events\\Default Work Unit\\Play_orange",
-      "GUID": "{EFE086F9-A084-442F-8AA5-F3519CCA2F41}",
-      "Color": "8",
-      "DurationType": "OneShot",
-      "DurationMin": "3",
-      "DurationMax": "3",
-      "MediaRefs": [
-       {
-        "Id": "999922548"
-       }
-      ],
-      "AuxBusRefs": [
-       {
-        "Id": "980603520",
-        "Name": "Rev",
-        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
-        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
+        "Id": "966541592"
        }
       ]
      },
@@ -282,25 +308,18 @@
       "Id": "3406300906",
       "Name": "Play_yellow",
       "ObjectPath": "\\Events\\Default Work Unit\\Play_yellow",
-      "GUID": "{6ACF5DBF-AD27-4B9B-A93C-1F7FE2634A36}",
-      "Color": "19",
-      "DurationType": "OneShot",
-      "DurationMin": "1.5659186",
-      "DurationMax": "1.5659186",
-      "MediaRefs": [
-       {
-        "Id": "960573866"
-       }
-      ],
+      "GUID": "{C6CA5608-0D65-477A-B8CF-4E3A5FB47858}",
+      "Color": "6",
+      "DurationType": "Infinite",
       "PluginRefs": {
        "Custom": [
         {
-         "Id": "80323076"
+         "Id": "103395564"
         }
        ],
        "ShareSets": [
         {
-         "Id": "1259256166"
+         "Id": "3657550167"
         }
        ]
       },
@@ -311,11 +330,187 @@
         "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
         "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
        }
+      ],
+      "SwitchContainers": [
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "84696438",
+         "GUID": "{2B86FF34-C690-48E2-A33C-A509BB674F94}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "381532029"
+         }
+        ],
+        "PluginRefs": {
+         "Custom": [
+          {
+           "Id": "103395564"
+          }
+         ],
+         "ShareSets": [
+          {
+           "Id": "3657550167"
+          }
+         ]
+        }
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "1752637611",
+         "GUID": "{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "327823820"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "512257368",
+         "GUID": "{4D75717F-6B79-4081-BA7D-53B820D1E8DB}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "92740378"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "1752637620",
+         "GUID": "{45FCA14E-C811-4BB0-B897-8EA07E23A5E0}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "697493682"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "84696425",
+         "GUID": "{A2F78C76-2404-4B8F-9F74-98143393E8A5}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "554507038"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "1534528546",
+         "GUID": "{BC3CE909-3247-4709-9A42-8D5672F6F395}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "70615269"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "3437286228",
+         "GUID": "{98573E9C-D27F-47D5-9AD5-7DFF79316DE9}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "52741130"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "510138863",
+         "GUID": "{4707DFE0-C196-40C0-BD1D-16E11EBE95BD}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "77226494"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "4133533608",
+      "Name": "yellow_switch",
+      "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch",
+      "GUID": "{4878B015-0DF9-484A-A176-0B70F2CE8009}",
+      "Switches": [
+       {
+        "Id": "84696425",
+        "Name": "V",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\V",
+        "GUID": "{A2F78C76-2404-4B8F-9F74-98143393E8A5}"
+       },
+       {
+        "Id": "84696438",
+        "Name": "I",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\I",
+        "GUID": "{2B86FF34-C690-48E2-A33C-A509BB674F94}"
+       },
+       {
+        "Id": "510138863",
+        "Name": "VII",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VII",
+        "GUID": "{4707DFE0-C196-40C0-BD1D-16E11EBE95BD}"
+       },
+       {
+        "Id": "512257368",
+        "Name": "III",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\III",
+        "GUID": "{4D75717F-6B79-4081-BA7D-53B820D1E8DB}"
+       },
+       {
+        "Id": "1534528546",
+        "Name": "VI",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VI",
+        "GUID": "{BC3CE909-3247-4709-9A42-8D5672F6F395}"
+       },
+       {
+        "Id": "1752637611",
+        "Name": "II",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\II",
+        "GUID": "{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"
+       },
+       {
+        "Id": "1752637620",
+        "Name": "IV",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\IV",
+        "GUID": "{45FCA14E-C811-4BB0-B897-8EA07E23A5E0}"
+       },
+       {
+        "Id": "3437286228",
+        "Name": "VIII",
+        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VIII",
+        "GUID": "{98573E9C-D27F-47D5-9AD5-7DFF79316DE9}"
+       }
       ]
      }
     ]
    }
   ],
-  "FileHash": "{E99E95C0-5779-907F-D5AA-DABE7284842A}"
+  "FileHash": "{010169B3-7FCB-0017-F6F4-549BE88BE5C1}"
  }
 }

@@ -4,6 +4,12 @@ class_name AudioManager
 var scanline_logic: ScanlineLogic
 var color_cooldowns: Dictionary = {}
 
+# Yellow monophonic state
+var yellow_active: bool = false
+var yellow_note: int = -1
+const YELLOW_SWITCH_GROUP: String = "yellow_switch"
+const YELLOW_SWITCH_VALUES: Array = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
+
 
 func _ready() -> void:
 	Wwise.register_game_obj(self, "AudioManager")
@@ -21,14 +27,32 @@ func _ready() -> void:
 
 func _on_cycle_reset() -> void:
 	color_cooldowns.clear()
+	if yellow_active:
+		yellow_active = false
+		yellow_note = -1
+		Wwise.post_event("Stop_yellow", self)
 
 
 func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
-	play_sound(piece.color, piece.y)
+	if piece.color == "yellow":
+		_handle_yellow(piece.y)
+	else:
+		play_sound(piece.color, piece.y)
 
 
 func _on_sector_activated(_sector_index: int, y: float, color: String) -> void:
 	play_sound(color, y)
+
+
+func _handle_yellow(y: float) -> void:
+	var note = clampi(int(y * 8), 0, 7)
+	if note == yellow_note and yellow_active:
+		return
+	yellow_note = note
+	Wwise.set_switch(YELLOW_SWITCH_GROUP, YELLOW_SWITCH_VALUES[note], self)
+	if not yellow_active:
+		yellow_active = true
+		Wwise.post_event("Play_yellow", self)
 
 
 func play_sound(color: String, y_position: float) -> void:

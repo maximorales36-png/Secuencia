@@ -15,6 +15,7 @@ var sector_pulses: Dictionary = {}
 @export var sector_color: Color = Color(1.0, 0.75, 0.8)
 @export var sector_alpha: float = 0.15
 @export var rect_height: float = 80.0
+@export var yellow_shadow_alpha: float = 0.15
 
 
 func _ready() -> void:
@@ -34,7 +35,7 @@ func _process(delta: float) -> void:
 
 
 func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
-	if piece.color in ["pink", "celeste"]:
+	if piece.color in ["pink", "celeste", "neon_green", "yellow"]:
 		return
 	var viewport = get_viewport_rect().size
 	active_effects.append({
@@ -61,8 +62,42 @@ func _update_effects(delta: float) -> void:
 
 func _draw() -> void:
 	_draw_sector_rectangles()
+	_draw_yellow_shadow()
 	_draw_scanline()
 	_draw_effects()
+
+
+func _draw_yellow_shadow() -> void:
+	if scanline_logic == null:
+		return
+	var yellows = scanline_logic.get_yellow_pieces()
+	if yellows.is_empty():
+		return
+	var viewport = get_viewport_rect().size
+	if viewport.x <= 0 or viewport.y <= 0:
+		return
+
+	yellows.sort_custom(func(a, b): return a.x < b.x)
+	var h = rect_height
+	var color = Color(1.0, 1.0, 0.0, yellow_shadow_alpha)
+	var w = viewport.x
+	var first = yellows[0]
+	var last = yellows[yellows.size() - 1]
+
+	var points = PackedVector2Array()
+	# Top edge: left edge -> each piece -> right edge
+	points.append(Vector2(0, first.y * viewport.y - h / 2.0))
+	for yp in yellows:
+		points.append(Vector2(yp.x * w, yp.y * viewport.y - h / 2.0))
+	points.append(Vector2(w, last.y * viewport.y - h / 2.0))
+	# Bottom edge: right edge -> each piece (reverse) -> left edge
+	points.append(Vector2(w, last.y * viewport.y + h / 2.0))
+	for i in range(yellows.size() - 1, -1, -1):
+		var yp = yellows[i]
+		points.append(Vector2(yp.x * w, yp.y * viewport.y + h / 2.0))
+	points.append(Vector2(0, first.y * viewport.y + h / 2.0))
+
+	draw_colored_polygon(points, color)
 
 
 func _draw_scanline() -> void:
@@ -117,6 +152,8 @@ func _draw_sector_rectangles() -> void:
 					rect_color = Color(1.0, 0.75, 0.8, sector_alpha)
 				"celeste":
 					rect_color = Color(0.32, 0.82, 0.96, sector_alpha)
+				"neon_green":
+					rect_color = Color(0.0, 1.0, 0.5, sector_alpha)
 				_:
 					rect_color = Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha)
 

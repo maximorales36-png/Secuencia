@@ -18,6 +18,13 @@
     "StaticLib": "AkRoomVerbFX"
    },
    {
+    "LibName": "Wwise Synth One",
+    "LibId": "9699330",
+    "Type": "Source",
+    "DLL": "AkSynthOne",
+    "StaticLib": "AkSynthOneSource"
+   },
+   {
     "LibName": "System",
     "LibId": "11403271",
     "Type": "AudioDevice"
@@ -28,6 +35,6 @@
     "Type": "AudioDevice"
    }
   ],
-  "FileHash": "{860FF1DD-40EB-28B0-4FF3-8D423F22FD49}"
+  "FileHash": "{82FBE37E-90A7-0A9E-CB99-89EC9AB5FD55}"
  }
 }

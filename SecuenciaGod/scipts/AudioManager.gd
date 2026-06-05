@@ -21,12 +21,12 @@ func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
 	play_sound(piece.color, piece.y)
 
 
-func _on_sector_activated(_sector_index: int, y: float) -> void:
-	play_sound("pink", y)
+func _on_sector_activated(_sector_index: int, y: float, color: String) -> void:
+	play_sound(color, y)
 
 
 func play_sound(color: String, y_position: float) -> void:
-	var valid_colors = ["yellow", "orange", "pink", "neon_green"]
+	var valid_colors = ["yellow", "orange", "pink", "celeste", "neon_green"]
 	if not color in valid_colors:
 		print("[AudioManager] Color inv\u00e1lido: %s" % color)
 		return

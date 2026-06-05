@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 
 
 func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
-	if piece.color == "pink":
+	if piece.color in ["pink", "celeste"]:
 		return
 	var viewport = get_viewport_rect().size
 	active_effects.append({
@@ -45,9 +45,9 @@ func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
 	print("[EffectsRenderer] Efecto disparado: %s en (%.2f, %.2f)" % [piece.color, piece.x, piece.y])
 
 
-func _on_sector_activated(sector_index: int, y: float) -> void:
+func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
 	sector_pulses[sector_index] = Time.get_ticks_msec() / 1000.0
-	print("[EffectsRenderer] Pulso de sector rosa: sector %d" % sector_index)
+	print("[EffectsRenderer] Pulso de sector %s: sector %d" % [color, sector_index])
 
 
 func _update_effects(delta: float) -> void:
@@ -60,7 +60,7 @@ func _update_effects(delta: float) -> void:
 
 
 func _draw() -> void:
-	_draw_pink_rectangles()
+	_draw_sector_rectangles()
 	_draw_scanline()
 	_draw_effects()
 
@@ -86,11 +86,13 @@ func _draw_effects() -> void:
 				_draw_orange_effect(center, intensity)
 			"pink":
 				_draw_pink_effect(center, intensity)
+			"celeste":
+				_draw_celeste_effect(center, intensity)
 			"neon_green":
 				_draw_neon_green_effect(center, intensity)
 
 
-func _draw_pink_rectangles() -> void:
+func _draw_sector_rectangles() -> void:
 	if scanline_logic == null:
 		return
 	var viewport = get_viewport_rect().size
@@ -102,16 +104,25 @@ func _draw_pink_rectangles() -> void:
 	var sector_width = viewport.x / s_count
 
 	for i in range(s_count):
-		var y = scanline_logic.pink_sectors.get(i)
-		if y == null:
+		var data = scanline_logic.sector_colors.get(i)
+		if data == null:
 			continue
+
+		var rect_color: Color
+		match data.color:
+			"pink":
+				rect_color = Color(1.0, 0.75, 0.8, sector_alpha)
+			"celeste":
+				rect_color = Color(0.32, 0.82, 0.96, sector_alpha)
+			_:
+				rect_color = Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha)
 
 		var rect_x = i * sector_width
 		var rect_w = sector_width
 		var rect_h = rect_height
-		var center_y = y * viewport.y
+		var center_y = data.y * viewport.y
 		var rect_y = center_y - rect_h / 2.0
-		draw_rect(Rect2(rect_x, rect_y, rect_w, rect_h), Color(sector_color.r, sector_color.g, sector_color.b, sector_alpha))
+		draw_rect(Rect2(rect_x, rect_y, rect_w, rect_h), rect_color)
 
 
 func _draw_yellow_effect(center: Vector2, intensity: float) -> void:
@@ -136,6 +147,14 @@ func _draw_orange_effect(center: Vector2, intensity: float) -> void:
 
 func _draw_pink_effect(center: Vector2, intensity: float) -> void:
 	var color = Color(1.0, 0.75, 0.8)
+	color.a = intensity * 0.5
+	var radius = max_wave_radius * (1.0 - intensity) * 0.8
+	draw_circle(center, radius, color)
+	draw_arc(center, radius * 1.5, 0, TAU, 48, Color.WHITE, 1.0 * intensity)
+
+
+func _draw_celeste_effect(center: Vector2, intensity: float) -> void:
+	var color = Color(0.32, 0.82, 0.96)
 	color.a = intensity * 0.5
 	var radius = max_wave_radius * (1.0 - intensity) * 0.8
 	draw_circle(center, radius, color)

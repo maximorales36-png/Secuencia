@@ -3,9 +3,9 @@ class_name ScanlineLogic
 
 signal crossing_detected(piece: WebSocketManager.Piece)
 signal beats_per_cycle_changed(new_beats: int)
-signal sector_activated(sector_index: int, y: float)
+signal sector_activated(sector_index: int, y: float, color: String)
 
-@export var bpm: float = 60.0
+@export var bpm: float = 87
 @export var beats_per_cycle: int = 32
 var scan_position: float = 0.0
 var prev_scan_position: float = -1.0
@@ -17,7 +17,7 @@ var websocket_manager: WebSocketManager
 # Sector logic (1 sector = 4 negras = 1 compas)
 const BEATS_PER_SECTOR: int = 4
 var sector_count: int = 0
-var pink_sectors: Dictionary = {}
+var sector_colors: Dictionary = {}  # sector_index -> {color: String, y: float}
 var triggered_sectors: Dictionary = {}
 var prev_sector: int = -1
 
@@ -50,23 +50,26 @@ func _process(delta: float) -> void:
 	_detect_sector_crossings()
 
 
+var sector_based_colors: Array = ["pink", "celeste"]
+
+
 func _on_pieces_updated(new_pieces: Array) -> void:
 	pieces = new_pieces
-	_update_pink_sectors()
+	_update_sector_colors()
 
 
-func _update_pink_sectors() -> void:
-	pink_sectors.clear()
+func _update_sector_colors() -> void:
+	sector_colors.clear()
 	for piece in pieces:
-		if piece.color == "pink":
+		if piece.color in sector_based_colors:
 			var sector = int(piece.x * sector_count)
-			if not pink_sectors.has(sector) or piece.y > pink_sectors[sector]:
-				pink_sectors[sector] = piece.y
+			if not sector_colors.has(sector) or piece.y > sector_colors[sector].y:
+				sector_colors[sector] = {"color": piece.color, "y": piece.y}
 
 
 func _detect_crossings() -> void:
 	for piece in pieces:
-		if piece.color == "pink":
+		if piece.color in sector_based_colors:
 			continue
 		var key: String = str(piece.color, "_", snapped(piece.x, 0.01))
 		if triggered_keys.has(key):
@@ -82,11 +85,11 @@ func _detect_sector_crossings() -> void:
 	var current_sector = int(scan_position * sector_count)
 	if current_sector != prev_sector:
 		prev_sector = current_sector
-		if pink_sectors.has(current_sector) and not triggered_sectors.has(current_sector):
+		if sector_colors.has(current_sector) and not triggered_sectors.has(current_sector):
 			triggered_sectors[current_sector] = true
-			var y = pink_sectors[current_sector]
-			print("[ScanlineLogic] SECTOR ROSA activado: sector %d (y=%.2f, ciclo %.1f%%)" % [current_sector, y, scan_position * 100])
-			sector_activated.emit(current_sector, y)
+			var data = sector_colors[current_sector]
+			print("[ScanlineLogic] Sector %s activado: sector %d (y=%.2f, ciclo %.1f%%)" % [data.color, current_sector, data.y, scan_position * 100])
+			sector_activated.emit(current_sector, data.y, data.color)
 
 
 func get_scan_position() -> float:
@@ -117,8 +120,14 @@ func get_sector_count() -> int:
 	return sector_count
 
 
-func is_sector_pink(sector: int) -> bool:
-	return pink_sectors.has(sector)
+func is_sector_occupied(sector: int) -> bool:
+	return sector_colors.has(sector)
+
+
+func get_sector_color(sector: int) -> String:
+	if sector_colors.has(sector):
+		return sector_colors[sector].color
+	return ""
 
 
 func get_sector_for_position(x: float) -> int:

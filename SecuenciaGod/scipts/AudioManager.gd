@@ -45,7 +45,7 @@ func _on_sector_activated(_sector_index: int, y: float, color: String) -> void:
 
 
 func _handle_yellow(y: float) -> void:
-	var note = clampi(int(y * 8), 0, 7)
+	var note = clampi(7 - int(y * 8), 0, 7)
 	if note == yellow_note and yellow_active:
 		return
 	yellow_note = note

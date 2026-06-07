@@ -20,16 +20,16 @@
 #   una perturbación en la superficie que tarda en calmarse.
 #
 # PATRONES DE TURING (Familia 1):
-#   Celeste    → Espiral  (como concha de caracol)
-#   Neon Green → Laberinto (como ameba)
-#   Yellow     → Manchas  (como leopardo)
-#   Pink       → Rayas    (como cebra)
+#   Celeste    → Espiral     (como concha de caracol)
+#   Neon Green → Laberinto   (como ameba)
+#   Yellow     → Manchas     (como leopardo)
+#   Pink       → Pufferfish  (como pez globo: retícula hexagonal)
 #
 # CÓMO MODIFICAR:
 #   • Colores y patrones: editar GestorFamilias.gd → FAMILIAS
-#   • Duración de estelas: cambiar TRAIL_DURATION (abajo)
-#   • Velocidad de onda: cambiar WAVE_DURATION (abajo)
-#   • Nuevo patrón: agregar función _dibujar_patron_X() y
+#   • Duración de estelas: cambiar trail_duration (abajo)
+#   • Velocidad de onda: cambiar wave_duration (abajo)
+#   • Nuevo patrón: agregar función en SECCIÓN 7 y
 #     agregar caso en _evaluar_patron()
 #
 # ============================================================================
@@ -44,20 +44,24 @@ class_name EffectsRenderer
 # Estos valores se pueden modificar desde el inspector de Godot.
 # También se pueden cambiar directamente acá.
 
-## Duración de la onda expansiva (segundos)
-@export var wave_duration: float = 0.8
+## Duración de la onda expansiva (segundos) — más lenta para apreciar la expansión
+@export var wave_duration: float = 1.2
 
-## Duración de la estela persistente (segundos)
-@export var trail_duration: float = 4.0
+## Duración de la estela persistente (segundos) — más larga, se diluye lentamente
+@export var trail_duration: float = 8.0
 
 ## Radio máximo de la onda expansiva (píxeles)
-@export var max_wave_radius: float = 200.0
+@export var max_wave_radius: float = 300.0
 
 ## Radio del área cubierta por el patrón de Turing (píxeles)
-@export var pattern_radius: float = 130.0
+@export var pattern_radius: float = 220.0
 
-## Separación entre puntos del patrón de Turing (menor = más detalle, más lento)
-@export var pattern_spacing: float = 14.0
+## CANTIDAD de círculos: separación entre centros (menor = más círculos, más detalle)
+@export var pattern_spacing: float = 10.0
+
+## DIÁMETRO relativo de cada círculo (0.0–1.0, respecto a la separación).
+## 0.5 → los círculos apenas se tocan. 0.7 → muy solapados (Voronoi). 0.3 → puntitos sueltos.
+@export var diametro_circulo: float = 0.5
 
 ## Cantidad de anillos en el tren de ondas
 @export var wave_ring_count: int = 4
@@ -159,7 +163,7 @@ func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
 
 ## Se llama cuando se ACTIVA UN SECTOR (compás completo).
 ## Las piezas sectoriales (pink, celeste, neon_green) se activan así.
-## Crea una onda expansiva + estela en el centro del sector.
+## Crea una onda expansiva + estela ORGÁNICA con forma de sector.
 func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
 	if not GestorFamilias.es_de_familia_activa(color):
 		return
@@ -172,7 +176,8 @@ func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
 	var center_x: float = (sector_index + 0.5) * sector_width
 	var center := Vector2(center_x, y * viewport.y)
 
-	_crear_efecto(color, center)
+	# Pasar sector_index para que cree estela con forma orgánica sectorial
+	_crear_efecto(color, center, sector_index, y)
 	sector_pulses[sector_index] = Time.get_ticks_msec() / 1000.0
 
 	print("[EffectsRenderer] Sector %s activado: sector %d" % [color, sector_index])
@@ -187,9 +192,10 @@ func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
 ## Una "onda" es el anillo brillante que se expande (vive poco).
 ## Una "estela" es el patrón de Turing que queda visible (vive mucho).
 ##
-## Ambas comparten la misma posición y color, pero tienen duraciones
-## diferentes.
-func _crear_efecto(color_name: String, center: Vector2) -> void:
+## Para piezas sectoriales (sector_index >= 0), la estela usa un
+## polígono orgánico con forma de la región (procariota).
+## Para piezas melódicas (sector_index < 0), la estela es circular.
+func _crear_efecto(color_name: String, center: Vector2, sector_index: int = -1, y_pos: float = -1.0) -> void:
 	var ahora: float = Time.get_ticks_msec() / 1000.0
 
 	# --- ONDA: efecto rápido que se expande ---
@@ -201,14 +207,36 @@ func _crear_efecto(color_name: String, center: Vector2) -> void:
 	})
 
 	# --- ESTELA: efecto lento que persiste ---
-	active_trails.append({
+	var trail_data: Dictionary = {
 		center = center,
 		color_name = color_name,
 		start_time = ahora,
 		duration = trail_duration,
 		intensity = 1.0,
-		max_radius = pattern_radius  # permite variar radio por estela
-	})
+		shape_type = "circle",      # por defecto: circular
+		max_radius = pattern_radius
+	}
+
+	# Si tiene sector_index, es una estela sectorial con forma orgánica
+	if sector_index >= 0 and y_pos >= 0.0:
+		var viewport = get_viewport_rect().size
+		if viewport.x > 0 and sector_count > 0:
+			var s_width: float = viewport.x / sector_count
+			var rect_x: float = sector_index * s_width
+			var rect_w: float = s_width
+			var rect_h: float = rect_height
+			var rect_y: float = (y_pos * viewport.y) - rect_h / 2.0
+			var sector_rect := Rect2(rect_x, rect_y, rect_w, rect_h)
+
+			# Expandir ligeramente el rect para que el polígono
+			# se sienta más orgánico y menos contenido
+			sector_rect = sector_rect.grow(s_width * 0.08)
+
+			trail_data.shape_type = "sector"
+			trail_data.sector_rect = sector_rect
+			trail_data.sector_polygon = _generar_poligono_organico(sector_rect, ahora)
+
+	active_trails.append(trail_data)
 
 
 # ============================================================================
@@ -278,85 +306,160 @@ func _evaluar_patron(color_name: String, x: float, y: float, semilla: float) -> 
 			return _patron_espiral(x, y, semilla)
 		"labyrinth":
 			return _patron_laberinto(x, y, semilla)
+		"pufferfish":
+			return _patron_pufferfish(x, y, semilla)
 		_:
 			return false
 
 
 ## PATRÓN: MANCHAS (SPOTS)  →  Yellow
 ## --------------------------------------------------------------------------
-## Simula manchas de leopardo o jirafa.
-## Usa una combinación de ondas senoidales 2D con un umbral.
-## Cada "mancha" es una zona donde la función supera el umbral.
+## Grandes manchas redondeadas aisladas (como dálmata o jirafa).
+## Usa baja frecuencia + umbral alto para crear manchas separadas,
+## bien definidas y de gran tamaño.
 func _patron_manchas(x: float, y: float, semilla: float) -> bool:
-	var f: float = 0.07  # frecuencia base
+	var f: float = 0.04       # frecuencia baja → manchas grandes
 	var v1: float = sin(x * f + semilla) * cos(y * f * 1.3 + semilla * 0.7)
 	var v2: float = sin((x + y) * f * 0.7 + semilla * 0.3)
 	var v3: float = cos(x * f * 0.5 - y * f * 0.9 + semilla * 0.5)
 	var valor: float = v1 + v2 * 0.6 + v3 * 0.4
-	return valor > 0.25  # umbral: más alto = manchas más chicas y separadas
+	return valor > 0.6        # umbral alto → manchas separadas y definidas
 
 
 ## PATRÓN: RAYAS (STRIPES)  →  Pink
 ## --------------------------------------------------------------------------
-## Simula rayas de cebra o tigre.
-## Usa ondas senoidales en una dirección principal con una leve modulación
-## lateral para que las rayas no sean perfectamente rectas.
+## Rayas gruesas y diagonales con ondulación suave (como cebra).
+## Las rayas cruzan el área en un ángulo pronunciado y tienen
+## un grosor uniforme gracias al umbral simétrico (abs).
 func _patron_rayas(x: float, y: float, semilla: float) -> bool:
-	var f: float = 0.05
-	var angulo: float = 0.3  # inclinación de las rayas (radianes)
-	# Rotar coordenadas para que las rayas tengan un ángulo
+	var f: float = 0.03       # frecuencia baja → rayas anchas
+	var angulo: float = 0.6   # inclinación diagonal (radianes)
 	var xr: float = x * cos(angulo) - y * sin(angulo)
 	var yr: float = x * sin(angulo) + y * cos(angulo)
-	# Onda principal (rayas) + modulación suave
+	# Onda principal (genera las rayas) + modulación suave lateral
 	var v1: float = sin(xr * f + semilla)
-	var v2: float = cos(yr * f * 2.0 + semilla * 0.5) * 0.3
+	var v2: float = cos(yr * f * 1.5 + semilla * 0.5) * 0.4
 	var valor: float = v1 + v2
-	return abs(valor) > 0.35
+	return abs(valor) > 0.15  # umbral bajo → rayas gruesas y llenas
 
 
 ## PATRÓN: ESPIRAL (SPIRAL)  →  Celeste
 ## --------------------------------------------------------------------------
-## Simula una concha de caracol o galaxia espiral.
-## Usa coordenadas polares (radio + ángulo) para crear brazos espirales
-## que giran desde el centro hacia afuera.
+## Brazos espirales anchos que giran desde el centro (como galaxia).
+## Usa pocos brazos (3) con una frecuencia radial baja para que
+## las espirales sean amplias y abiertas.
 func _patron_espiral(x: float, y: float, semilla: float) -> bool:
 	var r: float = sqrt(x * x + y * y)
-	if r < 2.0:
-		return true  # centro siempre lleno
+	if r < 4.0:
+		return true           # centro siempre lleno
 	var theta: float = atan2(y, x)
-	var vueltas: float = 6.0  # cantidad de brazos espirales
-	var f_radial: float = 0.12
-	var v: float = sin(theta * vueltas + r * f_radial * 3.0 + semilla)
+	var vueltas: float = 3.0  # pocos brazos → más gruesos
+	var f_radial: float = 0.06
+	var v: float = sin(theta * vueltas + r * f_radial * 2.0 + semilla)
 	return v > 0.0
 
 
 ## PATRÓN: LABERINTO (LABYRINTH)  →  Neon Green
 ## --------------------------------------------------------------------------
-## Simula un patrón de ameba o laberinto.
-## Usa la suma de múltiples ondas senoidales en diferentes direcciones,
-## creando un patrón complejo e interconectado.
+## Patrón denso e interconectado (como ameba o redes neuronales).
+## Usa múltiples ondas en distintas direcciones para crear un
+## entramado complejo sin zonas vacías grandes.
 func _patron_laberinto(x: float, y: float, semilla: float) -> bool:
-	var f: float = 0.04
+	var f: float = 0.03       # frecuencia baja → formas grandes
 	var v1: float = sin(x * f + y * f * 1.2 + semilla)
 	var v2: float = sin(x * f * 0.8 - y * f * 1.5 + semilla * 0.7)
-	var v3: float = sin((x + y) * f * 0.5 + semilla * 1.3)
-	var v4: float = sin((x - y) * f * 1.1 + semilla * 0.2)
-	var valor: float = v1 + v2 + v3 * 0.5 + v4 * 0.3
-	return valor > 0.45
+	var v3: float = sin((x + y) * f * 0.7 + semilla * 1.3)
+	var v4: float = sin((x - y) * f * 1.3 + semilla * 0.2)
+	var v5: float = cos(x * f * 0.5 + y * f * 0.9 + semilla * 0.9)
+	var valor: float = v1 + v2 + v3 * 0.6 + v4 * 0.4 + v5 * 0.5
+	return valor > 0.1        # umbral bajo → patrón denso y conectado
+
+
+## PATRÓN: PUFFERFISH  →  Pink
+## --------------------------------------------------------------------------
+## Patrón reticulado inspirado en el pez globo (Tetraodontidae).
+## Crea una red poligonal interconectada (tipo panal) con manchas
+## redondeadas en las intersecciones, similar al patrón dorsal del
+## pez globo Valentini o Fugu.
+##
+## Técnica: tres ondas senoidales en direcciones a 60° para generar
+## interferencia hexagonal, combinadas con un coseno que añade
+## pequeñas islas-redondeadas en los nodos de la red.
+func _patron_pufferfish(x: float, y: float, semilla: float) -> bool:
+	var f: float = 0.07
+	var sqrt3: float = 1.732
+	# Tres direcciones a 60° para crear retícula hexagonal
+	var y_proj: float = y * f
+	var x1_proj: float = (x * 0.866 + y * 0.5) * f
+	var x2_proj: float = (-x * 0.866 + y * 0.5) * f
+	var v1: float = sin(y_proj + semilla * 0.5)
+	var v2: float = sin(x1_proj + semilla)
+	var v3: float = sin(x2_proj + semilla * 0.8)
+	# Islas adicionales en nodos de la red
+	var v4: float = cos(y_proj * 0.7 + x1_proj * 0.7 + semilla * 1.2) * 0.5
+	var valor: float = v1 + v2 + v3 + v4
+	return valor > -0.3      # umbral bajo para red interconectada
 
 
 # ============================================================================
-# SECCIÓN 8: DIBUJADO (_draw)
+# SECCIÓN 8: FUNCIONES AUXILIARES DE PATRONES
+# ============================================================================
+
+## Genera un desplazamiento pseudoaleatorio para crear el efecto Voronoi.
+## Toma las coordenadas de la celda (cx, cy) y devuelve un Vector2
+## con un offset determinista entre -max y +max.
+##
+## Esto hace que los puntos de la grilla se desplacen dando la
+## sensación de un diagrama de Thiessen (Voronoi) orgánico.
+func _jitter(cx: float, cy: float, max_jitter: float) -> Vector2:
+	var n: float = sin(cx * 127.1 + cy * 311.7) * 43758.5453
+	var hx: float = n - floor(n)
+	var hy: float = sin(n * 17.1 + cx * 3.7) * 0.5 + 0.5
+	return Vector2((hx - 0.5) * max_jitter, (hy - 0.5) * max_jitter)
+
+
+## Genera un polígono cerrado con bordes orgánicos (tipo procariota).
+## Toma un rectángulo base y lo deforma con jitter en cada vértice,
+## creando una forma celular irregular.
+##
+## Útil para darle a los sectores una apariencia de célula viva
+## en lugar de un rectángulo geométrico perfecto.
+func _generar_poligono_organico(rect: Rect2, semilla: float) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	var pts_per_side: int = 10  # vértices por lado (más = más detalle)
+
+	for i in range(4 * pts_per_side):
+		var side: int = i / pts_per_side
+		var t: float = float(i % pts_per_side) / float(pts_per_side)
+
+		# Posición base en el perímetro del rectángulo
+		var base: Vector2
+		match side:
+			0: base = Vector2(rect.position.x + t * rect.size.x, rect.position.y)
+			1: base = Vector2(rect.position.x + rect.size.x, rect.position.y + t * rect.size.y)
+			2: base = Vector2(rect.position.x + (1.0 - t) * rect.size.x, rect.position.y + rect.size.y)
+			3: base = Vector2(rect.position.x, rect.position.y + (1.0 - t) * rect.size.y)
+
+		# Jitter perpendicular al borde para deformar orgánicamente
+		var jitter_amount: float = 8.0 + sin(semilla + i * 0.3) * 5.0
+		var j: Vector2 = _jitter(base.x * 0.05 + semilla, base.y * 0.05 + i, jitter_amount)
+		points.append(base + j)
+
+	return points
+
+
+# ============================================================================
+# SECCIÓN 9: DIBUJADO (_draw)
 # ============================================================================
 # El orden de dibujado define qué capa queda arriba/abajo:
-#   1. ESTELAS (lo más al fondo)
+#   1. ESTELAS con aspecto Voronoi (lo más al fondo)
 #   2. Rectángulos de sector
 #   3. Sombra amarilla (soga)
 #   4. ONDAS expansivas
 #   5. Línea de barrido (lo más arriba)
 
 func _draw() -> void:
-	# Capa 1 — Fondo: estelas persistentes
+	# Capa 1 — Fondo: estelas persistentes con forma orgánica
 	_dibujar_estelas()
 
 	# Capa 2 — Rectángulos de sector
@@ -376,15 +479,24 @@ func _draw() -> void:
 
 
 # --------------------------------------------------------------------------
-# 8.1: DIBUJAR ESTELAS
+# 9.1: DIBUJAR ESTELAS — con aspecto orgánico tipo Voronoi
 # --------------------------------------------------------------------------
 # Dibuja los patrones de Turing persistentes en las posiciones donde
-# pasaron las ondas. Cada estela se dibuja con su intensidad actual
-# (va de 1.0 a 0.0 a medida que envejece).
+# pasaron las ondas.
 #
-# El patrón se muestrea en una grilla dentro del radio de la estela.
-# Cada punto de la grilla que supera el umbral del patrón se dibuja
-# como un pequeño cuadrado.
+# TÉCNICA VISUAL:
+#   En lugar de una grilla de cuadrados rígidos, usamos PUNTOS DE SEMILLA
+#   con desplazamiento pseudoaleatorio (jitter). Cada punto activo se
+#   dibuja como un CÍRCULO que se solapa con sus vecinos, generando
+#   un aspecto celular orgánico similar a:
+#     • Diagramas de Voronoi (Thiessen)
+#     • Tejido biológico visto al microscopio
+#     • Panal de abejas irregular
+#
+# CÓMO MODIFICAR EL ASPECTO:
+#   • pattern_spacing → separación entre semillas (menor = más detalle)
+#   • Ajustar el radio de los círculos en la fórmula de abajo
+#   • El jitter_amount controla cuánto se dispersan las semillas
 
 func _dibujar_estelas() -> void:
 	if active_trails.is_empty():
@@ -395,62 +507,130 @@ func _dibujar_estelas() -> void:
 		return
 
 	for trail in active_trails:
-		var color_name: String = trail.color_name
-		var centro: Vector2 = trail.center
-		var radio: float = trail.max_radius * trail.intensity
-		var intensidad: float = trail.intensity
+		match trail.shape_type:
+			"circle":
+				_dibujar_estela_circular(trail)
+			"sector":
+				_dibujar_estela_sector(trail)
 
-		# Obtener el color base del patrón
-		var color_patron: Color = GestorFamilias.get_color(color_name)
 
-		# Ajustar opacidad según intensidad de la estela
-		color_patron.a = intensidad * 0.6
+## Dibuja una estela circular (para piezas melódicas como yellow).
+## Usa un área circular alrededor del centro, con fade uniforme.
+func _dibujar_estela_circular(trail: Dictionary) -> void:
+	var color_name: String = trail.color_name
+	var centro: Vector2 = trail.center
+	var radio: float = trail.max_radius * trail.intensity
+	var intensidad: float = trail.intensity
 
-		if color_patron.a < 0.02:
-			continue
+	var color_patron: Color = GestorFamilias.get_color(color_name)
+	color_patron.a = intensidad * 0.9
+	if color_patron.a < 0.02:
+		return
 
-		# Recorrer la grilla dentro del radio de la estela
-		var inicio_x: float = centro.x - radio
-		var fin_x: float = centro.x + radio
-		var inicio_y: float = centro.y - radio
-		var fin_y: float = centro.y + radio
+	var jitter_amount: float = pattern_spacing * 0.45
+	var inicio_x: float = centro.x - radio
+	var fin_x: float = centro.x + radio
+	var inicio_y: float = centro.y - radio
+	var fin_y: float = centro.y + radio
 
-		var px: float = inicio_x
-		while px < fin_x:
-			var py: float = inicio_y
-			while py < fin_y:
-				var dx: float = px - centro.x
-				var dy: float = py - centro.y
-				var dist: float = sqrt(dx * dx + dy * dy)
+	var cx: float = inicio_x
+	while cx < fin_x:
+		var cy: float = inicio_y
+		while cy < fin_y:
+			var j: Vector2 = _jitter(cx, cy, jitter_amount)
+			var sx: float = cx + j.x
+			var sy: float = cy + j.y
 
-				# Solo dentro del círculo
-				if dist > radio:
-					py += pattern_spacing
-					continue
+			var dx: float = sx - centro.x
+			var dy: float = sy - centro.y
+			var dist: float = sqrt(dx * dx + dy * dy)
 
-				# Desvanecer hacia los bordes (efecto agua)
-				var fade_borde: float = 1.0 - (dist / radio)
-				var alpha_punto: float = intensidad * fade_borde
+			if dist > radio:
+				cy += pattern_spacing
+				continue
 
-				if alpha_punto < 0.05:
-					py += pattern_spacing
-					continue
+			# FADE UNIFORME: no se desvanece hacia los bordes,
+			# toda el área se desvanece al mismo ritmo.
+			var alpha_punto: float = intensidad
 
-				# Evaluar el patrón de Turing en este punto
-				if _evaluar_patron(color_name, dx, dy, pattern_seed + dist * 0.1):
-					var c: Color = color_patron
-					c.a = alpha_punto * 0.7
+			if alpha_punto < 0.05:
+				cy += pattern_spacing
+				continue
 
-					# Dibujar un cuadrado pequeño en la posición del patrón
-					var cell: float = pattern_spacing * 0.45
-					draw_rect(Rect2(px - cell * 0.5, py - cell * 0.5, cell, cell), c)
+			if _evaluar_patron(color_name, dx, dy, pattern_seed + dist * 0.1):
+				var c: Color = color_patron
+				c.a = alpha_punto
 
-				py += pattern_spacing
-			px += pattern_spacing
+				var radio_celula: float = pattern_spacing * diametro_circulo
+				draw_circle(Vector2(sx, sy), radio_celula, c)
+
+			cy += pattern_spacing
+		cx += pattern_spacing
+
+
+## Dibuja una estela sectorial con forma orgánica (para piezas sectoriales
+## como pink, celeste, neon_green).
+##
+## En lugar de un círculo, el patrón se dibuja dentro de un polígono
+## orgánico que imita la forma de una célula (procariota), creado
+## a partir del rectángulo del sector con bordes deformados.
+##
+## El fade es uniforme en toda la superficie: la estela se desvanece
+## completa en lugar de hacerlo desde los bordes hacia el centro.
+func _dibujar_estela_sector(trail: Dictionary) -> void:
+	var color_name: String = trail.color_name
+	var intensidad: float = trail.intensity
+	var polygon: PackedVector2Array = trail.get("sector_polygon", PackedVector2Array())
+	var sector_rect: Rect2 = trail.get("sector_rect", Rect2())
+
+	if polygon.is_empty() or sector_rect.size.x <= 0 or sector_rect.size.y <= 0:
+		return
+
+	var color_patron: Color = GestorFamilias.get_color(color_name)
+	color_patron.a = intensidad * 0.9
+	if color_patron.a < 0.02:
+		return
+
+	var jitter_amount: float = pattern_spacing * 0.45
+
+	# Recorrer la grilla dentro del rectángulo del sector
+	var cx: float = sector_rect.position.x
+	while cx < sector_rect.position.x + sector_rect.size.x:
+		var cy: float = sector_rect.position.y
+		while cy < sector_rect.position.y + sector_rect.size.y:
+			var j: Vector2 = _jitter(cx, cy, jitter_amount)
+			var sx: float = cx + j.x
+			var sy: float = cy + j.y
+
+			# Verificar si el punto está dentro del polígono orgánico
+			if not Geometry2D.is_point_in_polygon(Vector2(sx, sy), polygon):
+				cy += pattern_spacing
+				continue
+
+			var dx: float = sx - trail.center.x
+			var dy: float = sy - trail.center.y
+			var dist: float = sqrt(dx * dx + dy * dy)
+
+			# FADE UNIFORME: toda la superficie se desvanece igual
+			var alpha_punto: float = intensidad
+
+			if alpha_punto < 0.05:
+				cy += pattern_spacing
+				continue
+
+			if _evaluar_patron(color_name, dx, dy, pattern_seed + dist * 0.1):
+				var c: Color = color_patron
+				c.a = alpha_punto
+
+				var radio_celula: float = pattern_spacing * diametro_circulo
+				draw_circle(Vector2(sx, sy), radio_celula, c)
+
+			cy += pattern_spacing
+		cx += pattern_spacing
 
 
 # --------------------------------------------------------------------------
-# 8.2: DIBUJAR ONDAS EXPANSIVAS
+# 9.2: DIBUJAR ONDAS EXPANSIVAS
 # --------------------------------------------------------------------------
 # Dibuja un tren de anillos concéntricos que se expanden desde el centro
 # de cada pieza activada.
@@ -505,7 +685,7 @@ func _dibujar_ondas() -> void:
 
 
 # --------------------------------------------------------------------------
-# 8.3: RECTÁNGULOS DE SECTOR (igual que en v1)
+# 9.3: RECTÁNGULOS DE SECTOR (igual que en v1)
 # --------------------------------------------------------------------------
 
 func _draw_sector_rectangles() -> void:
@@ -539,7 +719,7 @@ func _draw_sector_rectangles() -> void:
 
 
 # --------------------------------------------------------------------------
-# 8.4: SOMBRA AMARILLA (soga)  — igual que en v1
+# 9.4: SOMBRA AMARILLA (soga)  — igual que en v1
 # --------------------------------------------------------------------------
 
 func _draw_yellow_shadow() -> void:
@@ -576,7 +756,7 @@ func _draw_yellow_shadow() -> void:
 
 
 # --------------------------------------------------------------------------
-# 8.5: LÍNEA DE BARRIDO  — igual que en v1
+# 9.5: LÍNEA DE BARRIDO  — igual que en v1
 # --------------------------------------------------------------------------
 
 func _draw_scanline() -> void:

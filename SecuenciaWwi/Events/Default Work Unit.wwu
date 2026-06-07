@@ -63,6 +63,24 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Stop_yellow" ID="{4A86DD87-6BEC-4876-9C11-E333D029349F}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="6"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Action Name="" ID="{C270649A-C080-4F2F-935A-BF32D1B27C7E}" ShortID="27636946">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="midi_Sw" ID="{F2870FD9-BC11-453B-8017-8D65848F67FA}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

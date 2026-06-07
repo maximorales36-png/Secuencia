@@ -10,7 +10,9 @@
 #
 #   Familia 1 = obra musical 1 (actual)
 #   Familia 2 = obra musical 2 (futura)
-#   etc.
+#   Familia 3 = obra musical 3 (futura)
+#   Familia 4 = obra musical 4 (futura)
+#   
 #
 # ¿CÓMO SE USA?
 #   Desde cualquier script:  GestorFamilias.get_patron("celeste")
@@ -69,10 +71,11 @@ const FAMILIA_ACTIVA: String = "familia_1"
 #   }
 #
 # PATRONES DE TURING DISPONIBLES:
-#   "spots"     → manchas punteadas (como leopardo)
-#   "stripes"   → rayas onduladas (como cebra)
-#   "spiral"    → espirales (como concha de caracol)
-#   "labyrinth" → laberinto (como ameba)
+#   "spots"      → manchas punteadas (como leopardo)
+#   "stripes"    → rayas onduladas (como cebra)
+#   "spiral"     → espirales (como concha de caracol)
+#   "labyrinth"  → laberinto (como ameba)
+#   "pufferfish" → retícula de pez globo (honeycomb + manchas)
 #
 # Para crear un nuevo patrón, agregar la función en EffectsRenderer.gd
 # en la sección "PATRONES DE TURING" y referenciarla acá.
@@ -97,7 +100,7 @@ const FAMILIAS: Dictionary = {
 				"sonido": "Play_Yellow"
 			},
 			"pink": {
-				"patron": "stripes",
+				"patron": "pufferfish",
 				"sonido": "Play_Pink"
 			}
 		}

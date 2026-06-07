@@ -52,10 +52,10 @@ func _on_connection_changed(connected_state: bool) -> void:
 func _draw() -> void:
 	var viewport_size = get_viewport_rect().size
 	
-	# Dibujar fondo de info
-	draw_rect(Rect2(10, 10, 350, 90), Color(0, 0, 0, 0.9))
+	# Dibujar fondo de data status 
+	draw_rect(Rect2(10, 10, 350, 90), Color(0, 0, 0, 0.5))
 	
-	# Información de conexión
+	# Data de conexión 
 	var connection_text = "WebSocket: CONECTADO" if connected else "WebSocket: DESCONECTADO"
 	var connection_color = Color.GREEN if connected else Color.RED
 	draw_string(ThemeDB.fallback_font, Vector2(20, 25), connection_text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, connection_color)

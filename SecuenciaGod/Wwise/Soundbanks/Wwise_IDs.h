@@ -17,6 +17,7 @@ namespace AK
         static const AkUniqueID PLAY_NEON_GREEN = 3153919642U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID PLAY_YELLOW = 3406300906U;
+        static const AkUniqueID STOP_YELLOW = 2252151776U;
     } // namespace EVENTS
 
     namespace SWITCHES
@@ -67,6 +68,7 @@ namespace AK
 
     namespace AUX_BUSSES
     {
+        static const AkUniqueID DEL = 378875104U;
         static const AkUniqueID REV = 980603520U;
     } // namespace AUX_BUSSES
 

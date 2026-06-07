@@ -30,6 +30,41 @@
 								</ObjectList>
 							</ObjectLists>
 						</AuxBus>
+						<AuxBus Name="Del" ID="{190CB217-4CAA-4C95-8ED4-757A21CE42FC}">
+							<ObjectLists>
+								<ObjectList Name="Effects">
+									<EffectSlot Name="" ID="{B7192132-2542-4B82-A7A6-DCB3D2064CF0}" ShortID="551967157">
+										<ReferenceList>
+											<Reference Name="Effect">
+												<Custom>
+													<Effect Name="Delay (Custom)" ID="{ACF0C0A1-1302-434D-8483-D0105C4DEAF1}" ShortID="892973210" PluginName="Wwise Delay" CompanyID="0" PluginID="106" PluginType="3">
+														<PropertyList>
+															<Property Name="DelayTime" Type="Real32" Value="0.25"/>
+															<Property Name="Feedback" Type="Real32" Value="30"/>
+															<Property Name="WetDryMix" Type="Real32" Value="100"/>
+														</PropertyList>
+													</Effect>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</EffectSlot>
+									<EffectSlot Name="" ID="{B6214CAC-20D4-4F19-82E1-EAC6AB932F3D}" ShortID="106622465">
+										<ReferenceList>
+											<Reference Name="Effect">
+												<Custom>
+													<Effect Name="Delay (Custom)" ID="{B4FA7A6C-EE2C-4381-A766-D6CAEB7B1469}" ShortID="720833167" PluginName="Wwise Delay" CompanyID="0" PluginID="106" PluginType="3">
+														<PropertyList>
+															<Property Name="Feedback" Type="Real32" Value="25"/>
+															<Property Name="WetDryMix" Type="Real32" Value="100"/>
+														</PropertyList>
+													</Effect>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</EffectSlot>
+								</ObjectList>
+							</ObjectLists>
+						</AuxBus>
 					</ChildrenList>
 				</Bus>
 			</ChildrenList>

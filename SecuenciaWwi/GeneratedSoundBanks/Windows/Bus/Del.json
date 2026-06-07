@@ -1,0 +1,59 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "172",
+  "SoundBanks": [
+   {
+    "Id": "378875104",
+    "Type": "Bus",
+    "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}",
+    "Language": "SFX",
+    "Hash": "{F2837AFF-537C-55E1-B347-B2DD470CA785}",
+    "ObjectPath": "Del",
+    "ShortName": "Del",
+    "Path": "Bus/Del.bnk",
+    "Plugins": {
+     "Custom": [
+      {
+       "Id": "720833167",
+       "Name": "Delay (Custom)",
+       "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del\\[Effect Slot [1]: (Delay)]\\Delay (Custom)",
+       "GUID": "{B4FA7A6C-EE2C-4381-A766-D6CAEB7B1469}",
+       "LibName": "Wwise Delay",
+       "LibId": "6946819"
+      },
+      {
+       "Id": "892973210",
+       "Name": "Delay (Custom)",
+       "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del\\[Effect Slot [0]: (Delay)]\\Delay (Custom)",
+       "GUID": "{ACF0C0A1-1302-434D-8483-D0105C4DEAF1}",
+       "LibName": "Wwise Delay",
+       "LibId": "6946819"
+      }
+     ]
+    },
+    "AuxBusses": [
+     {
+      "Id": "378875104",
+      "Name": "Del",
+      "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del",
+      "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "720833167"
+        },
+        {
+         "Id": "892973210"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "FileHash": "{126A4D9E-CB75-0734-1D7B-22ACC27D2E9F}"
+ }
+}

@@ -2,10 +2,13 @@ Audio Bus	ID	Name			Wwise Object Path	Notes
 	2246998526	Main Audio Bus			\Default Work Unit\Main Audio Bus	
 
 Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	378875104	Del			\Default Work Unit\Main Audio Bus\Del	
 	980603520	Rev			\Default Work Unit\Main Audio Bus\Rev	
 
 Effect plug-ins	ID	Name	Type				Notes
 	666457101	RoomVerb (Custom)	Wwise RoomVerb			
+	720833167	Delay (Custom)	Wwise Delay			
+	892973210	Delay (Custom)	Wwise Delay			
 
 Audio Devices	ID	Name	Type				Notes
 	2317455096	No_Output	No Output			

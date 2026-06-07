@@ -1,0 +1,7 @@
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	378875104	Del			\Default Work Unit\Main Audio Bus\Del	
+
+Effect plug-ins	ID	Name	Type				Notes
+	720833167	Delay (Custom)	Wwise Delay			
+	892973210	Delay (Custom)	Wwise Delay			
+

@@ -50,7 +50,6 @@ func _process(delta: float) -> void:
 
 	_detect_crossings()
 	_detect_sector_crossings()
-	_catch_up_sectors()
 
 
 var sector_based_colors: Array = ["pink", "celeste", "neon_green"]
@@ -162,12 +161,6 @@ func _trigger_sector(sector: int) -> void:
 			var y = sector_colors[sector][color]
 			print("[ScanlineLogic] Sector %s activado: sector %d (y=%.2f, ciclo %.1f%%)" % [color, sector, y, scan_position * 100])
 			sector_activated.emit(sector, y, color)
-
-
-func _catch_up_sectors() -> void:
-	var current_sector = int(scan_position * sector_count)
-	for s in range(current_sector + 1):
-		_trigger_sector(s)
 
 
 func get_yellow_pieces() -> Array:

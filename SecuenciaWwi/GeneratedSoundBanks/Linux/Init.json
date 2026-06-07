@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{4C62C210-2E32-D5AA-898A-5A6153DCD5E7}",
+    "Hash": "{2473031B-A5E1-A5B5-4C9D-84212EE303BC}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -23,6 +23,22 @@
        "GUID": "{4BF6737B-BDB3-46C3-9FDA-DF18F22113F1}",
        "LibName": "Wwise RoomVerb",
        "LibId": "7733251"
+      },
+      {
+       "Id": "720833167",
+       "Name": "Delay (Custom)",
+       "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del\\[Effect Slot [1]: (Delay)]\\Delay (Custom)",
+       "GUID": "{B4FA7A6C-EE2C-4381-A766-D6CAEB7B1469}",
+       "LibName": "Wwise Delay",
+       "LibId": "6946819"
+      },
+      {
+       "Id": "892973210",
+       "Name": "Delay (Custom)",
+       "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del\\[Effect Slot [0]: (Delay)]\\Delay (Custom)",
+       "GUID": "{ACF0C0A1-1302-434D-8483-D0105C4DEAF1}",
+       "LibName": "Wwise Delay",
+       "LibId": "6946819"
       }
      ],
      "AudioDevices": [
@@ -53,6 +69,22 @@
      }
     ],
     "AuxBusses": [
+     {
+      "Id": "378875104",
+      "Name": "Del",
+      "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del",
+      "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "720833167"
+        },
+        {
+         "Id": "892973210"
+        }
+       ]
+      }
+     },
      {
       "Id": "980603520",
       "Name": "Rev",
@@ -666,6 +698,6 @@
     ]
    }
   ],
-  "FileHash": "{1047C2E4-E65B-59D5-AAB2-D719F7F2785D}"
+  "FileHash": "{377F8031-D3E6-3C0E-1A9B-A1D10A7D7603}"
  }
 }

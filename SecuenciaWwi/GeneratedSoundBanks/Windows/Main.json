@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{2688FFE2-CA98-F28D-059D-138B98C6357B}",
+    "Hash": "{6EA12CF6-B3D9-2C26-BFF2-2C8AA44D2BB1}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
@@ -269,6 +269,14 @@
        {
         "Id": "966541592"
        }
+      ],
+      "AuxBusRefs": [
+       {
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
+       }
       ]
      },
      {
@@ -324,6 +332,12 @@
        ]
       },
       "AuxBusRefs": [
+       {
+        "Id": "378875104",
+        "Name": "Del",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del",
+        "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}"
+       },
        {
         "Id": "980603520",
         "Name": "Rev",
@@ -449,6 +463,17 @@
         ]
        }
       ]
+     },
+     {
+      "Id": "2252151776",
+      "Name": "Stop_yellow",
+      "ObjectPath": "\\Events\\Default Work Unit\\Stop_yellow",
+      "GUID": "{4A86DD87-6BEC-4876-9C11-E333D029349F}",
+      "Color": "6",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
      }
     ],
     "SwitchGroups": [
@@ -511,6 +536,6 @@
     ]
    }
   ],
-  "FileHash": "{010169B3-7FCB-0017-F6F4-549BE88BE5C1}"
+  "FileHash": "{2A793D51-D66D-12A4-AE3A-7B82DB8D87B2}"
  }
 }

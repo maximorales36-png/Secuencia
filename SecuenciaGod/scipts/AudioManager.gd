@@ -55,8 +55,8 @@ func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
 		_reproducir_sonido(piece.color, piece.y)
 
 
-func _on_sector_activated(_sector_index: int, y: float, color: String) -> void:
-	_reproducir_sonido(color, y)
+func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
+	_reproducir_sonido(color, y, sector_index)
 
 
 ## Manejo especial del yellow (monofónico, con switches de nota)
@@ -76,15 +76,18 @@ func _handle_yellow(y: float) -> void:
 
 ## Reproduce el sonido de un color en la posición Y dada.
 ## Obtiene el nombre del evento Wwise desde GestorFamilias.
-func _reproducir_sonido(color: String, y_position: float) -> void:
+## sector_index permite crear un cooldown único por sector+color
+## para que piezas del mismo color en sectores diferentes no se bloqueen.
+func _reproducir_sonido(color: String, y_position: float, sector_index: int = -1) -> void:
 	# Verificar que el color pertenezca a la familia activa
 	if not GestorFamilias.es_de_familia_activa(color):
 		print("[AudioManager] Color '%s' no está en la familia activa" % color)
 		return
 
-	# Cooldown (para evitar disparos múltiples)
+	# Cooldown por sector+color (evita que un color bloquee a todos)
 	var ahora := Time.get_ticks_msec() / 1000.0
-	if color_cooldowns.has(color) and ahora < color_cooldowns[color]:
+	var cooldown_key: String = color if sector_index < 0 else str(sector_index) + "_" + color
+	if color_cooldowns.has(cooldown_key) and ahora < color_cooldowns[cooldown_key]:
 		return
 
 	y_position = clampf(y_position, 0.0, 1.0)
@@ -101,4 +104,4 @@ func _reproducir_sonido(color: String, y_position: float) -> void:
 	Wwise.set_rtpc_value("Timbre", rtpc_value, self)
 
 	# Cooldown = duración de un sector
-	color_cooldowns[color] = ahora + scanline_logic.get_sector_duration()
+	color_cooldowns[cooldown_key] = ahora + scanline_logic.get_sector_duration()

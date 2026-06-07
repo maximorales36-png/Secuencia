@@ -53,7 +53,7 @@ func _draw() -> void:
 	var viewport_size = get_viewport_rect().size
 	
 	# Dibujar fondo de info
-	draw_rect(Rect2(10, 10, 350, 90), Color(0, 0, 0, 0.7))
+	draw_rect(Rect2(10, 10, 350, 90), Color(0, 0, 0, 0.9))
 	
 	# Información de conexión
 	var connection_text = "WebSocket: CONECTADO" if connected else "WebSocket: DESCONECTADO"

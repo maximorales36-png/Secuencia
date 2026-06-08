@@ -25,6 +25,11 @@ var yellow_note: int = -1
 const YELLOW_SWITCH_GROUP: String = "yellow_switch"
 const YELLOW_SWITCH_VALUES: Array = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
 
+# Violet RTPC (global controller)
+var _violet_current: float = 100.0
+var _violet_target: float = 100.0
+const VIOLET_RTPC_NAME: String = "RTPC_Violet"
+
 
 func _ready() -> void:
 	Wwise.register_game_obj(self, "AudioManager")
@@ -40,6 +45,35 @@ func _ready() -> void:
 		print("[AudioManager] ERROR: No se encontró ScanlineLogic")
 
 
+func _process(delta: float) -> void:
+	_update_violet_rtpc(delta)
+
+
+## Smooths and sends the Violet RTPC value to Wwise.
+## When no violet piece is detected, target = 100 (default / safe state).
+## Uses exponential smoothing with ~3s time constant.
+func _update_violet_rtpc(delta: float) -> void:
+	if scanline_logic == null:
+		return
+
+	var found := false
+	var highest_y := 1.0
+	for piece in scanline_logic.pieces:
+		if piece.color == "violet" and piece.y < highest_y:
+			highest_y = piece.y
+			found = true
+
+	if found:
+		_violet_target = (1.0 - highest_y) * 100.0
+	else:
+		_violet_target = 100.0
+
+	var smoothing := 1.0 - exp(-delta * 1.0)
+	_violet_current = lerp(_violet_current, _violet_target, smoothing)
+
+	Wwise.set_rtpc_value(VIOLET_RTPC_NAME, _violet_current, self)
+
+
 func _on_cycle_reset() -> void:
 	color_cooldowns.clear()
 	if yellow_active:
@@ -51,6 +85,8 @@ func _on_cycle_reset() -> void:
 func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
 	if piece.color == "yellow":
 		_handle_yellow(piece.y)
+	elif piece.color == "violet":
+		return
 	else:
 		_reproducir_sonido(piece.color, piece.y)
 

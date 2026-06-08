@@ -57,6 +57,11 @@ COLOR_RANGES = {
         "lower": np.array([95, 60, 150]),
         "upper": np.array([115, 255, 255]),
         "bgr": (246, 209, 81)
+    },
+    "violet": {
+        "lower": np.array([120, 40, 40]),
+        "upper": np.array([139, 255, 255]),
+        "bgr": (255, 0, 255)
     }
 }
 

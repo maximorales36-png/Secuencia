@@ -108,6 +108,11 @@ var sector_count: int = 0
 # tengan un movimiento sutil (como agua que respira).
 var pattern_seed: float = 0.0
 
+# --- Saturación dinámica para pink/celeste controlada por violeta ---
+# Violet es un controlador global: cuando está abajo (y cerca de 1),
+# la saturación de pink y celeste se reduce.
+var _violet_saturation: float = 1.0
+
 # --- Cache de viewport ---
 var last_viewport_size: Vector2 = Vector2.ZERO
 
@@ -140,6 +145,9 @@ func _process(delta: float) -> void:
 	# Animar la semilla para que los patrones se muevan lentamente
 	pattern_seed += delta * 0.8
 
+	# Actualizar saturación controlada por violeta
+	_update_violet_saturation()
+
 	queue_redraw()
 
 
@@ -152,6 +160,8 @@ func _process(delta: float) -> void:
 ## Crea una onda expansiva + estela en la posición de la pieza.
 func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
 	if not GestorFamilias.es_de_familia_activa(piece.color):
+		return
+	if piece.color == "violet":
 		return
 
 	var viewport = get_viewport_rect().size
@@ -262,6 +272,40 @@ func _actualizar_estelas(ahora: float) -> void:
 			trail.intensity = 1.0 - (edad / trail.duration)
 			keep.append(trail)
 	active_trails = keep
+
+
+# ============================================================================
+# SECCIÓN 6.5: SATURACIÓN CONTROLADA POR VIOLETA
+# ============================================================================
+# Violeta es un controlador global. Cuando está cerca del borde inferior
+# (y → 1.0, RTPC → 0), la saturación de pink y celeste se reduce.
+# Cuando no hay violeta, la saturación vuelve al 100%.
+
+func _update_violet_saturation() -> void:
+	if scanline_logic == null:
+		_violet_saturation = 1.0
+		return
+	var found := false
+	var highest_y := 1.0
+	for piece in scanline_logic.pieces:
+		if piece.color == "violet" and piece.y < highest_y:
+			highest_y = piece.y
+			found = true
+	if found:
+		var rtpc = (1.0 - highest_y) * 100.0
+		_violet_saturation = 0.0 + 1.0 * (rtpc / 100.0)
+	else:
+		_violet_saturation = 1.0
+
+
+## Reduce la saturación del color si es pink o celeste,
+## según la posición del violeta.
+func _ajustar_saturacion(color: Color, nombre_color: String) -> Color:
+	if nombre_color in ["pink", "celeste"]:
+		var c: Color = color
+		c.s = c.s * _violet_saturation
+		return c
+	return color
 
 
 # ============================================================================
@@ -387,7 +431,6 @@ func _patron_laberinto(x: float, y: float, semilla: float) -> bool:
 ## pequeñas islas-redondeadas en los nodos de la red.
 func _patron_pufferfish(x: float, y: float, semilla: float) -> bool:
 	var f: float = 0.07
-	var sqrt3: float = 1.732
 	# Tres direcciones a 60° para crear retícula hexagonal
 	var y_proj: float = y * f
 	var x1_proj: float = (x * 0.866 + y * 0.5) * f
@@ -522,7 +565,7 @@ func _dibujar_estela_circular(trail: Dictionary) -> void:
 	var radio: float = trail.max_radius * trail.intensity
 	var intensidad: float = trail.intensity
 
-	var color_patron: Color = GestorFamilias.get_color(color_name)
+	var color_patron: Color = _ajustar_saturacion(GestorFamilias.get_color(color_name), color_name)
 	color_patron.a = intensidad * 0.9
 	if color_patron.a < 0.02:
 		return
@@ -586,7 +629,7 @@ func _dibujar_estela_sector(trail: Dictionary) -> void:
 	if polygon.is_empty() or sector_rect.size.x <= 0 or sector_rect.size.y <= 0:
 		return
 
-	var color_patron: Color = GestorFamilias.get_color(color_name)
+	var color_patron: Color = _ajustar_saturacion(GestorFamilias.get_color(color_name), color_name)
 	color_patron.a = intensidad * 0.9
 	if color_patron.a < 0.02:
 		return
@@ -659,7 +702,7 @@ func _dibujar_ondas() -> void:
 		var intensidad: float = 1.0 - progreso
 
 		# Color de la onda
-		var color_onda: Color = GestorFamilias.get_color(color_name)
+		var color_onda: Color = _ajustar_saturacion(GestorFamilias.get_color(color_name), color_name)
 
 		# --- Tren de anillos concéntricos ---
 		for j in range(wave_ring_count):
@@ -707,7 +750,7 @@ func _draw_sector_rectangles() -> void:
 		for color in sector_data:
 			var y = sector_data[color]
 
-			var rect_color: Color = GestorFamilias.get_color(color)
+			var rect_color: Color = _ajustar_saturacion(GestorFamilias.get_color(color), color)
 			rect_color.a = sector_alpha
 
 			var rect_x = i * sector_width

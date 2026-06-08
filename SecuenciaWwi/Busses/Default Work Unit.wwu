@@ -67,6 +67,108 @@
 						</AuxBus>
 					</ChildrenList>
 				</Bus>
+				<Bus Name="D&amp;B" ID="{F106DCD1-D1ED-4055-8C16-71BC7C877A75}">
+					<ReferenceList>
+						<Reference Name="AudioDevice" PluginName="System" CompanyID="0" PluginID="174" PluginType="7">
+							<ObjectRef Name="System" ID="{E2C9E60A-B941-4A1C-96D7-1F54A9246488}" WorkUnitID="{595AEE8C-9ABF-4FC6-AB85-B6FA71CF54A6}"/>
+						</Reference>
+					</ReferenceList>
+					<ObjectLists>
+						<ObjectList Name="Effects">
+							<EffectSlot Name="" ID="{2A684188-6C34-4B76-91D5-D68CFACEF19E}" ShortID="732078179">
+								<ReferenceList>
+									<Reference Name="Effect">
+										<Custom>
+											<Effect Name="Parametric EQ (Custom)" ID="{DD8141CC-7109-44B7-BBD1-77BDD2422FD9}" ShortID="644197767" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
+												<PropertyList>
+													<Property Name="FilterTypeBand1" Type="int32" Value="7"/>
+													<Property Name="FrequencyBand1" Type="Real32" Value="20000"/>
+													<Property Name="QFactorBand1" Type="Real32" Value="1.646898"/>
+												</PropertyList>
+												<ObjectLists>
+													<ObjectList Name="RTPC">
+														<RTPC Name="" ID="{1190FC3F-5367-4443-9F4D-5551D0C87CEB}" ShortID="884948506">
+															<PropertyList>
+																<Property Name="PropertyName" Type="string" Value="FrequencyBand1"/>
+															</PropertyList>
+															<ReferenceList>
+																<Reference Name="ControlInput">
+																	<ObjectRef Name="Viololeta" ID="{FBB67A9A-E3D3-4A30-BAB7-5F36764CA1A0}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
+																</Reference>
+																<Reference Name="Curve">
+																	<Custom>
+																		<Curve Name="" ID="{F427925C-A11F-45DA-BCF8-6663F4B0F744}">
+																			<PropertyList>
+																				<Property Name="Flags" Type="int32" Value="5"/>
+																			</PropertyList>
+																			<PointList>
+																				<Point>
+																					<XPos>0</XPos>
+																					<YPos>58.60789</YPos>
+																					<Flags>5</Flags>
+																				</Point>
+																				<Point>
+																					<XPos>100</XPos>
+																					<YPos>20000</YPos>
+																					<Flags>37</Flags>
+																				</Point>
+																			</PointList>
+																		</Curve>
+																	</Custom>
+																</Reference>
+															</ReferenceList>
+														</RTPC>
+														<RTPC Name="" ID="{7980409E-5E14-427E-9EB3-7D5584BF974E}" ShortID="560647317">
+															<PropertyList>
+																<Property Name="PropertyName" Type="string" Value="QFactorBand1"/>
+															</PropertyList>
+															<ReferenceList>
+																<Reference Name="ControlInput">
+																	<ObjectRef Name="Viololeta" ID="{FBB67A9A-E3D3-4A30-BAB7-5F36764CA1A0}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
+																</Reference>
+																<Reference Name="Curve">
+																	<Custom>
+																		<Curve Name="" ID="{89C8ED40-F181-436F-905B-3331018DA92E}">
+																			<PropertyList>
+																				<Property Name="Flags" Type="int32" Value="1"/>
+																			</PropertyList>
+																			<PointList>
+																				<Point>
+																					<XPos>0</XPos>
+																					<YPos>1</YPos>
+																					<Flags>5</Flags>
+																				</Point>
+																				<Point>
+																					<XPos>31.4</XPos>
+																					<YPos>10</YPos>
+																					<Flags>0</Flags>
+																				</Point>
+																				<Point>
+																					<XPos>80.4</XPos>
+																					<YPos>10</YPos>
+																					<Flags>0</Flags>
+																				</Point>
+																				<Point>
+																					<XPos>100</XPos>
+																					<YPos>1</YPos>
+																					<Flags>37</Flags>
+																				</Point>
+																			</PointList>
+																		</Curve>
+																	</Custom>
+																</Reference>
+															</ReferenceList>
+														</RTPC>
+													</ObjectList>
+												</ObjectLists>
+											</Effect>
+										</Custom>
+									</Reference>
+								</ReferenceList>
+							</EffectSlot>
+						</ObjectList>
+					</ObjectLists>
+				</Bus>
 			</ChildrenList>
 		</WorkUnit>
 	</Busses>

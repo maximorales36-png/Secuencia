@@ -10,12 +10,20 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{E012025E-F5CB-7DDA-F035-DB3F64017201}",
+    "Hash": "{7BA11263-AEE6-F5F9-BE4C-4038800A1747}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
     "Plugins": {
      "Custom": [
+      {
+       "Id": "644197767",
+       "Name": "Parametric EQ (Custom)",
+       "ObjectPath": "\\Busses\\Default Work Unit\\D&B\\[Effect Slot [0]: (Parametric EQ)]\\Parametric EQ (Custom)",
+       "GUID": "{DD8141CC-7109-44B7-BBD1-77BDD2422FD9}",
+       "LibName": "Wwise Parametric EQ",
+       "LibId": "6881283"
+      },
       {
        "Id": "666457101",
        "Name": "RoomVerb (Custom)",
@@ -66,6 +74,19 @@
       "Name": "Main Audio Bus",
       "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus",
       "GUID": "{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"
+     },
+     {
+      "Id": "3650407655",
+      "Name": "D&B",
+      "ObjectPath": "\\Busses\\Default Work Unit\\D&B",
+      "GUID": "{F106DCD1-D1ED-4055-8C16-71BC7C877A75}",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "644197767"
+        }
+       ]
+      }
      }
     ],
     "AuxBusses": [
@@ -153,6 +174,12 @@
       "Name": "SS_Air_Presence",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Presence",
       "GUID": "{E3B7811A-7B2F-490F-B44F-5FE51B468041}"
+     },
+     {
+      "Id": "3862788774",
+      "Name": "RTPC_Violet",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_Violet",
+      "GUID": "{FBB67A9A-E3D3-4A30-BAB7-5F36764CA1A0}"
      },
      {
       "Id": "4160247818",
@@ -698,6 +725,6 @@
     ]
    }
   ],
-  "FileHash": "{4AD554AA-B122-9B02-64FE-82F682B639BB}"
+  "FileHash": "{62CCD4C5-8DD3-D612-FA91-C1B4DB5C497B}"
  }
 }

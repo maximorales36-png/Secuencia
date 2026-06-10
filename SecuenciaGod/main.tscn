@@ -14,8 +14,9 @@
 [node name="Parallax2D" type="Parallax2D" parent="Background" unique_id=591179869]
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D" unique_id=1714887398]
-position = Vector2(1559.9999, 966.25)
-scale = Vector2(0.42744568, 0.40054968)
+self_modulate = Color(1, 1, 1, 0.6117647)
+position = Vector2(679, 589)
+scale = Vector2(0.41290757, 0.36823085)
 texture = ExtResource("6_7mycd")
 
 [node name="ScanlineLogic" type="Node" parent="." unique_id=66086854]
@@ -32,9 +33,15 @@ script = ExtResource("7")
 
 [node name="PiecesVisualizer" type="Node2D" parent="Canvas" unique_id=465233847]
 script = ExtResource("2_h2yge")
+piece_radius = 30.0
+text_size = 10
 
 [node name="EffectsRenderer" type="Node2D" parent="Canvas" unique_id=950658509]
 script = ExtResource("4")
+wave_duration = 5.0
+trail_duration = 10.0
+max_wave_radius = 400.0
+pattern_radius = 320.0
 pattern_spacing = 8.0
-diametro_circulo = 0.2
-scan_line_color = Color(1, 0.6156863, 0, 0.6901961)
+diametro_circulo = 0.35
+ani_contraste = 3.0

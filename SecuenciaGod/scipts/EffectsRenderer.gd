@@ -69,7 +69,7 @@ class_name EffectsRenderer
 ## Ancho de la línea de barrido (píxeles)
 @export var scan_line_width: float = 5.0
 
-## Color de la línea de barrido
+## Color de la línea de barrido (alpha base, multiplicado por ani_contraste)
 @export var scan_line_color: Color = Color(1.0, 0.62, 0.0, 0.69)
 
 ## Opacidad de la sombra amarilla (soga)
@@ -80,6 +80,10 @@ class_name EffectsRenderer
 
 ## Opacidad de los rectángulos de sector
 @export var sector_alpha: float = 0.15
+
+## Contraste general de las visualizaciones (0.0 = invisible, 1.0 = máximo)
+## Multiplica la opacidad de todos los efectos: ondas, estelas, sectores, etc.
+@export var ani_contraste: float = 1.0
 
 
 # ============================================================================
@@ -566,7 +570,7 @@ func _dibujar_estela_circular(trail: Dictionary) -> void:
 	var intensidad: float = trail.intensity
 
 	var color_patron: Color = _ajustar_saturacion(GestorFamilias.get_color(color_name), color_name)
-	color_patron.a = intensidad * 0.9
+	color_patron.a = intensidad * 0.9 * ani_contraste
 	if color_patron.a < 0.02:
 		return
 
@@ -594,7 +598,7 @@ func _dibujar_estela_circular(trail: Dictionary) -> void:
 
 			# FADE UNIFORME: no se desvanece hacia los bordes,
 			# toda el área se desvanece al mismo ritmo.
-			var alpha_punto: float = intensidad
+			var alpha_punto: float = intensidad * ani_contraste
 
 			if alpha_punto < 0.05:
 				cy += pattern_spacing
@@ -630,7 +634,7 @@ func _dibujar_estela_sector(trail: Dictionary) -> void:
 		return
 
 	var color_patron: Color = _ajustar_saturacion(GestorFamilias.get_color(color_name), color_name)
-	color_patron.a = intensidad * 0.9
+	color_patron.a = intensidad * 0.9 * ani_contraste
 	if color_patron.a < 0.02:
 		return
 
@@ -655,7 +659,7 @@ func _dibujar_estela_sector(trail: Dictionary) -> void:
 			var dist: float = sqrt(dx * dx + dy * dy)
 
 			# FADE UNIFORME: toda la superficie se desvanece igual
-			var alpha_punto: float = intensidad
+			var alpha_punto: float = intensidad * ani_contraste
 
 			if alpha_punto < 0.05:
 				cy += pattern_spacing
@@ -712,7 +716,7 @@ func _dibujar_ondas() -> void:
 				continue
 
 			# Cada anillo es más tenue y fino hacia adentro
-			var alpha_anillo: float = intensidad * (1.0 - j * 0.25)
+			var alpha_anillo: float = intensidad * (1.0 - j * 0.25) * ani_contraste
 			var grosor_anillo: float = (4.0 - j * 1.0) * intensidad
 
 			if alpha_anillo < 0.02 or grosor_anillo < 0.5:
@@ -751,7 +755,7 @@ func _draw_sector_rectangles() -> void:
 			var y = sector_data[color]
 
 			var rect_color: Color = _ajustar_saturacion(GestorFamilias.get_color(color), color)
-			rect_color.a = sector_alpha
+			rect_color.a = sector_alpha * ani_contraste
 
 			var rect_x = i * sector_width
 			var rect_w = sector_width
@@ -777,7 +781,7 @@ func _draw_yellow_shadow() -> void:
 
 	yellows.sort_custom(func(a, b): return a.x < b.x)
 	var h = rect_height
-	var color = Color(1.0, 1.0, 0.0, yellow_shadow_alpha)
+	var color = Color(1.0, 1.0, 0.0, yellow_shadow_alpha * ani_contraste)
 	var w = viewport.x
 	var first = yellows[0]
 	var last = yellows[yellows.size() - 1]
@@ -805,4 +809,6 @@ func _draw_yellow_shadow() -> void:
 func _draw_scanline() -> void:
 	var viewport = get_viewport_rect().size
 	var x = scan_position * viewport.x
-	draw_line(Vector2(x, 0), Vector2(x, viewport.y), scan_line_color, scan_line_width)
+	var c: Color = scan_line_color
+	c.a = scan_line_color.a * ani_contraste
+	draw_line(Vector2(x, 0), Vector2(x, viewport.y), c, scan_line_width)

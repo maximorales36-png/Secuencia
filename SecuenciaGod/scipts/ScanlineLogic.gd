@@ -1,7 +1,7 @@
 extends Node
 class_name ScanlineLogic
 
-signal crossing_detected(piece: WebSocketManager.Piece)
+signal crossing_detected(piece: IPCManager.Piece)
 signal beats_per_cycle_changed(new_beats: int)
 signal sector_activated(sector_index: int, y: float, color: String)
 signal cycle_reset()
@@ -13,7 +13,7 @@ var prev_scan_position: float = -1.0
 var scan_speed: float = 0.0
 var pieces: Array = []
 var triggered_keys: Dictionary = {}
-var websocket_manager: WebSocketManager
+var ipc_manager: IPCManager
 
 # Sector logic (1 sector = 4 negras = 1 compas)
 const BEATS_PER_SECTOR: int = 4
@@ -29,11 +29,11 @@ func _ready() -> void:
 	_update_scan_speed()
 	_update_sector_count()
 
-	websocket_manager = get_tree().root.find_child("WebSocketManager", true, false)
-	if websocket_manager:
-		websocket_manager.pieces_updated.connect(_on_pieces_updated)
+	ipc_manager = IPCManager
+	if ipc_manager:
+		ipc_manager.pieces_updated.connect(_on_pieces_updated)
 	else:
-		print("[ScanlineLogic] ERROR: No se encontr\u00f3 WebSocketManager")
+		print("[ScanlineLogic] ERROR: No se encontr\u00f3 IPCManager")
 
 
 func _process(delta: float) -> void:
@@ -92,7 +92,7 @@ func _on_pieces_updated(new_pieces: Array) -> void:
 	pieces.clear()
 	for key in piece_memory:
 		var mem = piece_memory[key]
-		var piece = WebSocketManager.Piece.new(mem.color, mem.x, mem.y)
+		var piece = IPCManager.Piece.new(mem.color, mem.x, mem.y)
 		pieces.append(piece)
 
 	_update_sector_colors()

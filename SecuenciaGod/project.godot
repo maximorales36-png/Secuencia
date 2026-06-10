@@ -17,8 +17,13 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+IPCManager="*res://scipts/IPCManager.gd"
 WwiseRuntimeManager="*res://addons/Wwise/runtime/wwise_runtime_manager.gd"
 GestorFamilias="*res://scipts/GestorFamilias.gd"
+
+[display]
+
+window/size/mode=3
 
 [physics]
 

@@ -10,7 +10,7 @@ class_name PiecesVisualizer
 @export var text_color: Color = Color.WHITE
 @export var text_size: int = 16
 
-var websocket_manager: WebSocketManager
+var ipc_manager: IPCManager
 var pieces: Array = []
 var connected: bool = false
 
@@ -29,16 +29,14 @@ var color_map: Dictionary = {
 func _ready() -> void:
 	print("[PiecesVisualizer] Inicializando...")
 	
-	# Buscar WebSocketManager en la escena
-	websocket_manager = get_tree().root.find_child("WebSocketManager", true, false)
+	ipc_manager = IPCManager
 	
-	if websocket_manager == null:
-		print("[PiecesVisualizer] ERROR: No encontré WebSocketManager en la escena")
+	if ipc_manager == null:
+		print("[PiecesVisualizer] ERROR: No se encontr\u00f3 IPCManager")
 		return
 	
-	# Conectar signals
-	websocket_manager.pieces_updated.connect(_on_pieces_updated)
-	websocket_manager.connection_changed.connect(_on_connection_changed)
+	ipc_manager.pieces_updated.connect(_on_pieces_updated)
+	ipc_manager.connection_changed.connect(_on_connection_changed)
 	
 	print("[PiecesVisualizer] Listo")
 

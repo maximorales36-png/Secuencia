@@ -158,7 +158,7 @@ func _process(delta: float) -> void:
 ## Se llama cuando la línea de barrido CRUZA una pieza melódica.
 ## Las piezas melódicas son las que NO son sectoriales (actualmente: yellow).
 ## Crea una onda expansiva + estela en la posición de la pieza.
-func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
+func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 	if not GestorFamilias.es_de_familia_activa(piece.color):
 		return
 	if piece.color == "violet":

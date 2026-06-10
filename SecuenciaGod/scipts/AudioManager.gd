@@ -82,7 +82,7 @@ func _on_cycle_reset() -> void:
 		Wwise.post_event("Stop_yellow", self)
 
 
-func _on_crossing_detected(piece: WebSocketManager.Piece) -> void:
+func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 	if piece.color == "yellow":
 		_handle_yellow(piece.y)
 	elif piece.color == "violet":

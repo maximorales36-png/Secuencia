@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://buly1eva32rq1"]
 
-[ext_resource type="Script" uid="uid://cuegbnucx0jb" path="res://scipts/WebSocketManager.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://cgy7040alsmec" path="res://scipts/PiecesVisualizer.gd" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://co2g43scpovvw" path="res://scipts/ScanlineLogic.gd" id="3"]
 [ext_resource type="Script" uid="uid://wtribbhcn4m2" path="res://scipts/EffectsRenderer.gd" id="4"]
@@ -15,12 +14,9 @@
 [node name="Parallax2D" type="Parallax2D" parent="Background" unique_id=591179869]
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D" unique_id=1714887398]
-position = Vector2(590.4999, 375.24997)
-scale = Vector2(0.16399458, 0.15991451)
+position = Vector2(1559.9999, 966.25)
+scale = Vector2(0.42744568, 0.40054968)
 texture = ExtResource("6_7mycd")
-
-[node name="WebSocketManager" type="Node" parent="." unique_id=1204148754]
-script = ExtResource("1_0xm2m")
 
 [node name="ScanlineLogic" type="Node" parent="." unique_id=66086854]
 script = ExtResource("3")

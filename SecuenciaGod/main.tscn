@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://wtribbhcn4m2" path="res://scipts/EffectsRenderer.gd" id="4"]
 [ext_resource type="Script" uid="uid://21vpbcs7p64a" path="res://scipts/AudioManager.gd" id="5"]
 [ext_resource type="Texture2D" uid="uid://72l5ash431wl" path="res://assets/blue-paint-wall-background-texture.jpg" id="6_7mycd"]
-[ext_resource type="Script" uid="uid://grid12345678" path="res://scipts/GridRenderer.gd" id="7"]
-[ext_resource type="Script" uid="uid://blobrenderer" path="res://scipts/BlobRenderer.gd" id="8_uiqh"]
+[ext_resource type="Script" path="res://scipts/GridRenderer.gd" id="7"]
+[ext_resource type="Script" path="res://scipts/BlobRenderer.gd" id="8_uiqh"]
 
 [node name="Main" type="Node" unique_id=81295403]
 
@@ -44,8 +44,8 @@ trail_duration = 10.0
 max_wave_radius = 400.0
 pattern_radius = 320.0
 pattern_spacing = 8.0
-diametro_circulo = 0.35
-ani_contraste = 3.0
+circle_diameter = 0.35
+contrast = 3.0
 
 [node name="BlobRenderer" type="Node2D" parent="Canvas" unique_id=208419136]
 script = ExtResource("8_uiqh")

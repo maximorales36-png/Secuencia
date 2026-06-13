@@ -1,18 +1,3 @@
-# ============================================================================
-# AudioManager.gd  |  v1.1
-# ============================================================================
-# Gestiona los eventos de audio via Wwise.
-#
-# AHORA USA GestorFamilias:
-#   • El nombre del evento Wwise se obtiene de GestorFamilias.get_sonido()
-#   • Cuando se cambie de familia, los sonidos cambian automáticamente
-#
-# CÓMO AGREGAR UNA NUEVA FAMILIA:
-#   Solo hace falta agregar los eventos Wwise correspondientes y
-#   configurarlos en GestorFamilias.gd → FAMILIAS
-#
-# ============================================================================
-
 extends Node
 class_name AudioManager
 
@@ -62,41 +47,36 @@ func _process(delta: float) -> void:
 
 
 ## Smooths and sends the Violet RTPC value to Wwise.
-## When no violet piece is detected, target = 100 (default / safe state).
-## Uses exponential smoothing with ~3s time constant.
+func _get_highest_y_for(color: String) -> float:
+	if scanline_logic == null:
+		return -1.0
+	var highest := 1.0
+	var found := false
+	for piece in scanline_logic.pieces:
+		if piece.color == color and piece.y < highest:
+			highest = piece.y
+			found = true
+	return highest if found else -1.0
+
+
 func _update_violet_rtpc(delta: float) -> void:
 	if scanline_logic == null:
 		return
-
-	var found := false
-	var highest_y := 1.0
-	for piece in scanline_logic.pieces:
-		if piece.color == "violet" and piece.y < highest_y:
-			highest_y = piece.y
-			found = true
-
-	if found:
+	var highest_y := _get_highest_y_for("violet")
+	if highest_y >= 0.0:
 		_violet_target = (1.0 - highest_y) * 100.0
 	else:
 		_violet_target = 100.0
-
 	var smoothing := 1.0 - exp(-delta * 1.0)
 	_violet_current = lerp(_violet_current, _violet_target, smoothing)
-
 	Wwise.set_rtpc_value(VIOLET_RTPC_NAME, _violet_current, self)
 
 
-## Smooths and sends the Green RTPC value to Wwise (half speed of violet).
 func _update_green_rtpc(delta: float) -> void:
 	if scanline_logic == null:
 		return
-	var found := false
-	var highest_y := 1.0
-	for piece in scanline_logic.pieces:
-		if piece.color == "neon_green" and piece.y < highest_y:
-			highest_y = piece.y
-			found = true
-	if found:
+	var highest_y := _get_highest_y_for("neon_green")
+	if highest_y >= 0.0:
 		_green_target = (1.0 - highest_y) * 100.0
 	else:
 		_green_target = 100.0
@@ -105,17 +85,11 @@ func _update_green_rtpc(delta: float) -> void:
 	Wwise.set_rtpc_value(GREEN_RTPC_NAME, _green_current, self)
 
 
-## Smooths and sends the Pink RTPC value to Wwise (half speed of violet).
 func _update_pink_rtpc(delta: float) -> void:
 	if scanline_logic == null:
 		return
-	var found := false
-	var highest_y := 1.0
-	for piece in scanline_logic.pieces:
-		if piece.color == "pink" and piece.y < highest_y:
-			highest_y = piece.y
-			found = true
-	if found:
+	var highest_y := _get_highest_y_for("pink")
+	if highest_y >= 0.0:
 		_pink_target = (1.0 - highest_y) * 100.0
 	else:
 		_pink_target = 100.0
@@ -134,21 +108,20 @@ func _on_cycle_reset() -> void:
 
 func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 	if GestorFamilias.familia_activa != "familia_1":
-		_reproducir_sonido(piece.color, piece.y)
+		_play_sound(piece.color, piece.y)
 		return
 	if piece.color == "yellow":
 		_handle_yellow(piece.y)
 	elif piece.color == "violet":
 		return
 	else:
-		_reproducir_sonido(piece.color, piece.y)
+		_play_sound(piece.color, piece.y)
 
 
 func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
-	_reproducir_sonido(color, y, sector_index)
+	_play_sound(color, y, sector_index)
 
 
-## Manejo especial del yellow (monofónico, con switches de nota)
 func _handle_yellow(y: float) -> void:
 	var note := clampi(7 - int(y * 8), 0, 7)
 	if note == yellow_note and yellow_active:
@@ -157,40 +130,29 @@ func _handle_yellow(y: float) -> void:
 	Wwise.set_switch(YELLOW_SWITCH_GROUP, YELLOW_SWITCH_VALUES[note], self)
 	if not yellow_active:
 		yellow_active = true
-		# El nombre del evento se obtiene del GestorFamilias
-		var evento: String = GestorFamilias.get_sonido("yellow")
+		var evento: String = GestorFamilias.get_sound("yellow")
 		if not evento.is_empty():
 			Wwise.post_event(evento, self)
 
 
-## Reproduce el sonido de un color en la posición Y dada.
-## Obtiene el nombre del evento Wwise desde GestorFamilias.
-## sector_index permite crear un cooldown único por sector+color
-## para que piezas del mismo color en sectores diferentes no se bloqueen.
-func _reproducir_sonido(color: String, y_position: float, sector_index: int = -1) -> void:
-	# Verificar que el color pertenezca a la familia activa
-	if not GestorFamilias.es_de_familia_activa(color):
+func _play_sound(color: String, y_position: float, sector_index: int = -1) -> void:
+	if not GestorFamilias.is_in_active_family(color):
 		print("[AudioManager] Color '%s' no está en la familia activa" % color)
 		return
 
-	# Cooldown por sector+color (evita que un color bloquee a todos)
-	var ahora := Time.get_ticks_msec() / 1000.0
+	var now := Time.get_ticks_msec() / 1000.0
 	var cooldown_key: String = color if sector_index < 0 else str(sector_index) + "_" + color
-	if color_cooldowns.has(cooldown_key) and ahora < color_cooldowns[cooldown_key]:
+	if color_cooldowns.has(cooldown_key) and now < color_cooldowns[cooldown_key]:
 		return
 
 	y_position = clampf(y_position, 0.0, 1.0)
 
-	# Obtener el nombre del evento Wwise desde la configuración de familia
-	var event_name: String = GestorFamilias.get_sonido(color)
+	var event_name: String = GestorFamilias.get_sound(color)
 	if event_name.is_empty():
 		print("[AudioManager] No hay evento Wwise configurado para '%s'" % color)
 		return
 
-	var rtpc_value := y_position * 100.0
-
 	Wwise.post_event(event_name, self)
-	Wwise.set_rtpc_value("Timbre", rtpc_value, self)
+	Wwise.set_rtpc_value("Timbre", y_position * 100.0, self)
 
-	# Cooldown = duración de un sector
-	color_cooldowns[cooldown_key] = ahora + scanline_logic.get_sector_duration()
+	color_cooldowns[cooldown_key] = now + scanline_logic.get_sector_duration()

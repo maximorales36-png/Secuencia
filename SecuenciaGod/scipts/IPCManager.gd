@@ -1,8 +1,6 @@
 extends Node
 ## IPCManager
 ## Lee datos de piezas desde archivo JSON compartido.
-## Alternativa a WebSocket que NO depende de red WiFi.
-## Python escribe → archivo → Godot lee (polling).
 
 const PIECE_TIMEOUT: float = 2.0
 
@@ -54,15 +52,9 @@ func _read_pieces() -> void:
 	if file == null:
 		return
 
-	var len = file.get_length()
-	if len <= 0:
-		file.close()
-		return
-
-	var bytes = file.get_buffer(len)
+	var text = file.get_as_text().strip_edges()
 	file.close()
 
-	var text = bytes.get_string_from_utf8().strip_edges()
 	if text.is_empty():
 		return
 
@@ -78,10 +70,11 @@ func _read_pieces() -> void:
 			pieces.clear()
 			for item in piezas_data:
 				if item is Dictionary:
-					var color = item.get("color", "unknown")
-					var x = float(item.get("x", 0))
-					var y = float(item.get("y", 0))
-					pieces.append(Piece.new(color, x, y))
+					pieces.append(Piece.new(
+						item.get("color", "unknown"),
+						float(item.get("x", 0)),
+						float(item.get("y", 0))
+					))
 
 			last_update_time = Time.get_ticks_msec() / 1000.0
 			pieces_updated.emit(pieces)

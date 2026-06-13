@@ -27,8 +27,7 @@ func _draw() -> void:
 	if viewport.x <= 0 or viewport.y <= 0:
 		return
 
-	var beat_value = 1.0
-	var divs = int(beats_per_cycle / beat_value)
+	var divs = beats_per_cycle
 
 	for i in range(divs + 1):
 		var x = (float(i) / divs) * viewport.x

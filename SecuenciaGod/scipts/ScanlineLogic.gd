@@ -15,14 +15,19 @@ var pieces: Array = []
 var triggered_keys: Dictionary = {}
 var ipc_manager: IPCManager
 
-# Sector logic (1 sector = 4 negras = 1 compas)
 const BEATS_PER_SECTOR: int = 4
 var sector_count: int = 0
-var sector_colors: Dictionary = {}  # sector_index -> {color_name: y, ...}
+var sector_colors: Dictionary = {}
 var triggered_sectors: Dictionary = {}
 var prev_sector: int = -1
 
 const CYCLE_RESET_THRESHOLD: float = 0.1
+const SECTOR_BASED_COLORS: Array = ["pink", "celeste", "neon_green"]
+
+const PIECE_TIMEOUT: float = 0.35
+const STABILIZE_SNAP: float = 0.015
+const SMOOTHING_FACTOR: float = 0.35
+var piece_memory: Dictionary = {}
 
 
 func _ready() -> void:
@@ -33,7 +38,7 @@ func _ready() -> void:
 	if ipc_manager:
 		ipc_manager.pieces_updated.connect(_on_pieces_updated)
 	else:
-		print("[ScanlineLogic] ERROR: No se encontr\u00f3 IPCManager")
+		print("[ScanlineLogic] ERROR: No se encontró IPCManager")
 
 
 func _process(delta: float) -> void:
@@ -52,19 +57,9 @@ func _process(delta: float) -> void:
 	_detect_sector_crossings()
 
 
-var sector_based_colors: Array = ["pink", "celeste", "neon_green"]
-
-# Piece memory / stabilization
-const PIECE_TIMEOUT: float = 0.35
-const STABILIZE_SNAP: float = 0.015
-const SMOOTHING_FACTOR: float = 0.35
-var piece_memory: Dictionary = {}
-
-
 func _on_pieces_updated(new_pieces: Array) -> void:
 	var now = Time.get_ticks_msec() / 1000.0
 
-	# Update memory with new detections
 	for p in new_pieces:
 		var key = str(p.color, "_", snapped(p.x, STABILIZE_SNAP))
 		if piece_memory.has(key):
@@ -80,7 +75,6 @@ func _on_pieces_updated(new_pieces: Array) -> void:
 				last_seen = now
 			}
 
-	# Remove expired entries
 	var expired := []
 	for key in piece_memory:
 		if now - piece_memory[key].last_seen > PIECE_TIMEOUT:
@@ -88,7 +82,6 @@ func _on_pieces_updated(new_pieces: Array) -> void:
 	for key in expired:
 		piece_memory.erase(key)
 
-	# Build stabilized pieces from memory
 	pieces.clear()
 	for key in piece_memory:
 		var mem = piece_memory[key]
@@ -101,7 +94,7 @@ func _on_pieces_updated(new_pieces: Array) -> void:
 func _update_sector_colors() -> void:
 	sector_colors.clear()
 	for piece in pieces:
-		if piece.color in sector_based_colors:
+		if piece.color in SECTOR_BASED_COLORS:
 			var sector = int(piece.x * sector_count)
 			if not sector_colors.has(sector):
 				sector_colors[sector] = {}
@@ -112,13 +105,11 @@ func _update_sector_colors() -> void:
 
 func _detect_crossings() -> void:
 	for piece in pieces:
-		if piece.color in sector_based_colors:
+		if piece.color in SECTOR_BASED_COLORS:
 			continue
-
 		if not prev_scan_position < piece.x or not scan_position >= piece.x:
 			continue
 
-		# For yellow at same X, only use the highest piece
 		if piece.color == "yellow":
 			var skip := false
 			for other in pieces:

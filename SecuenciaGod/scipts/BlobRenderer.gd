@@ -1,0 +1,547 @@
+extends Node2D
+class_name BlobRenderer
+
+@export var blob_radius_base: float = 30.0
+@export var max_wave_radius: float = 400.0
+@export var wave_duration: float = 1.5
+@export var trail_duration: float = 6.0
+@export var scan_line_aura: float = 60.0
+@export var scan_line_halo: float = 18.0
+@export var scan_line_core: float = 2.0
+@export var connection_threshold: float = 3.0
+
+var scanline_logic: ScanlineLogic
+var exp_waves: Array = []
+var mem_trails: Array = []
+var tracked_pieces: Dictionary = {}
+var pid_counter: int = 0
+var frame: int = 0
+var pattern_seed: float = 0.0
+var scan_progress: float = 0.0
+
+const PIECE_TIMEOUT: float = 0.5
+const TRAIL_BG_ALPHA_NIGHT: float = 0.13
+const TRAIL_BG_ALPHA_LIGHT: float = 0.18
+const BPM_DEFAULT: float = 76.0
+
+var is_night: bool = true
+var BPM: float = BPM_DEFAULT
+var BEAT: float = (60.0 / BPM_DEFAULT) * 1000.0
+var last_beat: float = 0.0
+
+# Temporal helpers for drawing
+var _viewport: Vector2 = Vector2.ZERO
+
+
+class BlobPiece:
+	var id: int
+	var color: String
+	var x: float
+	var y: float
+	var radius: float
+	var phase: float
+	var energy: float
+	var rings: int
+	var cool: int
+	var last_seen: float
+
+	func _init(p_id: int, p_color: String, p_x: float, p_y: float):
+		id = p_id
+		color = p_color
+		x = p_x
+		y = p_y
+		radius = 24.0 + randf() * 20.0
+		phase = randf() * TAU
+		energy = 1.0
+		rings = 2 + randi() % 3
+		cool = 0
+		last_seen = Time.get_ticks_msec() / 1000.0
+
+
+func _ready() -> void:
+	scanline_logic = get_tree().root.find_child("ScanlineLogic", true, false)
+	if scanline_logic:
+		scanline_logic.crossing_detected.connect(_on_crossing_detected)
+		scanline_logic.sector_activated.connect(_on_sector_activated)
+		scanline_logic.cycle_reset.connect(_on_cycle_reset)
+		BPM = scanline_logic.bpm
+		BEAT = (60.0 / maxf(BPM, 1.0)) * 1000.0
+	else:
+		print("[BlobRenderer] ERROR: No se encontr\u00f3 ScanlineLogic")
+
+	if IPCManager:
+		IPCManager.pieces_updated.connect(_on_pieces_updated)
+	else:
+		print("[BlobRenderer] ERROR: No se encontr\u00f3 IPCManager")
+
+
+func _process(delta: float) -> void:
+	if GestorFamilias.familia_activa != "familia_2":
+		return
+
+	frame += 1
+	pattern_seed += delta * 0.8
+
+	var ahora: float = Time.get_ticks_msec() / 1000.0
+
+	# Beat tracking
+	if last_beat == 0.0:
+		last_beat = ahora * 1000.0
+	if (ahora * 1000.0) - last_beat > BEAT:
+		last_beat += BEAT
+		scan_progress = 0.0
+
+	if BEAT > 0:
+		scan_progress = minf((ahora * 1000.0 - last_beat) / BEAT, 1.0)
+
+	# Update blobs
+	for key in tracked_pieces:
+		var bp: BlobPiece = tracked_pieces[key]
+		bp.phase += delta * 0.5
+		bp.energy *= 0.88
+		if bp.cool > 0:
+			bp.cool -= 1
+
+	# Update memory trails (como el HTML: life -= 0.002 por frame ≈ 8s total)
+	var keep_trails: Array = []
+	for t in mem_trails:
+		t.life -= 0.002
+		if t.life > 0:
+			keep_trails.append(t)
+	mem_trails = keep_trails
+
+	# Update expansive waves (como el HTML: speed se acelera con radio)
+	var keep_waves: Array = []
+	for w in exp_waves:
+		w.r += w.speed * (1.0 + w.r / w.max_r * 0.9)
+		var prog: float = w.r / w.max_r
+		w.life = maxf(0.0, 1.0 - pow(prog, 0.6))
+		if w.life > 0 and w.r < w.max_r * 1.1:
+			keep_waves.append(w)
+	exp_waves = keep_waves
+
+	queue_redraw()
+
+
+func _draw() -> void:
+	if GestorFamilias.familia_activa != "familia_2":
+		return
+
+	_viewport = get_viewport_rect().size
+	if _viewport.x <= 0 or _viewport.y <= 0:
+		return
+
+	var sx: float = scan_progress * _viewport.x
+
+	_draw_difuminado()
+	_draw_exp_waves()
+	_draw_mem_trails()
+	_draw_connections()
+	_draw_blobs()
+	_draw_labels()
+	_draw_scanline(sx)
+
+
+# ─── PIECE TRACKING ──────────────────────────────────────────────────────────
+
+func _on_pieces_updated(new_pieces: Array) -> void:
+	if GestorFamilias.familia_activa != "familia_2":
+		return
+
+	var ahora: float = Time.get_ticks_msec() / 1000.0
+	var seen_keys: Dictionary = {}
+
+	for p in new_pieces:
+		var col: String = p.color
+		if not GestorFamilias.es_de_familia(col, "familia_2"):
+			continue
+
+		var key: String = str(col, "_", snapped(p.x, 0.015))
+		seen_keys[key] = true
+
+		if tracked_pieces.has(key):
+			var bp: BlobPiece = tracked_pieces[key]
+			bp.x = lerp(bp.x, p.x, 0.35)
+			bp.y = lerp(bp.y, p.y, 0.35)
+			bp.last_seen = ahora
+		else:
+			var bp := BlobPiece.new(pid_counter, col, p.x, p.y)
+			bp.last_seen = ahora
+			tracked_pieces[key] = bp
+			pid_counter += 1
+
+	# Remove timed-out pieces
+	var expired: Array = []
+	for key in tracked_pieces:
+		if ahora - tracked_pieces[key].last_seen > PIECE_TIMEOUT:
+			expired.append(key)
+	for key in expired:
+		tracked_pieces.erase(key)
+
+
+func _on_crossing_detected(piece: IPCManager.Piece) -> void:
+	if GestorFamilias.familia_activa != "familia_2":
+		return
+	if not GestorFamilias.es_de_familia(piece.color, "familia_2"):
+		return
+
+	var bp: BlobPiece = _find_piece(piece.color, piece.x, piece.y)
+	if bp != null:
+		bp.energy = 1.0
+		bp.cool = 7
+		_spawn_effects(piece)
+
+
+func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
+	if GestorFamilias.familia_activa != "familia_2":
+		return
+	if not GestorFamilias.es_de_familia(color, "familia_2"):
+		return
+
+	var viewport := get_viewport_rect().size
+	if viewport.x <= 0:
+		return
+
+	if scanline_logic:
+		var s_count: int = scanline_logic.get_sector_count()
+		if s_count > 0:
+			var sec_w: float = viewport.x / s_count
+			var cx: float = (sector_index + 0.5) * sec_w
+			var cy: float = y * viewport.y
+
+			_spawn_effects_at(Vector2(cx, cy), color)
+
+
+func _on_cycle_reset() -> void:
+	mem_trails.clear()
+	exp_waves.clear()
+
+
+func _spawn_effects(piece: IPCManager.Piece) -> void:
+	var viewport := get_viewport_rect().size
+	var center := Vector2(piece.x * viewport.x, piece.y * viewport.y)
+	_spawn_effects_at(center, piece.color)
+
+
+func _spawn_effects_at(center: Vector2, color_name: String) -> void:
+	var col_arr: Array = GestorFamilias.get_html_color(color_name)
+	var drift_arr: Array = GestorFamilias.get_html_drift(color_name)
+
+	# Create memory trails
+	var trails_count: int = 4
+	var phase_base: float = randf() * TAU
+	for k in range(trails_count):
+		mem_trails.append({
+			x = center.x,
+			y = center.y,
+			r = 30.0 + randf() * 20.0,
+			col = col_arr.duplicate(),
+			drift = drift_arr.duplicate(),
+			phase = phase_base + float(k) * 0.4,
+			life = 1.0,
+		})
+
+	# Create expansive wave
+	var w_max_r: float = sqrt(_viewport.x * _viewport.x + _viewport.y * _viewport.y) * 0.85
+	exp_waves.append({
+		x = center.x,
+		y = center.y,
+		col = col_arr.duplicate(),
+		drift = drift_arr.duplicate(),
+		r = 0.0,
+		max_r = w_max_r,
+		life = 1.0,
+		speed = 2.2 + randf() * 1.2,
+		phase = randf() * TAU,
+	})
+
+
+# ─── PIECE LOOKUP ──────────────────────────────────────────────────────────
+
+func _find_piece(color: String, x: float, y: float) -> BlobPiece:
+	var best: BlobPiece = null
+	var best_dist: float = 0.05
+	for key in tracked_pieces:
+		var bp: BlobPiece = tracked_pieces[key]
+		if bp.color != color:
+			continue
+		var dist: float = sqrt(pow(bp.x - x, 2.0) + pow(bp.y - y, 2.0))
+		if dist < best_dist:
+			best_dist = dist
+			best = bp
+	return best
+
+
+# ─── COLOR HELPERS ──────────────────────────────────────────────────────────
+
+static func lerp_col(a: Array, b: Array, t: float) -> Array:
+	return [
+		roundi(a[0] + (b[0] - a[0]) * t),
+		roundi(a[1] + (b[1] - a[1]) * t),
+		roundi(a[2] + (b[2] - a[2]) * t),
+	]
+
+static func _rgb(c: Array, a: float = 1.0) -> Color:
+	return Color(c[0] / 255.0, c[1] / 255.0, c[2] / 255.0, a)
+
+
+# ─── NOISE ──────────────────────────────────────────────────────────────────
+
+static func _fbm(x: float, y: float, t: float) -> float:
+	return (
+		sin(x * 1.7 + t) * cos(y * 1.3 - t * 0.7)
+		+ sin(x * 3.1 - t * 1.1) * 0.5
+		+ cos(y * 2.9 + t * 0.4) * 0.25
+	)
+
+
+# ─── DRAW: DIFUMINADO DE FONDO (TRAIL) ─────────────────────────────────────
+
+func _draw_difuminado() -> void:
+	var bg_a: float = TRAIL_BG_ALPHA_NIGHT if is_night else TRAIL_BG_ALPHA_LIGHT
+	var bg_col: Color
+	if is_night:
+		bg_col = Color(0.024, 0.024, 0.039, bg_a)
+	else:
+		bg_col = Color(0.91, 0.91, 0.94, bg_a)
+	draw_rect(Rect2(0, 0, _viewport.x, _viewport.y), bg_col)
+
+
+# ─── DRAW: MEMORY TRAILS ────────────────────────────────────────────────────
+
+func _draw_mem_trails() -> void:
+	for t in mem_trails:
+		var age: float = 1.0 - t.life
+		var dc: Array = lerp_col(t.col, t.drift, 0.1 + age * 0.35)
+		var alpha: float = t.life * 0.08
+		var rr: float = t.r * (1.4 + age * 1.8)
+		var col: Color = _rgb(dc, alpha)
+
+		var pts: int = 14
+		var poly: PackedVector2Array = []
+		for j in range(pts):
+			var ang: float = (float(j) / float(pts)) * TAU + t.phase + age * 0.2
+			var n: float = 1.0 + sin(float(j) * 2.3 + age * 3.0 + t.phase) * 0.12
+			var px: float = t.x + cos(ang) * rr * n
+			var py: float = t.y + sin(ang) * rr * n * 0.86
+			poly.append(Vector2(px, py))
+		draw_colored_polygon(poly, col)
+
+
+# ─── DRAW: EXPANSIVE WAVES ─────────────────────────────────────────────────
+
+func _draw_exp_waves() -> void:
+	for w in exp_waves:
+		var dc: Array = lerp_col(w.col, w.drift, (w.r / maxf(w.max_r, 1.0)) * 0.5)
+		var pts: int = 24
+
+		# Ring 1 (outer)
+		var alpha1: float = w.life * 0.025
+		if alpha1 > 0.005:
+			var col1: Color = _rgb(dc, alpha1)
+			var poly1: PackedVector2Array = []
+			for j in range(pts):
+				var ang: float = (float(j) / float(pts)) * TAU + w.phase
+				var n: float = 1.0 + sin(float(j) * 2.1 + w.r * 0.007 + w.phase) * (0.055 + w.life * 0.07)
+				var px: float = w.x + cos(ang) * w.r * n
+				var py: float = w.y + sin(ang) * w.r * n * 0.88
+				poly1.append(Vector2(px, py))
+			draw_colored_polygon(poly1, col1)
+
+		# Ring 2 (inner)
+		var alpha2: float = w.life * 0.045
+		if alpha2 > 0.005:
+			var col2: Color = _rgb(dc, alpha2)
+			var r2: float = w.r * 0.87
+			var poly2: PackedVector2Array = []
+			for j in range(pts):
+				var ang: float = (float(j) / float(pts)) * TAU - w.phase * 0.6
+				var n: float = 1.0 + sin(float(j) * 3.4 + w.r * 0.005) * 0.06
+				var px: float = w.x + cos(ang) * r2 * n
+				var py: float = w.y + sin(ang) * r2 * n * 0.9
+				poly2.append(Vector2(px, py))
+			draw_colored_polygon(poly2, col2)
+
+		# Ring 3 (drift color, thin)
+		var alpha3: float = w.life * 0.03
+		if alpha3 > 0.005:
+			var col3: Color = _rgb(w.drift, alpha3)
+			var r3: float = w.r * 0.93
+			var poly3: PackedVector2Array = []
+			for j in range(pts):
+				var ang: float = (float(j) / float(pts)) * TAU + w.phase * 1.3
+				var n: float = 1.0 + sin(float(j) * 1.8 + w.r * 0.009) * 0.07
+				var px: float = w.x + cos(ang) * r3 * n
+				var py: float = w.y + sin(ang) * r3 * n * 0.86
+				poly3.append(Vector2(px, py))
+			draw_colored_polygon(poly3, col3)
+
+
+# ─── DRAW: CONNECTION LINES ─────────────────────────────────────────────────
+
+func _draw_connections() -> void:
+	var blob_list: Array = tracked_pieces.values()
+	for i in range(blob_list.size()):
+		var a: BlobPiece = blob_list[i]
+		var ax: float = a.x * _viewport.x
+		var ay: float = a.y * _viewport.y
+		var a_col_arr: Array = GestorFamilias.get_html_color(a.color)
+
+		for j in range(i + 1, blob_list.size()):
+			var b: BlobPiece = blob_list[j]
+			var dx: float = (b.x - a.x) * _viewport.x
+			var dy: float = (b.y - a.y) * _viewport.y
+			var d: float = sqrt(dx * dx + dy * dy)
+			var thr: float = (a.radius + b.radius) * connection_threshold
+
+			if d < thr:
+				var alpha: float = (1.0 - d / thr) * 0.1
+				var col: Color = _rgb(a_col_arr, alpha * 0.6)
+				draw_line(Vector2(ax, ay), Vector2(ax + dx, ay + dy), col, 0.35)
+
+
+# ─── DRAW: BLOBS ────────────────────────────────────────────────────────────
+
+func _draw_blobs() -> void:
+	for key in tracked_pieces:
+		var bp: BlobPiece = tracked_pieces[key]
+		var sx: float = bp.x * _viewport.x
+		var sy: float = bp.y * _viewport.y
+		_draw_blob(sx, sy, bp.radius, bp.color, bp.phase, bp.energy, bp.rings)
+
+
+func _draw_blob(x: float, y: float, r: float, color_name: String, phase: float, energy: float, rings: int) -> void:
+	var col_arr: Array = GestorFamilias.get_html_color(color_name)
+	var drift_arr: Array = GestorFamilias.get_html_drift(color_name)
+	var bc: Array = lerp_col(col_arr, drift_arr, 0.06 + energy * 0.22)
+
+	# Outer rings
+	for ring in range(rings, -1, -1):
+		var rr: float = r * (1.0 + float(ring) * 0.72)
+		var base_a: float = (0.48 - float(ring) * 0.08) * (0.22 + energy * 1.15)
+		if base_a <= 0.0:
+			continue
+		base_a = clampf(base_a, 0.0, 1.0)
+
+		var pts: int = 12 + ring * 3
+
+		var poly: PackedVector2Array = []
+		for i in range(pts + 1):
+			var ang: float = (float(i) / float(pts)) * TAU + phase * (1.0 if ring % 2 == 0 else -0.55)
+			var n1: float = sin(float(i) * 2.1 + float(frame) * 0.013 + phase) * (0.13 + energy * 0.22)
+			var n2: float = sin(float(i) * 4.3 - float(frame) * 0.021 + phase * 1.7) * (0.06 + energy * 0.09)
+			var n3: float = _fbm(cos(ang), sin(ang), float(frame) * 0.008 + float(ring)) * (0.05 + energy * 0.07)
+			var nr: float = 1.0 + n1 + n2 + n3
+			var px: float = x + cos(ang) * rr * nr
+			var py: float = y + sin(ang) * rr * nr * 0.84
+			poly.append(Vector2(px, py))
+
+		var c: Color = _rgb(bc, base_a)
+		draw_colored_polygon(poly, c)
+
+	# Inner glow
+	var glow_a: float = clampf(0.28 + energy * 0.38, 0.0, 1.0)
+	var glow_col: Color = _rgb(bc, glow_a * 0.7)
+	var glow_r: float = r * 0.35
+	var glow_pts: int = 8
+	var glow_poly: PackedVector2Array = []
+	for i in range(glow_pts + 1):
+		var ang: float = (float(i) / float(glow_pts)) * TAU + phase
+		var nr: float = 1.0 + sin(float(i) * 3.1 + float(frame) * 0.02) * 0.15
+		var px: float = x + cos(ang) * glow_r * nr
+		var py: float = y + sin(ang) * glow_r * nr
+		glow_poly.append(Vector2(px, py))
+	draw_colored_polygon(glow_poly, glow_col)
+
+	# Outer glow cuando hay energía alta (hit)
+	if energy > 0.3:
+		var t_r: float = r * 0.9
+		var t_poly: PackedVector2Array = []
+		for i in range(12):
+			var ang: float = (float(i) / 12.0) * TAU + phase
+			var n: float = 1.0 + sin(float(i) * 1.5 + float(frame) * 0.01) * 0.1
+			var px: float = x + cos(ang) * t_r * n
+			var py: float = y + sin(ang) * t_r * n * 0.84
+			t_poly.append(Vector2(px, py))
+		var t_col: Color = _rgb(bc, energy * 0.04)
+		draw_colored_polygon(t_poly, t_col)
+
+
+# ─── DRAW: SCAN LINE ───────────────────────────────────────────────────────
+
+func _draw_scanline(sx: float) -> void:
+	var has_pieces: bool = tracked_pieces.size() > 0
+	var base_a: float = 0.025 + (0.02 if has_pieces else 0.0)
+
+	var layers: Array = [
+		[scan_line_aura, base_a * 0.3],
+		[scan_line_halo, base_a * 0.6],
+		[scan_line_core, base_a * 1.0],
+	]
+
+	for layer in layers:
+		var w: float = layer[0]
+		var a: float = layer[1]
+		if a <= 0.0:
+			continue
+		var col: Color = Color(1.0, 1.0, 1.0, a)
+		draw_rect(Rect2(sx - w, 0, w * 2.0, _viewport.y), col)
+
+
+# ─── DRAW: FLOATING LABELS ─────────────────────────────────────────────────
+
+func _draw_labels() -> void:
+	var font: Font = ThemeDB.fallback_font
+	if font == null:
+		return
+
+	for key in tracked_pieces:
+		var bp: BlobPiece = tracked_pieces[key]
+		var sx: float = bp.x * _viewport.x
+		var sy: float = bp.y * _viewport.y
+		var col_arr: Array = GestorFamilias.get_html_color(bp.color)
+		var col: Color = _rgb(col_arr, 0.7)
+		var label_y: float = sy - bp.radius - 8.0
+		var label_x: float = sx
+
+		var atom_def: Dictionary = GestorFamilias.get_html_atom_def(bp.color)
+		var freq: float = atom_def.get("freq", 0.0)
+		var y_norm: float = 1.0 - bp.y
+		var actual_freq: float = freq * (0.4 + y_norm * 2.2)
+		var inst: String = atom_def.get("inst", "")
+		var x_pct: int = roundi(bp.x * 100.0)
+		var y_pct: int = roundi(y_norm * 100.0)
+
+		# Bracket + instrument
+		var line1: String = "[%s]" % inst
+		var line2: String = "[%d hz]" % roundi(actual_freq)
+		var line3: String = "[x:%d%% y:%d%%]" % [x_pct, y_pct]
+
+		var font_size: int = 7
+		var line_h: float = 10.0
+
+		draw_string(font, Vector2(label_x, label_y), line1, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, col)
+		draw_string(font, Vector2(label_x, label_y + line_h), line2, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, col)
+		draw_string(font, Vector2(label_x, label_y + line_h * 2.0), line3, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, col)
+
+		# Small connector line
+		var conn_y: float = label_y + line_h * 2.5
+		var conn_col: Color = _rgb(col_arr, 0.2)
+		draw_line(Vector2(label_x, conn_y), Vector2(sx, sy - bp.radius), conn_col, 0.5)
+
+
+# ─── NIGHT/LIGHT MODE ──────────────────────────────────────────────────────
+
+func toggle_mode() -> void:
+	is_night = not is_night
+
+
+func set_night(enabled: bool) -> void:
+	is_night = enabled
+
+
+# ─── BPM ───────────────────────────────────────────────────────────────────
+
+func set_bpm(new_bpm: float) -> void:
+	BPM = new_bpm
+	BEAT = (60.0 / maxf(BPM, 1.0)) * 1000.0

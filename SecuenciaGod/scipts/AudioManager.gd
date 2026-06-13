@@ -133,6 +133,9 @@ func _on_cycle_reset() -> void:
 
 
 func _on_crossing_detected(piece: IPCManager.Piece) -> void:
+	if GestorFamilias.familia_activa != "familia_1":
+		_reproducir_sonido(piece.color, piece.y)
+		return
 	if piece.color == "yellow":
 		_handle_yellow(piece.y)
 	elif piece.color == "violet":

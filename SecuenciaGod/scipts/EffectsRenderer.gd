@@ -163,6 +163,8 @@ func _process(delta: float) -> void:
 ## Las piezas melódicas son las que NO son sectoriales (actualmente: yellow).
 ## Crea una onda expansiva + estela en la posición de la pieza.
 func _on_crossing_detected(piece: IPCManager.Piece) -> void:
+	if GestorFamilias.familia_activa != "familia_1":
+		return
 	if not GestorFamilias.es_de_familia_activa(piece.color):
 		return
 	if piece.color == "violet":
@@ -175,10 +177,9 @@ func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 	print("[EffectsRenderer] Cruzó %s en (%.2f, %.2f)" % [piece.color, piece.x, piece.y])
 
 
-## Se llama cuando se ACTIVA UN SECTOR (compás completo).
-## Las piezas sectoriales (pink, celeste, neon_green) se activan así.
-## Crea una onda expansiva + estela ORGÁNICA con forma de sector.
 func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
+	if GestorFamilias.familia_activa != "familia_1":
+		return
 	if not GestorFamilias.es_de_familia_activa(color):
 		return
 
@@ -190,7 +191,6 @@ func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
 	var center_x: float = (sector_index + 0.5) * sector_width
 	var center := Vector2(center_x, y * viewport.y)
 
-	# Pasar sector_index para que cree estela con forma orgánica sectorial
 	_crear_efecto(color, center, sector_index, y)
 	sector_pulses[sector_index] = Time.get_ticks_msec() / 1000.0
 

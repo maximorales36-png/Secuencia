@@ -121,33 +121,36 @@ name = "Default Work Unit"
 id = 125608783
 
 [sub_resource type="WwiseTreeObject" id="WwiseTreeObject_yyrou"]
-path = "\\Busses\\Default Work Unit\\Main Audio Bus\\Del"
-type = 1
-name = "Del"
-guid = "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}"
-id = 378875104
-
-[sub_resource type="WwiseTreeObject" id="WwiseTreeObject_geu6g"]
-path = "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev"
-type = 1
-name = "Rev"
-guid = "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
-id = 980603520
-
-[sub_resource type="WwiseTreeObject" id="WwiseTreeObject_5n8hf"]
-children = [SubResource("WwiseTreeObject_yyrou"), SubResource("WwiseTreeObject_geu6g")]
-name = "Main Audio Bus"
-id = 2246998526
-
-[sub_resource type="WwiseTreeObject" id="WwiseTreeObject_tnib1"]
 path = "\\Busses\\Default Work Unit\\D&B"
 type = 2
 name = "D&B"
 guid = "{F106DCD1-D1ED-4055-8C16-71BC7C877A75}"
 id = 3650407655
 
+[sub_resource type="WwiseTreeObject" id="WwiseTreeObject_geu6g"]
+path = "\\Busses\\Default Work Unit\\Main Audio Bus\\Del"
+type = 1
+name = "Del"
+guid = "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}"
+id = 378875104
+
+[sub_resource type="WwiseTreeObject" id="WwiseTreeObject_5n8hf"]
+path = "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev"
+type = 1
+name = "Rev"
+guid = "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
+id = 980603520
+
+[sub_resource type="WwiseTreeObject" id="WwiseTreeObject_tnib1"]
+path = "\\Busses\\Default Work Unit\\Main Audio Bus"
+children = [SubResource("WwiseTreeObject_geu6g"), SubResource("WwiseTreeObject_5n8hf")]
+type = 2
+name = "Main Audio Bus"
+guid = "{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"
+id = 2246998526
+
 [sub_resource type="WwiseTreeObject" id="WwiseTreeObject_o7sea"]
-children = [SubResource("WwiseTreeObject_5n8hf"), SubResource("WwiseTreeObject_tnib1")]
+children = [SubResource("WwiseTreeObject_yyrou"), SubResource("WwiseTreeObject_tnib1")]
 name = "Default Work Unit"
 id = 125608783
 

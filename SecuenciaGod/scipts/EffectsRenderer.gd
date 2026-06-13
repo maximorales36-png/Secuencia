@@ -12,7 +12,6 @@
 #     agregar caso en _evaluar_patron()
 #
 # ============================================================================
-
 extends Node2D
 class_name EffectsRenderer
 
@@ -174,7 +173,6 @@ func _update_trails(ahora: float) -> void:
 # ============================================================================
 # SECCIÓN 6.5: SATURACIÓN CONTROLADA POR VIOLETA
 # ============================================================================
-# Violeta es un controlador global. Cuando está cerca del borde inferior
 func _update_violet_saturation() -> void:
 	if scanline_logic == null:
 		_violet_saturation = 1.0

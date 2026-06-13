@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SECUENCIA v6</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{overflow:hidden;font-family:'Courier New',monospace;transition:background .4s}
+body.night{background:#06060a;--bg:6,6,10;--surface:9,9,15;--border:255,255,255;--text:255,255,255;--text-dim:0.15;--text-mid:0.35}
+body.light{background:#e8e8f0;--bg:232,232,240;--surface:220,220,232;--border:0,0,20;--text:0,0,20;--text-dim:0.18;--text-mid:0.5}
+
+#wrap{width:100vw;height:100vh;display:flex}
+
+#sidebar{
+  width:72px;min-width:72px;
+  background:rgba(var(--surface),0.95);
+  border-right:1px solid rgba(var(--border),0.04);
+  display:flex;flex-direction:column;align-items:center;
+  padding:14px 0 10px;gap:6px;z-index:20;overflow-y:auto;
+  transition:background .4s,border-color .4s
+}
+.sid-label{font-size:7px;color:rgba(var(--text),var(--text-dim));letter-spacing:.2em;text-transform:uppercase;margin-bottom:3px}
+.atom-src{
+  width:34px;height:34px;border-radius:50%;
+  cursor:grab;flex-shrink:0;
+  transition:transform .2s;position:relative
+}
+.atom-src:hover{transform:scale(1.12)}
+.atom-src::after{content:'';position:absolute;inset:0;border-radius:50%;border:1px solid rgba(var(--border),0.08)}
+
+.s-sep{width:26px;height:1px;background:rgba(var(--border),0.04);margin:3px 0;flex-shrink:0}
+
+#bpm-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0}
+#bpm-label{font-size:7px;color:rgba(var(--text),var(--text-dim));letter-spacing:.15em;text-transform:uppercase}
+#bpm-knob{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(var(--border),0.03);
+  border:1px solid rgba(var(--border),0.07);
+  cursor:ns-resize;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0
+}
+#bpm-needle{
+  position:absolute;width:2px;height:9px;  
+  background:rgba(var(--text),0.22);  
+  border-radius:2px;transform-origin:50% 100%;  
+  top:5px;left:50%;margin-left:-1px;  
+  transition:transform .05s  
+}  
+#bpm-val{font-size:8px;color:rgba(var(--text),0.22);letter-spacing:.08em}  
+  
+#mode-btn{  
+  width:34px;height:20px;border-radius:10px;  
+  border:1px solid rgba(var(--border),0.08);  
+  background:rgba(var(--border),0.04);
+  cursor:pointer;font-size:8px;
+  color:rgba(var(--text),0.22);letter-spacing:.05em;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .2s
+}
+#mode-btn:hover{color:rgba(var(--text),0.5)}
+
+#info-panel{
+  width:100%;padding:6px 5px 4px;
+  border-top:1px solid rgba(var(--border),0.04);
+  display:flex;flex-direction:column;gap:2px;
+  margin-top:auto;flex-shrink:0
+}
+.ir{font-size:6.5px;color:rgba(var(--text),0.12);letter-spacing:.08em;text-align:center;line-height:1.6;text-transform:uppercase}
+.ir b{color:rgba(74,240,212,0.45);font-weight:400}
+body.light .ir b{color:rgba(0,120,180,0.7)}
+
+#clr{
+  width:30px;height:30px;border-radius:4px;
+  border:1px solid rgba(var(--border),0.05);
+  background:transparent;color:rgba(var(--text),0.12);
+  font-size:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;flex-shrink:0
+}
+#clr:hover{border-color:rgba(240,70,70,.2);color:rgba(240,70,70,.3)}
+
+#mesa{flex:1;position:relative;overflow:hidden}
+canvas{position:absolute;inset:0;width:100%;height:100%}
+
+#grid-overlay{
+  position:absolute;inset:0;pointer-events:none;z-index:2;
+  background-image:
+    linear-gradient(rgba(var(--border),0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--border),0.015) 1px, transparent 1px);
+  background-size:48px 48px;
+}
+
+
+.corner{position:absolute;width:18px;height:18px;pointer-events:none;z-index:3}
+.corner.tl{top:12px;left:12px;border-top:1px solid rgba(var(--border),0.18);border-left:1px solid rgba(var(--border),0.18)}
+.corner.tr{top:12px;right:12px;border-top:1px solid rgba(var(--border),0.18);border-right:1px solid rgba(var(--border),0.18)}
+.corner.bl{bottom:12px;left:12px;border-bottom:1px solid rgba(var(--border),0.18);border-left:1px solid rgba(var(--border),0.18)}
+.corner.br{bottom:12px;right:12px;border-bottom:1px solid rgba(var(--border),0.18);border-right:1px solid rgba(var(--border),0.18)}
+
+#hud-bottom{
+  position:absolute;bottom:0;left:0;right:0;
+  height:28px;pointer-events:none;z-index:4;
+  display:flex;align-items:center;gap:20px;
+  padding:0 16px;
+  border-top:1px solid rgba(var(--border),0.05);
+  background:rgba(var(--bg),0.6)
+}
+.hb{font-size:7px;color:rgba(var(--text),0.18);letter-spacing:.15em;text-transform:uppercase}
+.hb b{color:rgba(var(--text),0.32);font-weight:400}
+.hb-sep{width:1px;height:10px;background:rgba(var(--border),0.08)}
+
+
+#hud-tr{
+  position:absolute;top:12px;right:16px;z-index:4;
+  pointer-events:none;
+  display:flex;flex-direction:column;align-items:flex-end;gap:3px
+}
+.ht{font-size:7px;color:rgba(var(--text),0.18);letter-spacing:.12em;text-transform:uppercase}
+.ht b{color:rgba(74,240,212,0.4);font-weight:400}
+body.light .ht b{color:rgba(0,120,180,0.6)}
+
+#labels-layer{position:absolute;inset:0;pointer-events:none;z-index:5}
+.float-label{
+  position:absolute;pointer-events:none;
+  transform:translate(-50%,-100%);
+  display:flex;flex-direction:column;align-items:flex-start;gap:1px
+}
+.fl-line{
+  display:flex;align-items:center;gap:5px;
+  font-size:7px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(var(--text),0.35);
+  white-space:nowrap
+}
+.fl-bracket{color:rgba(var(--text),0.18)}
+.fl-val{color:rgba(var(--text),0.55)}
+.fl-connector{
+  width:1px;height:18px;
+  background:linear-gradient(rgba(var(--border),0.2),rgba(var(--border),0));
+  margin-left:3px
+}
+
+#ghost{position:fixed;pointer-events:none;display:none;width:34px;height:34px;border-radius:50%;transform:translate(-50%,-50%);z-index:999}
+</style>
+</head>
+<body class="night">
+<div id="wrap">
+  <div id="sidebar">
+    <div class="sid-label">átomos</div>
+  </div>
+  <div id="mesa">
+    <canvas id="c"></canvas>
+    <div id="grid-overlay"></div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+    <div id="labels-layer"></div>
+    <div id="hud-bottom">
+      <div class="hb">secuencia <b>v0.1</b></div>
+      <div class="hb-sep"></div>
+      <div class="hb" id="hb-atoms">átomos <b>0</b></div>
+      <div class="hb-sep"></div>
+      <div class="hb" id="hb-waves">ondas <b>0</b></div>
+      <div class="hb-sep"></div>
+      <div class="hb">↑↓ tono</div>
+      <div class="hb-sep"></div>
+      <div class="hb">←→ tiempo</div>
+      <div class="hb-sep"></div>
+      <div class="hb">rclick eliminar</div>
+    </div>
+    <div id="hud-tr">
+      <div class="ht" id="ht-bpm">bpm <b>76</b></div>
+      <div class="ht" id="ht-scan">scan <b>0%</b></div>
+      <div class="ht" id="ht-mode">mode <b>night</b></div>
+    </div>
+  </div>
+</div>
+<div id="ghost"></div>
+
+<script>
+const DEFS=[
+  {id:'cyan',  col:[74,240,212], drift:[30,140,255], synth:'sine',     freq:528, name:'ether',   inst:'sine osc',  wave:'∿'},
+  {id:'yell',  col:[240,215,55], drift:[255,160,30], synth:'triangle', freq:396, name:'pulse',   inst:'tri osc',   wave:'△'},
+  {id:'green', col:[90,240,90],  drift:[40,200,120], synth:'sawtooth', freq:264, name:'organic', inst:'saw osc',   wave:'⊿'},
+  {id:'vio',   col:[176,74,240], drift:[220,50,180], synth:'square',   freq:792, name:'crystal', inst:'sqr osc',   wave:'□'},
+  {id:'red',   col:[240,65,65],  drift:[255,130,20], synth:'sine',     freq:132, name:'deep',    inst:'sub sine',  wave:'∿'},
+];
+
+let BPM=76, BEAT=(60/BPM)*1000, lastBeat=performance.now(), scanProgress=0;
+let isNight=true;
+
+function lerpCol(a,b,t){return[Math.round(a[0]+(b[0]-a[0])*t),Math.round(a[1]+(b[1]-a[1])*t),Math.round(a[2]+(b[2]-a[2])*t)];}
+function rgb(c,a=1){return `rgba(${c[0]},${c[1]},${c[2]},${a})`;}
+function fbm(x,y,t){return Math.sin(x*1.7+t)*Math.cos(y*1.3-t*0.7)+Math.sin(x*3.1-t*1.1)*0.5+Math.cos(y*2.9+t*0.4)*0.25;}
+
+const sidebar=document.getElementById('sidebar');
+
+DEFS.forEach(d=>{
+  const el=document.createElement('div');
+  el.className='atom-src';el.dataset.id=d.id;el.title=d.name;
+  el.style.background=`radial-gradient(circle at 38% 32%, rgba(${d.col},0.92) 0%, rgba(${d.col},0.18) 60%, rgba(${d.col},0.04) 100%)`;
+  el.style.boxShadow=`0 0 14px rgba(${d.col},0.22)`;
+  sidebar.appendChild(el);
+});
+
+function mkSep(){const s=document.createElement('div');s.className='s-sep';sidebar.appendChild(s);}
+mkSep();
+
+const bw=document.createElement('div');bw.id='bpm-wrap';
+bw.innerHTML=`<div id="bpm-label">bpm</div><div id="bpm-knob"><div id="bpm-needle"></div></div><div id="bpm-val">76</div>`;
+sidebar.appendChild(bw);
+mkSep();
+
+
+const mb=document.createElement('button');mb.id='mode-btn';mb.textContent='☀';mb.title='toggle mode';
+sidebar.appendChild(mb);
+mkSep();
+
+const ip=document.createElement('div');ip.id='info-panel';
+['inst','freq','pos','band'].forEach(k=>{
+  const r=document.createElement('div');r.className='ir';r.id='ir-'+k;
+  r.innerHTML=`<span>${k}</span><br><b>—</b>`;
+  ip.appendChild(r);
+});
+sidebar.appendChild(ip);
+mkSep();
+
+const clr=document.createElement('button');clr.id='clr';clr.innerHTML='✕';sidebar.appendChild(clr);
+
+function setInfo(k,v){const el=document.getElementById('ir-'+k);if(el)el.innerHTML=`<span>${k}</span><br><b>${v}</b>`;}
+
+const bpmKnob=document.getElementById('bpm-knob');
+const bpmNeedle=document.getElementById('bpm-needle');
+const bpmVal=document.getElementById('bpm-val');
+let knobDrag=false,knobY0=0,knobBPM0=BPM;
+function updateKnob(){
+  const rot=-135+((BPM-40)/(180-40))*270;
+  bpmNeedle.style.transform=`rotate(${rot}deg)`;
+  bpmVal.textContent=BPM;
+  document.getElementById('ht-bpm').innerHTML=`bpm <b>${BPM}</b>`;
+}
+updateKnob();
+bpmKnob.addEventListener('mousedown',e=>{knobDrag=true;knobY0=e.clientY;knobBPM0=BPM;e.preventDefault();});
+window.addEventListener('mousemove',e=>{
+  if(!knobDrag)return;
+  BPM=Math.max(40,Math.min(180,Math.round(knobBPM0+(knobY0-e.clientY)*0.5)));
+  BEAT=(60/BPM)*1000;updateKnob();setInfo('band',BPM+' bpm');
+});
+window.addEventListener('mouseup',()=>{knobDrag=false;});
+
+mb.addEventListener('click',()=>{
+  isNight=!isNight;
+  document.body.className=isNight?'night':'light';
+  mb.textContent=isNight?'☀':'☾';
+  document.getElementById('ht-mode').innerHTML=`mode <b>${isNight?'night':'light'}</b>`;
+});
+
+// Audio
+let ac=null;
+function getAC(){if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();return ac;}
+function playAtom(def,x,y,W,H){
+  const a=getAC(),t=a.currentTime;
+  const yN=1-(y/H),xN=x/W;
+  const freq=def.freq*(0.4+yN*2.2);
+  const osc=a.createOscillator(),gain=a.createGain(),filt=a.createBiquadFilter();
+  osc.type=def.synth;osc.frequency.setValueAtTime(freq,t);
+  filt.type='bandpass';filt.frequency.setValueAtTime(freq*1.15,t);filt.Q.value=3.5;
+  gain.gain.setValueAtTime(0.001,t);
+  gain.gain.linearRampToValueAtTime(0.07+xN*0.03,t+0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001,t+0.75);
+  const verb=a.createConvolver();
+  const buf=a.createBuffer(2,Math.floor(a.sampleRate*0.9),a.sampleRate);
+  for(let i=0;i<2;i++){const d=buf.getChannelData(i);for(let j=0;j<d.length;j++)d[j]=(Math.random()*2-1)*Math.pow(1-j/d.length,2);}
+  verb.buffer=buf;
+  const dry=a.createGain(),wet=a.createGain();dry.gain.value=0.58;wet.gain.value=0.4;
+  osc.connect(filt);filt.connect(gain);
+  gain.connect(dry);dry.connect(a.destination);
+  gain.connect(verb);verb.connect(wet);wet.connect(a.destination);
+  osc.start(t);osc.stop(t+0.8);
+}
+
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
+const mesa=document.getElementById('mesa');
+const ghost=document.getElementById('ghost');
+const labelsLayer=document.getElementById('labels-layer');
+
+let W,H,pieces=[],memTrails=[],expWaves=[],frame=0;
+function resize(){W=canvas.width=mesa.clientWidth;H=canvas.height=mesa.clientHeight;}
+resize();window.addEventListener('resize',resize);
+
+const floatLabels={};
+function updateLabel(p){
+  if(!floatLabels[p.id]){
+    const div=document.createElement('div');div.className='float-label';div.id='fl-'+p.id;
+    labelsLayer.appendChild(div);floatLabels[p.id]=div;
+  }
+  const el=floatLabels[p.id];
+  const yN=1-(p.y/H),xN=p.x/W;
+  const freq=Math.round(p.def.freq*(0.4+yN*2.2));
+  const xPct=Math.round(xN*100),yPct=Math.round(yN*100);
+  const col=p.def.col;
+  const c=`rgba(${col[0]},${col[1]},${col[2]},0.7)`;
+  el.style.left=p.x+'px';
+  el.style.top=(p.y-p.r-8)+'px';
+  el.style.transform='translate(-50%,-100%)';
+  el.innerHTML=`
+    <div class="fl-line"><span class="fl-bracket" style="color:${c}">[</span><span class="fl-val">${p.def.inst}</span><span class="fl-bracket" style="color:${c}">]</span></div>
+    <div class="fl-line"><span class="fl-bracket" style="color:${c}">[</span><span class="fl-val">${freq} hz</span><span class="fl-bracket" style="color:${c}">]</span></div>
+    <div class="fl-line"><span class="fl-bracket" style="color:${c}">[</span><span class="fl-val">x:${xPct}% y:${yPct}%</span><span class="fl-bracket" style="color:${c}">]</span></div>
+    <div class="fl-connector" style="background:linear-gradient(${c},transparent)"></div>
+  `;
+}
+function removeLabel(id){
+  const el=document.getElementById('fl-'+id);
+  if(el){el.remove();delete floatLabels[id];}
+}
+
+
+function drawBlob(x,y,r,def,phase,energy,rings){
+  const col=def.col,drift=def.drift;
+  const bc=lerpCol(col,drift,0.06+energy*0.22);
+  for(let ring=rings;ring>=0;ring--){
+    const rr=r*(1+ring*0.72);
+    const baseA=(0.48-ring*0.08)*(0.22+energy*1.15);
+    if(baseA<=0)continue;
+    const pts=12+ring*3;
+    ctx.save();ctx.globalAlpha=Math.max(0,Math.min(1,baseA));
+    const ox=x+Math.sin(phase*0.7+ring)*r*0.18;
+    const oy=y+Math.cos(phase*0.5+ring)*r*0.14;
+    const g=ctx.createRadialGradient(ox,oy,0,x,y,rr*1.15);
+    g.addColorStop(0,rgb(bc,0.75));
+    g.addColorStop(0.3,rgb(bc,0.3));
+    g.addColorStop(0.65,rgb(bc.map(c=>Math.floor(c*0.2)),0.07));
+    g.addColorStop(1,rgb(bc,0));
+    ctx.fillStyle=g;
+    ctx.beginPath();
+    for(let i=0;i<=pts;i++){
+      const ang=(i/pts)*Math.PI*2+phase*(ring%2===0?1:-0.55);
+      const n1=Math.sin(i*2.1+frame*0.013+phase)*(0.13+energy*0.22);
+      const n2=Math.sin(i*4.3-frame*0.021+phase*1.7)*(0.06+energy*0.09);
+      const n3=fbm(Math.cos(ang),Math.sin(ang),frame*0.008+ring)*(0.05+energy*0.07);
+      const nr=1+n1+n2+n3;
+      const px=x+Math.cos(ang)*rr*nr;
+      const py=y+Math.sin(ang)*rr*nr*0.84;
+      i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.closePath();ctx.fill();ctx.restore();
+  }
+  ctx.save();ctx.globalAlpha=0.28+energy*0.38;
+  const cg=ctx.createRadialGradient(x,y,0,x,y,r*0.35);
+  cg.addColorStop(0,rgb(bc,0.7));cg.addColorStop(1,rgb(bc,0));
+  ctx.fillStyle=cg;
+  ctx.beginPath();
+  for(let i=0;i<=8;i++){
+    const ang=(i/8)*Math.PI*2+phase;
+    const nr=1+Math.sin(i*3.1+frame*0.02)*0.15;
+    const px=x+Math.cos(ang)*r*0.3*nr;
+    const py=y+Math.sin(ang)*r*0.3*nr;
+    i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+  }
+  ctx.closePath();ctx.fill();ctx.restore();
+}
+
+function spawnWave(x,y,col,drift){
+  const maxR=Math.sqrt(W*W+H*H)*0.85;
+  expWaves.push({x,y,col,drift,r:0,maxR,life:1,speed:2.2+Math.random()*1.2,phase:Math.random()*Math.PI*2});
+}
+
+let pidCounter=0;
+function mkPiece(x,y,def){
+  return{id:pidCounter++,x,y,def,r:24+Math.random()*20,phase:Math.random()*Math.PI*2,energy:1,rings:2+Math.floor(Math.random()*3),cool:0};
+}
+
+function loop(){
+  requestAnimationFrame(loop);
+  frame++;
+  const now=performance.now();
+  if(now-lastBeat>BEAT){lastBeat+=BEAT;scanProgress=0;}
+  scanProgress=Math.min((now-lastBeat)/BEAT,1);
+  const sx=scanProgress*W;
+
+  // bg
+  const bgA=isNight?0.13:0.18;
+  ctx.fillStyle=isNight?`rgba(6,6,10,${bgA})`:`rgba(232,232,240,${bgA})`;
+  ctx.fillRect(0,0,W,H);
+
+  for(let i=expWaves.length-1;i>=0;i--){
+    const w=expWaves[i];
+    w.r+=w.speed*(1+w.r/w.maxR*0.9);
+    const prog=w.r/w.maxR;
+    w.life=Math.max(0,1-Math.pow(prog,0.6));
+    if(w.life<=0||w.r>w.maxR*1.1){expWaves.splice(i,1);continue;}
+    const dc=lerpCol(w.col,w.drift,prog*0.5);
+    const pts=24;
+
+    ctx.save();ctx.globalAlpha=w.life*0.025;
+    const wg=ctx.createRadialGradient(w.x,w.y,w.r*0.75,w.x,w.y,w.r*1.2);
+    wg.addColorStop(0,rgb(dc,0));wg.addColorStop(0.5,rgb(dc,0.6));wg.addColorStop(1,rgb(dc,0));
+    ctx.fillStyle=wg;ctx.beginPath();ctx.arc(w.x,w.y,w.r*1.2,0,Math.PI*2);ctx.fill();ctx.restore();
+
+    ctx.save();ctx.globalAlpha=w.life*0.10;
+    ctx.strokeStyle=rgb(dc,1);ctx.lineWidth=1.5;
+    ctx.beginPath();
+    for(let j=0;j<=pts;j++){
+      const ang=(j/pts)*Math.PI*2+w.phase;
+      const n=1+Math.sin(j*2.1+w.r*0.007+w.phase)*(0.055+w.life*0.07);
+      const px=w.x+Math.cos(ang)*w.r*n;
+      const py=w.y+Math.sin(ang)*w.r*n*0.88;
+      j===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.closePath();ctx.stroke();ctx.restore();
+
+    ctx.save();ctx.globalAlpha=w.life*0.045;
+    ctx.strokeStyle=rgb(dc,1);ctx.lineWidth=0.6;
+    const r2=w.r*0.87;
+    ctx.beginPath();
+    for(let j=0;j<=pts;j++){
+      const ang=(j/pts)*Math.PI*2-w.phase*0.6;
+      const n=1+Math.sin(j*3.4+w.r*0.005)*(0.06);
+      const px=w.x+Math.cos(ang)*r2*n;
+      const py=w.y+Math.sin(ang)*r2*n*0.9;
+      j===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.closePath();ctx.stroke();ctx.restore();
+
+    ctx.save();ctx.globalAlpha=w.life*0.03;
+    ctx.strokeStyle=rgb(w.drift,1);ctx.lineWidth=0.4;
+    const r3=w.r*0.93;
+    ctx.beginPath();
+    for(let j=0;j<=pts;j++){
+      const ang=(j/pts)*Math.PI*2+w.phase*1.3;
+      const n=1+Math.sin(j*1.8+w.r*0.009)*(0.07);
+      const px=w.x+Math.cos(ang)*r3*n;
+      const py=w.y+Math.sin(ang)*r3*n*0.86;
+      j===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.closePath();ctx.stroke();ctx.restore();
+  }
+
+  for(let i=memTrails.length-1;i>=0;i--){
+    const m=memTrails[i];
+    m.life-=0.002;if(m.life<=0){memTrails.splice(i,1);continue;}
+    const age=1-m.life;
+    const dc=lerpCol(m.col,m.drift,0.1+age*0.35);
+    ctx.save();ctx.globalAlpha=m.life*0.08;
+    ctx.strokeStyle=rgb(dc,1);ctx.lineWidth=0.4;
+    const rr=m.r*(1.4+age*1.8);
+    ctx.beginPath();
+    for(let j=0;j<=14;j++){
+      const ang=(j/14)*Math.PI*2+m.phase+age*0.2;
+      const n=1+Math.sin(j*2.3+age*3+m.phase)*0.12;
+      const px=m.x+Math.cos(ang)*rr*n;
+      const py=m.y+Math.sin(ang)*rr*n*0.86;
+      j===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.closePath();ctx.stroke();ctx.restore();
+  }
+
+    pieces.forEach((p,i)=>{
+    p.phase+=0.005;p.energy*=0.88;
+    const dist=Math.abs(p.x-sx);
+    if(dist<22&&p.cool<=0){
+      p.energy=1.0;p.cool=7;
+      playAtom(p.def,p.x,p.y,W,H);
+      for(let k=0;k<4;k++)memTrails.push({x:p.x,y:p.y,r:p.r,col:p.def.col,drift:p.def.drift,phase:p.phase+k*0.4,life:1});
+      spawnWave(p.x,p.y,p.def.col,p.def.drift);
+    }
+    if(p.cool>0)p.cool--;
+    drawBlob(p.x,p.y,p.r,p.def,p.phase,p.energy,p.rings);
+    updateLabel(p);
+
+    pieces.forEach((o,j)=>{
+      if(j<=i)return;
+      const dx=o.x-p.x,dy=o.y-p.y,d=Math.sqrt(dx*dx+dy*dy);
+      const thr=(p.r+o.r)*2.2;
+      if(d<thr){
+        ctx.save();ctx.globalAlpha=(1-d/thr)*0.1;
+        ctx.strokeStyle=rgb(p.def.col,0.6);ctx.lineWidth=0.35;
+        ctx.setLineDash([1,9]);ctx.beginPath();
+        ctx.moveTo(p.x,p.y);ctx.lineTo(o.x,o.y);ctx.stroke();
+        ctx.setLineDash([]);ctx.restore();
+      }
+    });
+  });
+
+  const scanA=0.025+(pieces.length>0?0.02:0);
+  [[60,scanA*0.3],[18,scanA*0.6],[2,scanA*1.0]].forEach(([w,a])=>{
+    const sg=ctx.createLinearGradient(sx-w,0,sx+w,0);
+    sg.addColorStop(0,'rgba(255,255,255,0)');
+    sg.addColorStop(0.5,`rgba(255,255,255,${a})`);
+    sg.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=sg;ctx.fillRect(sx-w,0,w*2,H);
+  });
+
+
+  document.getElementById('hb-atoms').innerHTML=`átomos <b>${pieces.length}</b>`;
+  document.getElementById('hb-waves').innerHTML=`ondas <b>${expWaves.length}</b>`;
+  document.getElementById('ht-scan').innerHTML=`scan <b>${Math.round(scanProgress*100)}%</b>`;
+}
+requestAnimationFrame(loop);
+
+
+let dragging=false,dragDef=null;
+sidebar.addEventListener('mousedown',e=>{
+  const src=e.target.closest('.atom-src');if(!src)return;
+  dragDef=DEFS.find(d=>d.id===src.dataset.id);if(!dragDef)return;
+  dragging=true;
+  ghost.style.display='block';
+  ghost.style.background=`radial-gradient(circle at 38% 32%, rgba(${dragDef.col},0.9), rgba(${dragDef.col},0.1))`;
+  ghost.style.boxShadow=`0 0 18px rgba(${dragDef.col},0.38)`;
+  ghost.style.left=e.clientX+'px';ghost.style.top=e.clientY+'px';
+  e.preventDefault();
+});
+window.addEventListener('mousemove',e=>{
+  if(!dragging)return;
+  ghost.style.left=e.clientX+'px';ghost.style.top=e.clientY+'px';
+});
+window.addEventListener('mouseup',e=>{
+  if(!dragging)return;
+  ghost.style.display='none';dragging=false;
+  const rect=mesa.getBoundingClientRect();
+  const x=e.clientX-rect.left,y=e.clientY-rect.top;
+  if(x>0&&x<W&&y>0&&y<H&&dragDef){
+    pieces.push(mkPiece(x,y,dragDef));getAC();
+  }
+  dragDef=null;
+});
+
+
+mesa.addEventListener('mousemove',e=>{
+  if(dragging)return;
+  const rect=mesa.getBoundingClientRect();
+  const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+  let closest=null,minD=9999;
+  pieces.forEach(p=>{const d=Math.sqrt((p.x-mx)**2+(p.y-my)**2);if(d<p.r*2.5&&d<minD){minD=d;closest=p;}});
+  if(closest){
+    const yN=1-(closest.y/H),xN=closest.x/W;
+    const freq=Math.round(closest.def.freq*(0.4+yN*2.2));
+    setInfo('inst',closest.def.wave+' '+closest.def.inst);
+    setInfo('freq',freq+' hz');
+    setInfo('pos',Math.round(xN*100)+'%·'+Math.round(yN*100)+'%');
+    setInfo('band',BPM+' bpm');
+  }
+});
+
+mesa.addEventListener('contextmenu',e=>{
+  e.preventDefault();
+  const rect=mesa.getBoundingClientRect();
+  const x=e.clientX-rect.left,y=e.clientY-rect.top;
+  const before=pieces.length;
+  pieces=pieces.filter(p=>{
+    const dx=p.x-x,dy=p.y-y,hit=Math.sqrt(dx*dx+dy*dy)<p.r*1.4;
+    if(hit)removeLabel(p.id);
+    return !hit;
+  });
+});
+
+clr.addEventListener('click',()=>{
+  pieces.forEach(p=>removeLabel(p.id));
+  pieces=[];memTrails=[];expWaves=[];
+});
+
+
+sidebar.addEventListener('touchstart',e=>{
+  const src=e.target.closest('.atom-src');if(!src)return;
+  dragDef=DEFS.find(d=>d.id===src.dataset.id);if(!dragDef)return;
+  dragging=true;
+  const t=e.touches[0];
+  ghost.style.display='block';
+  ghost.style.background=`radial-gradient(circle at 38% 32%, rgba(${dragDef.col},0.9), rgba(${dragDef.col},0.1))`;
+  ghost.style.left=t.clientX+'px';ghost.style.top=t.clientY+'px';
+  e.preventDefault();
+},{passive:false});
+window.addEventListener('touchmove',e=>{
+  if(!dragging)return;
+  const t=e.touches[0];
+  ghost.style.left=t.clientX+'px';ghost.style.top=t.clientY+'px';
+},{passive:false});
+window.addEventListener('touchend',e=>{
+  if(!dragging)return;
+  ghost.style.display='none';dragging=false;
+  const t=e.changedTouches[0];
+  const rect=mesa.getBoundingClientRect();
+  const x=t.clientX-rect.left,y=t.clientY-rect.top;
+  if(x>0&&x<W&&y>0&&y<H&&dragDef){pieces.push(mkPiece(x,y,dragDef));getAC();}
+  dragDef=null;
+});
+</script>
+</body>
+</html>

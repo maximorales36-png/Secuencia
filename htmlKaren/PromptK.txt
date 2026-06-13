@@ -1,0 +1,63 @@
+aca le dije a claude que me haga un prompt 
+
+Tengo un proyecto llamado SECUENCIA que tiene tres partes:
+
+1. Python (detector): detecta piezas de colores con OpenCV y manda datos
+por WebSocket en este formato:
+{"piezas": [{"color": "yellow", "x": 0.453, "y": 0.612}]}
+Colores posibles: yellow, orange, pink, neon_green, celeste
+Coordenadas normalizadas 0-1. Puerto: 8765.
+
+2. Godot 4.6 (motor): recibe los datos del WebSocket y orquesta todo.
+Scripts existentes:
+- WebSocketManager.gd — recibe datos de Python
+- PiecesVisualizer.gd — renderiza las piezas
+- EffectsRenderer.gd — efectos visuales
+- GridRenderer.gd — grilla
+- ScanlineLogic.gd — línea de barrido
+- AudioManager.gd — Wwise (no tocar)
+
+3. HTML/JS (prototipo visual): un demo funcional hecho con Canvas API
+y Web Audio API que muestra la estética final del proyecto. Tiene:
+- Átomos (blobs orgánicos con gradiente radial y ruido sinusoidal)
+- Ondas expansivas que cruzan toda la pantalla con fade out
+- Memoria del fondo (huellas acumuladas que se desvanecen lento)
+- Scan line difusa en 3 capas
+- Labels flotantes con datos de cada pieza
+- BPM knob
+- Modo night/light
+
+PALETA:
+- Fondo: #07070a
+- Cyan/celeste: #4af0d4 → deriva a azul #1e8fff
+- Yellow: #f0d737 → deriva a naranja #ff8c1a
+- Green: #5af05a → deriva a #28c878
+- Violet/pink: #b04af0 → deriva a #dc32b4
+- Red/orange: #f04141 → deriva a #ff8214
+
+ESTÉTICA: bioluminiscencia, microscopía, organismos vivos. Fondo oscuro
+con luz que emana desde adentro. Formas orgánicas, no geométricas.
+Referencia visual: TouchDesigner + biología celular.
+
+MI PEDIDO:
+Quiero integrar la estética del HTML con el proyecto de Godot 4.6.
+El HTML ya tiene todo funcionando visualmente — necesito que esa
+estética se traslade a Godot.
+
+Específicamente necesito:
+1. Que EffectsRenderer.gd implemente los blobs orgánicos, las ondas
+   expansivas y la memoria del fondo igual que el HTML
+2. Que la scan line sea difusa (3 capas: aura ancha + halo medio + núcleo)
+3. Que los colores usen la paleta definida arriba con deriva de color
+   cuando hay energía (hit)
+4. Que PiecesVisualizer.gd muestre las piezas con la estética de blob
+   orgánico en reposo (sin hit), no como círculos simples
+
+El código tiene que:
+- Mantener las mismas firmas de clase y señales que ya existen
+- No tocar AudioManager.gd ni WebSocketManager.gd
+- Usar _draw() con draw_line, draw_circle, draw_colored_polygon
+  (no shaders por ahora)
+
+Antes de escribir código, pedime el contenido actual de
+PiecesVisualizer.gd para no pisar lo que ya funciona.

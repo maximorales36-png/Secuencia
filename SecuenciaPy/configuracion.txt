@@ -1,15 +1,15 @@
 ======================================================================
- CONFIGURACION DE SECUENCIA - Calibracion de camara y colores
+ CONFIGURACION DE SECUENCIA - Calibración de cámara y colores
 ======================================================================
 
-Este documento explica como calibrar la deteccion de piezas
+Este documento explica como calibrar la detección de piezas
 en el proyecto SECUENCIA. Hay dos calibraciones independientes:
 
   1. CALIBRACION DE ESQUINAS (CROP)  → archivo crop_config.json
   2. CALIBRACION DE COLORES (HSV)    → archivo color_config.json
 
 Ambos archivos se guardan en la carpeta SecuenciaPy/ y se cargan
-automaticamente al iniciar el detector.
+automáticamente al iniciar el detector.
 
 
 ======================================================================
@@ -17,25 +17,25 @@ automaticamente al iniciar el detector.
 ======================================================================
 
 QUE HACE:
-  Corrige la angulacion de la camara. Al marcar las 4 esquinas del
+  Corrige la angulación de la cámara. Al marcar las 4 esquinas del
   televisor/pantalla, el software rectifica la imagen para que las
   coordenadas 0-1 coincidan exactamente con los bordes de la pantalla.
 
 CUANDO HACERLA:
   - La primera vez que se usa el programa.
-  - Si se mueve la camara o el televisor de lugar.
+  - Si se mueve la cámara o el televisor de lugar.
   - Si las piezas aparecen en posiciones incorrectas.
 
 COMO FORZARLA:
 
-  Opcion A - Al iniciar el programa (forzar):
+  Opción A - Al iniciar el programa (forzar):
     python secuencia_detector_ipc.py --calibrate
 
-  Opcion B - Durante la ejecucion:
-    Presionar la tecla C (mayuscula o minuscula)
+  Opción B - Durante la ejecución:
+    Presionar la tecla C (mayúscula o minúscula)
 
-  Opcion C - Automatica:
-    Si no existe crop_config.json, la calibracion se inicia sola.
+  Opción C - Automática:
+    Si no existe crop_config.json, la calibración se inicia sola.
 
 INSTRUCCIONES PASO A PASO:
 
@@ -55,9 +55,9 @@ INSTRUCCIONES PASO A PASO:
        Q → Cancela (no guarda)
 
 AYUDA VISUAL:
-  Los puntos aparecen con circulos de colores:
+  Los puntos aparecen con círculos de colores:
     TL = amarillo, TR = azul, BR = rojo, BL = verde
-  El area fuera del poligono se oscurece para facilitar la vista.
+  El área fuera del polígono se oscurece para facilitar la vista.
 
 
 ======================================================================
@@ -66,7 +66,7 @@ AYUDA VISUAL:
 
 QUE HACE:
   Permite ajustar los rangos HSV de cada color para mejorar la
-  deteccion. Con los sliders (trackbars) se define que tonos,
+  detección. Con los sliders (trackbars) se define que tonos,
   saturaciones y brillos corresponden a cada color.
 
 CUANDO HACERLA:
@@ -74,24 +74,24 @@ CUANDO HACERLA:
   - Si se confunden colores entre si (ej: violeta con rosa).
   - Si detecta piezas donde no hay (falsos positivos, ej: celeste
     cuando no hay nada).
-  - Cuando cambia la iluminacion del ambiente.
+  - Cuando cambia la iluminación del ambiente.
 
 COMO FORZARLA:
 
-  Opcion A - Al iniciar el programa (forzar):
+  Opción A - Al iniciar el programa (forzar):
     python secuencia_detector_ipc.py --calibrate-colors
 
-  Opcion B - Durante la ejecucion:
-    Presionar la tecla B (mayuscula o minuscula)
+  Opción B - Durante la ejecución:
+    Presionar la tecla B (mayúscula o minúscula)
 
-  Opcion C - Automatica:
+  Opción C - Automática:
     La primera vez usa valores por defecto. Si ya existe
-    color_config.json, se cargan esos valores automaticamente.
+    color_config.json, se cargan esos valores automáticamente.
 
 INSTRUCCIONES PASO A PASO:
 
   1. Aparece una ventana titulada "Cal HSV" con:
-     - El video rectificado (como se ve en ejecucion normal).
+     - El video rectificado (como se ve en ejecución normal).
      - La mascara del color seleccionado superpuesta en
        semitransparencia.
      - Un cuadro chico en la esquina inferior derecha mostrando
@@ -110,8 +110,8 @@ INSTRUCCIONES PASO A PASO:
      H_Low / H_High  → Tono (Hue), rango 0-179
        - Ej: para ajustar la diferencia entre violeta (H~130) y
          rosa (H~150), mover estos sliders.
-     S_Low / S_High  → Saturacion, rango 0-255
-       - Subir S_Low si el color es muy palido y no se detecta.
+     S_Low / S_High  → Saturación, rango 0-255
+       - Subir S_Low si el color es muy pálido y no se detecta.
        - Bajar S_High si hay ruido de fondos grises.
      V_Low / V_High  → Brillo (Value), rango 0-255
        - Subir V_Low si el color es oscuro y no se detecta.
@@ -119,14 +119,14 @@ INSTRUCCIONES PASO A PASO:
          falsos positivos.
 
   4. VER RESULTADO EN VIVO:
-     - La mascara superpuesta se actualiza instantaneamente.
+     - La máscara superpuesta se actualiza instantáneamente.
      - Las zonas blancas en el cuadro chico = lo que se detecta.
      - Los contornos dibujados = piezas reconocidas.
      - Ajustar hasta que solo se detecten las piezas reales.
 
   5. GUARDAR:
      Presionar S → guarda TODOS los colores a color_config.json
-     y vuelve a la ejecucion normal.
+     y vuelve a la ejecución normal.
 
   6. CANCELAR:
      Presionar Q → cierra sin guardar cambios.
@@ -140,8 +140,8 @@ INSTRUCCIONES PASO A PASO:
  3. CONSEJOS PRACTICOS
 ======================================================================
 
-  - Calibrar primero las ESQUINAS y despues los COLORES.
-  - Para la calibracion de colores, poner una pieza de cada
+  - Calibrar primero las ESQUINAS y después los COLORES.
+  - Para la calibración de colores, poner una pieza de cada
     color sobre la mesa y ajustar uno por uno.
   - Si dos colores se confunden (ej: violeta y rosa):
       1. Seleccionar violeta (tecla 6)
@@ -152,8 +152,8 @@ INSTRUCCIONES PASO A PASO:
       Subir S_Low y/o V_Low para ignorar el ruido.
   - Si un color no se detecta:
       Bajar S_Low y V_Low para abrir el rango.
-  - La iluminacion afecta mucho. Si podes, mantené la misma
-    luz que usas durante la ejecucion normal.
+  - La iluminación afecta mucho. Si podes, mantené la misma
+    luz que usas durante la ejecución normal.
 
 
 ======================================================================

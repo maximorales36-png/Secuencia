@@ -5,7 +5,23 @@
 			<ChildrenList>
 				<GameParameter Name="RTPC_Violet" ID="{FBB67A9A-E3D3-4A30-BAB7-5F36764CA1A0}">
 					<PropertyList>
+						<Property Name="Color" Type="int16" Value="12"/>
 						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="RTPC_Pink" ID="{2B441A2F-2D08-4ABE-8272-1C94B50150AE}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="24"/>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="RTPC_N_Green" ID="{775EB99E-20BD-4B98-92A5-5EB73EFA9783}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="4"/>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
 					</PropertyList>
 				</GameParameter>
 			</ChildrenList>

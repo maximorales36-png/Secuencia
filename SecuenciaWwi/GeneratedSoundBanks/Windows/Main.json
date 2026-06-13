@@ -10,11 +10,27 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{A7F80FC8-57C4-99C5-A54C-A8F82B2C57E6}",
+    "Hash": "{CCEADF6B-A6AA-8147-58D5-18D5528C2CCE}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
     "Media": [
+     {
+      "Id": "22529526",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-2-1.wav",
+      "CachePath": "D6/{D649BC69-7208-D35E-0213-A8EAA01A1A49}.wem"
+     },
+     {
+      "Id": "48466710",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Pad2-2.wav",
+      "CachePath": "E0/{E0D8E97B-2F75-D7E0-C8E3-F354A503609B}.wem"
+     },
      {
       "Id": "52741130",
       "Language": "SFX",
@@ -30,6 +46,14 @@
       "Location": "Memory",
       "ShortName": "MIDI1A.mid",
       "CachePath": "07/{0709C63A-9769-D3AE-2507-CF6210287178}.wem"
+     },
+     {
+      "Id": "75870889",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-2-4.wav",
+      "CachePath": "FA/{FA9BB9A2-ED40-122A-230B-6A857819D099}.wem"
      },
      {
       "Id": "77226494",
@@ -56,12 +80,28 @@
       "CachePath": "E3/{E3C23697-9455-06E2-1274-8C1457F7593F}.wem"
      },
      {
+      "Id": "130499625",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-2-2.wav",
+      "CachePath": "B0/{B0ED0028-E4BC-CD7E-8DDC-F47E21E262DC}.wem"
+     },
+     {
       "Id": "150619875",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "707-6.wav",
       "CachePath": "B8/{B83BA5FE-92CB-ACDA-C272-623CF7BB8A2F}.wem"
+     },
+     {
+      "Id": "224751434",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-2-6.wav",
+      "CachePath": "A4/{A4F14D81-D614-B697-BA7C-09F9645E3B90}.wem"
      },
      {
       "Id": "295558765",
@@ -86,6 +126,14 @@
       "Location": "Memory",
       "ShortName": "Pad-1.wav",
       "CachePath": "AA/{AA57B6C1-9BA2-18BB-9A8E-17F450AE0AB3}.wem"
+     },
+     {
+      "Id": "358725165",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Pad2-1.wav",
+      "CachePath": "89/{89480635-B3B4-61FD-E2F9-D96FACAF3775}.wem"
      },
      {
       "Id": "381532029",
@@ -160,6 +208,22 @@
       "CachePath": "92/{92FF0F54-AF1E-278D-FD49-E5434DEBFEE0}.wem"
      },
      {
+      "Id": "729469912",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Pad2-4.wav",
+      "CachePath": "03/{0370DF39-9DC3-557E-3FCD-24BFCAC265B6}.wem"
+     },
+     {
+      "Id": "743979071",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-2-3.wav",
+      "CachePath": "15/{1586D650-5DFB-B065-245A-31F7A44937C3}.wem"
+     },
+     {
       "Id": "768119798",
       "Language": "SFX",
       "Streaming": "false",
@@ -168,12 +232,28 @@
       "CachePath": "D2/{D2F519BF-873C-6F6C-85F7-05028EEC458D}.wem"
      },
      {
+      "Id": "779203198",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-2-5.wav",
+      "CachePath": "D7/{D759EA7E-7390-66EA-3966-6DFE119A1DB5}.wem"
+     },
+     {
       "Id": "804058050",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "707-5.wav",
       "CachePath": "E0/{E0425934-B20E-6468-BEE7-98DF69242620}.wem"
+     },
+     {
+      "Id": "847348050",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Pad2-3.wav",
+      "CachePath": "B4/{B49308F5-1B53-BB9A-329C-B520F64D169B}.wem"
      },
      {
       "Id": "903860181",
@@ -190,6 +270,14 @@
       "Location": "Memory",
       "ShortName": "Pad-4.wav",
       "CachePath": "12/{12D19B4B-E5AE-28E9-C64F-D621DC57B210}.wem"
+     },
+     {
+      "Id": "987452775",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "707-2-7.wav",
+      "CachePath": "BB/{BB6FA90E-9CD3-2652-78D0-0CD04A5F8F46}.wem"
      },
      {
       "Id": "992317781",
@@ -258,13 +346,25 @@
       "DurationMax": "5.5172563",
       "MediaRefs": [
        {
+        "Id": "48466710"
+       },
+       {
         "Id": "353041505"
+       },
+       {
+        "Id": "358725165"
        },
        {
         "Id": "527820135"
        },
        {
         "Id": "693338827"
+       },
+       {
+        "Id": "729469912"
+       },
+       {
+        "Id": "847348050"
        },
        {
         "Id": "966541592"
@@ -290,7 +390,19 @@
       "DurationMax": "2.7586167",
       "MediaRefs": [
        {
+        "Id": "22529526"
+       },
+       {
+        "Id": "75870889"
+       },
+       {
+        "Id": "130499625"
+       },
+       {
         "Id": "150619875"
+       },
+       {
+        "Id": "224751434"
        },
        {
         "Id": "295558765"
@@ -305,7 +417,16 @@
         "Id": "533691421"
        },
        {
+        "Id": "743979071"
+       },
+       {
+        "Id": "779203198"
+       },
+       {
         "Id": "804058050"
+       },
+       {
+        "Id": "987452775"
        },
        {
         "Id": "992317781"
@@ -476,6 +597,22 @@
       "DurationMax": "0"
      }
     ],
+    "GameParameters": [
+     {
+      "Id": "2005540895",
+      "Name": "RTPC_Pink",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_Pink",
+      "GUID": "{2B441A2F-2D08-4ABE-8272-1C94B50150AE}",
+      "Color": "24"
+     },
+     {
+      "Id": "3400130303",
+      "Name": "RTPC_N_Green",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_N_Green",
+      "GUID": "{775EB99E-20BD-4B98-92A5-5EB73EFA9783}",
+      "Color": "4"
+     }
+    ],
     "SwitchGroups": [
      {
       "Id": "4133533608",
@@ -536,6 +673,6 @@
     ]
    }
   ],
-  "FileHash": "{733EB813-A39C-6C59-A170-C918C83331F3}"
+  "FileHash": "{5321D527-70E5-D3AC-D981-0843FCB5EEF3}"
  }
 }

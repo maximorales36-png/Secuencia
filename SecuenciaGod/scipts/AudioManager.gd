@@ -30,6 +30,16 @@ var _violet_current: float = 100.0
 var _violet_target: float = 100.0
 const VIOLET_RTPC_NAME: String = "RTPC_Violet"
 
+# Green RTPC
+var _green_current: float = 100.0
+var _green_target: float = 100.0
+const GREEN_RTPC_NAME: String = "RTPC_N_Green"
+
+# Pink RTPC
+var _pink_current: float = 100.0
+var _pink_target: float = 100.0
+const PINK_RTPC_NAME: String = "RTPC_Pink"
+
 
 func _ready() -> void:
 	Wwise.register_game_obj(self, "AudioManager")
@@ -47,6 +57,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_update_violet_rtpc(delta)
+	_update_green_rtpc(delta)
+	_update_pink_rtpc(delta)
 
 
 ## Smooths and sends the Violet RTPC value to Wwise.
@@ -72,6 +84,44 @@ func _update_violet_rtpc(delta: float) -> void:
 	_violet_current = lerp(_violet_current, _violet_target, smoothing)
 
 	Wwise.set_rtpc_value(VIOLET_RTPC_NAME, _violet_current, self)
+
+
+## Smooths and sends the Green RTPC value to Wwise (half speed of violet).
+func _update_green_rtpc(delta: float) -> void:
+	if scanline_logic == null:
+		return
+	var found := false
+	var highest_y := 1.0
+	for piece in scanline_logic.pieces:
+		if piece.color == "neon_green" and piece.y < highest_y:
+			highest_y = piece.y
+			found = true
+	if found:
+		_green_target = (1.0 - highest_y) * 100.0
+	else:
+		_green_target = 100.0
+	var smoothing := 1.0 - exp(-delta * 0.5)
+	_green_current = lerp(_green_current, _green_target, smoothing)
+	Wwise.set_rtpc_value(GREEN_RTPC_NAME, _green_current, self)
+
+
+## Smooths and sends the Pink RTPC value to Wwise (half speed of violet).
+func _update_pink_rtpc(delta: float) -> void:
+	if scanline_logic == null:
+		return
+	var found := false
+	var highest_y := 1.0
+	for piece in scanline_logic.pieces:
+		if piece.color == "pink" and piece.y < highest_y:
+			highest_y = piece.y
+			found = true
+	if found:
+		_pink_target = (1.0 - highest_y) * 100.0
+	else:
+		_pink_target = 100.0
+	var smoothing := 1.0 - exp(-delta * 0.5)
+	_pink_current = lerp(_pink_current, _pink_target, smoothing)
+	Wwise.set_rtpc_value(PINK_RTPC_NAME, _pink_current, self)
 
 
 func _on_cycle_reset() -> void:

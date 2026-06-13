@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{7BA11263-AEE6-F5F9-BE4C-4038800A1747}",
+    "Hash": "{69590507-487F-390F-EDEB-38CBEE15EB5D}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -140,6 +140,13 @@
       "GUID": "{F72E0659-4346-4E1C-A1B1-DAB46A05101E}"
      },
      {
+      "Id": "2005540895",
+      "Name": "RTPC_Pink",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_Pink",
+      "GUID": "{2B441A2F-2D08-4ABE-8272-1C94B50150AE}",
+      "Color": "24"
+     },
+     {
       "Id": "2648548617",
       "Name": "SS_Air_Month",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Month",
@@ -164,6 +171,13 @@
       "GUID": "{536FA72C-8C7E-4C8B-AE03-EF34FDADC314}"
      },
      {
+      "Id": "3400130303",
+      "Name": "RTPC_N_Green",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_N_Green",
+      "GUID": "{775EB99E-20BD-4B98-92A5-5EB73EFA9783}",
+      "Color": "4"
+     },
+     {
       "Id": "3715662592",
       "Name": "SS_Air_Storm",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Storm",
@@ -179,7 +193,8 @@
       "Id": "3862788774",
       "Name": "RTPC_Violet",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_Violet",
-      "GUID": "{FBB67A9A-E3D3-4A30-BAB7-5F36764CA1A0}"
+      "GUID": "{FBB67A9A-E3D3-4A30-BAB7-5F36764CA1A0}",
+      "Color": "12"
      },
      {
       "Id": "4160247818",
@@ -725,6 +740,6 @@
     ]
    }
   ],
-  "FileHash": "{62CCD4C5-8DD3-D612-FA91-C1B4DB5C497B}"
+  "FileHash": "{31E39EDF-0992-4DC8-CA66-14F4217B2E7C}"
  }
 }

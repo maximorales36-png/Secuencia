@@ -1,0 +1,180 @@
+======================================================================
+ CONFIGURACION DE SECUENCIA - Calibracion de camara y colores
+======================================================================
+
+Este documento explica como calibrar la deteccion de piezas
+en el proyecto SECUENCIA. Hay dos calibraciones independientes:
+
+  1. CALIBRACION DE ESQUINAS (CROP)  → archivo crop_config.json
+  2. CALIBRACION DE COLORES (HSV)    → archivo color_config.json
+
+Ambos archivos se guardan en la carpeta SecuenciaPy/ y se cargan
+automaticamente al iniciar el detector.
+
+
+======================================================================
+ 1. CALIBRACION DE ESQUINAS (Perspective Crop)
+======================================================================
+
+QUE HACE:
+  Corrige la angulacion de la camara. Al marcar las 4 esquinas del
+  televisor/pantalla, el software rectifica la imagen para que las
+  coordenadas 0-1 coincidan exactamente con los bordes de la pantalla.
+
+CUANDO HACERLA:
+  - La primera vez que se usa el programa.
+  - Si se mueve la camara o el televisor de lugar.
+  - Si las piezas aparecen en posiciones incorrectas.
+
+COMO FORZARLA:
+
+  Opcion A - Al iniciar el programa (forzar):
+    python secuencia_detector_ipc.py --calibrate
+
+  Opcion B - Durante la ejecucion:
+    Presionar la tecla C (mayuscula o minuscula)
+
+  Opcion C - Automatica:
+    Si no existe crop_config.json, la calibracion se inicia sola.
+
+INSTRUCCIONES PASO A PASO:
+
+  1. Aparece una ventana con el video de la camara.
+  2. Hacer click IZQUIERDO en las 4 esquinas del televisor/pantalla
+     en este orden:
+       1° click → Esquina Superior Izquierda (TL)
+       2° click → Esquina Superior Derecha  (TR)
+       3° click → Esquina Inferior Derecha  (BR)
+       4° click → Esquina Inferior Izquierda (BL)
+  3. Al marcar la 4a esquina, aparece un preview rectificado en la
+     esquina inferior derecha de la ventana.
+  4. Presionar C para confirmar y guardar.
+  5. Si te equivocaste:
+       U → Deshace el ultimo click
+       R → Reinicia todas las esquinas
+       Q → Cancela (no guarda)
+
+AYUDA VISUAL:
+  Los puntos aparecen con circulos de colores:
+    TL = amarillo, TR = azul, BR = rojo, BL = verde
+  El area fuera del poligono se oscurece para facilitar la vista.
+
+
+======================================================================
+ 2. CALIBRACION DE COLORES (HSV)
+======================================================================
+
+QUE HACE:
+  Permite ajustar los rangos HSV de cada color para mejorar la
+  deteccion. Con los sliders (trackbars) se define que tonos,
+  saturaciones y brillos corresponden a cada color.
+
+CUANDO HACERLA:
+  - Si un color no se detecta bien (falsos negativos).
+  - Si se confunden colores entre si (ej: violeta con rosa).
+  - Si detecta piezas donde no hay (falsos positivos, ej: celeste
+    cuando no hay nada).
+  - Cuando cambia la iluminacion del ambiente.
+
+COMO FORZARLA:
+
+  Opcion A - Al iniciar el programa (forzar):
+    python secuencia_detector_ipc.py --calibrate-colors
+
+  Opcion B - Durante la ejecucion:
+    Presionar la tecla B (mayuscula o minuscula)
+
+  Opcion C - Automatica:
+    La primera vez usa valores por defecto. Si ya existe
+    color_config.json, se cargan esos valores automaticamente.
+
+INSTRUCCIONES PASO A PASO:
+
+  1. Aparece una ventana titulada "Cal HSV" con:
+     - El video rectificado (como se ve en ejecucion normal).
+     - La mascara del color seleccionado superpuesta en
+       semitransparencia.
+     - Un cuadro chico en la esquina inferior derecha mostrando
+       la mascara en blanco y negro (blanco = detectado).
+     - Los contornos de las piezas detectadas para ese color.
+
+  2. SELECCIONAR COLOR (teclas 1 a 6):
+     1 = yellow    (amarillo)
+     2 = orange    (naranja)
+     3 = pink      (rosa)
+     4 = neon_green (verde neón)
+     5 = celeste
+     6 = violet    (violeta)
+
+  3. AJUSTAR TRACKBARS (6 sliders):
+     H_Low / H_High  → Tono (Hue), rango 0-179
+       - Ej: para ajustar la diferencia entre violeta (H~130) y
+         rosa (H~150), mover estos sliders.
+     S_Low / S_High  → Saturacion, rango 0-255
+       - Subir S_Low si el color es muy palido y no se detecta.
+       - Bajar S_High si hay ruido de fondos grises.
+     V_Low / V_High  → Brillo (Value), rango 0-255
+       - Subir V_Low si el color es oscuro y no se detecta.
+       - Bajar V_High si hay reflejos brillantes que generan
+         falsos positivos.
+
+  4. VER RESULTADO EN VIVO:
+     - La mascara superpuesta se actualiza instantaneamente.
+     - Las zonas blancas en el cuadro chico = lo que se detecta.
+     - Los contornos dibujados = piezas reconocidas.
+     - Ajustar hasta que solo se detecten las piezas reales.
+
+  5. GUARDAR:
+     Presionar S → guarda TODOS los colores a color_config.json
+     y vuelve a la ejecucion normal.
+
+  6. CANCELAR:
+     Presionar Q → cierra sin guardar cambios.
+
+  7. RESETEAR UN COLOR:
+     Presionar R → vuelve el color actual a los valores por
+     defecto de fabrica.
+
+
+======================================================================
+ 3. CONSEJOS PRACTICOS
+======================================================================
+
+  - Calibrar primero las ESQUINAS y despues los COLORES.
+  - Para la calibracion de colores, poner una pieza de cada
+    color sobre la mesa y ajustar uno por uno.
+  - Si dos colores se confunden (ej: violeta y rosa):
+      1. Seleccionar violeta (tecla 6)
+      2. Bajar H_High hasta que deje de detectar el rosa
+      3. Seleccionar rosa (tecla 3)
+      4. Subir H_Low hasta que solo detecte el rosa
+  - Si hay falsos positivos de celeste en fondo limpio:
+      Subir S_Low y/o V_Low para ignorar el ruido.
+  - Si un color no se detecta:
+      Bajar S_Low y V_Low para abrir el rango.
+  - La iluminacion afecta mucho. Si podes, mantené la misma
+    luz que usas durante la ejecucion normal.
+
+
+======================================================================
+ 4. ARCHIVOS DE CONFIGURACION
+======================================================================
+
+  crop_config.json   → 4 esquinas del televisor (fracciones 0-1)
+  color_config.json  → Rangos HSV de los 6 colores
+
+  Se pueden borrar manualmente para volver a valores de fabrica.
+  El detector los crea de nuevo al calibrar.
+
+
+======================================================================
+ 5. COMANDOS RAPIDOS (DURANTE EJECUCION)
+======================================================================
+
+  C  → Calibrar esquinas (crop)
+  B  → Calibrar colores HSV
+  V  → Alternar vista raw / rectificada
+  Q  → Salir del programa
+
+
+======================================================================

@@ -15,8 +15,8 @@
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D" unique_id=1714887398]
 self_modulate = Color(1, 1, 1, 0.6117647)
-position = Vector2(679, 589)
-scale = Vector2(0.41290757, 0.36823085)
+position = Vector2(970.75, 813.31256)
+scale = Vector2(0.49218747, 0.45956331)
 texture = ExtResource("6_7mycd")
 
 [node name="ScanlineLogic" type="Node" parent="." unique_id=66086854]

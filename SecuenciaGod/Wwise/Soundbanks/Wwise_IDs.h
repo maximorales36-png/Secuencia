@@ -43,6 +43,8 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID RTPC_N_GREEN = 3400130303U;
+        static const AkUniqueID RTPC_PINK = 2005540895U;
         static const AkUniqueID RTPC_VIOLET = 3862788774U;
         static const AkUniqueID SS_AIR_FEAR = 1351367891U;
         static const AkUniqueID SS_AIR_FREEFALL = 3002758120U;

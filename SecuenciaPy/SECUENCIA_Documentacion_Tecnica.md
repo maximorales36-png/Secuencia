@@ -20,7 +20,7 @@
 
 | Componente | Estado | Detalle |
 |---|---|---|
-| Detección Python + WebSocket | ✅ COMPLETO | OpenCV detecta 4 colores, servidor WS envía a 10 Hz |
+| Detección Python + WebSocket | ✅ COMPLETO | OpenCV detecta 6 colores, servidor WS envía a 10 Hz |
 | Cliente WebSocket Godot | ✅ COMPLETO | `WebSocketManager.gd` con reconexión automática |
 | Scanline Logic | ✅ COMPLETO | Barrido sincronizado a BPM, detección de cruces |
 | Efectos Visuales | ✅ COMPLETO | `EffectsRenderer.gd` con ondas, partículas, distorsión |
@@ -405,6 +405,24 @@ WwiseGodot: Sound engine initialized successfully.
 
 ## Changelog
 
+### 2026-06-11 — RTPCs N_Green y Pink + calibración interactiva HSV
+
+**`AudioManager.gd`:**
+- `RTPC_N_Green` y `RTPC_Pink` ahora se setean suavemente en `_process()`.
+- Siguen el mismo patrón que `RTPC_Violet`: escanean la pieza más alta de su color y calculan `(1.0 - highest_y) * 100.0`.
+- Smoothing a mitad de velocidad que violeta (`1.0 - exp(-delta * 0.5)` vs `* 1.0`).
+- Cuando no hay piezas del color, el RTPC vuelve suavemente a 100 (safe state).
+
+**`secuencia_detector_ipc.py`:**
+- Nueva función `calibrate_colors()`: ventana OpenCV con 6 trackbars (H/S/V low/high), selector de color por teclas 1-6, máscara superpuesta en vivo, mini máscara BN, contornos dibujados.
+- `save_color_config()` / `load_color_config()`: guardado atómico de rangos HSV a `color_config.json` (mismo patrón que crop).
+- Nuevo flag CLI `--calibrate-colors`.
+- Tecla `B` en runtime para ingresar a calibración de colores.
+- La calibración se hace sobre la imagen warpeada (post-perspectiva), donde corre la detección real.
+
+**`configuracion.txt`:**
+- Nuevo archivo instructivo con pasos detallados para calibración de esquinas y colores, consejos prácticos y comandos rápidos.
+
 ### 2026-06-04 — Zonas de sector para piezas pink
 - **`ScanlineLogic.gd`**: `BEATS_PER_SECTOR` cambiado de `16` a `4`.
 - Con `beats_per_cycle = 16` ahora hay **4 zonas** de 4 negras cada una:
@@ -467,7 +485,7 @@ WwiseGodot: Sound engine initialized successfully.
 
 ---
 
-**Última actualización:** 2026-06-05
+**Última actualización:** 2026-06-11
 **Responsable:** Maximiliano Morales (Maxi)
 **Institución:** Universidad Maimónides
 **Commit:** `54695d5` — feat: Wwise integration working

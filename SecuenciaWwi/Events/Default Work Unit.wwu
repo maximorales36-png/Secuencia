@@ -3,147 +3,124 @@
 	<Events>
 		<WorkUnit Name="Default Work Unit" ID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}" PersistMode="Standalone">
 			<ChildrenList>
-				<Event Name="Play_pink" ID="{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="11"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
+				<Folder Name="F1" ID="{0E18B33F-2FED-4A7B-B94C-85E1B965560A}" ShortID="1044582642">
 					<ChildrenList>
-						<Action Name="" ID="{90D0403B-2EE8-4D43-8DF1-C86370AC533A}" ShortID="58984440">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Play_neon_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="4"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-					<ChildrenList>
-						<Action Name="" ID="{B8B7D832-C73E-4E87-9AE7-BF4170497226}" ShortID="1023398002">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Pad" ID="{574E4AFB-FBEC-4FF6-87FC-5B1C58AAAFF6}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Play_celeste" ID="{949737E8-77D8-4A07-8775-5102B43EA667}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="2"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-					<ChildrenList>
-						<Action Name="" ID="{4A2A4608-98B4-4886-96FE-FEBDBC55010D}" ShortID="928999741">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="303" ID="{D080338B-8420-418D-8A5F-CE3F8333D1D5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Play_yellow" ID="{C6CA5608-0D65-477A-B8CF-4E3A5FB47858}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="6"/>
-						<Property Name="Inclusion" Type="bool" Value="False"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-					<ChildrenList>
-						<Action Name="" ID="{CEE3F2A8-4452-4C51-8F7D-361D167489CA}" ShortID="1032469376">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="midi_Sw" ID="{F2870FD9-BC11-453B-8017-8D65848F67FA}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Stop_yellow" ID="{4A86DD87-6BEC-4876-9C11-E333D029349F}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="6"/>
-						<Property Name="Inclusion" Type="bool" Value="False"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-					<ChildrenList>
-						<Action Name="" ID="{C270649A-C080-4F2F-935A-BF32D1B27C7E}" ShortID="27636946">
+						<Event Name="Play_celeste" ID="{949737E8-77D8-4A07-8775-5102B43EA667}">
 							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Color" Type="int16" Value="2"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="midi_Sw" ID="{F2870FD9-BC11-453B-8017-8D65848F67FA}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Stop_pink" ID="{163530BD-83D6-4E14-A907-2BCA3EEFC5F0}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="11"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-					<ChildrenList>
-						<Action Name="" ID="{11475096-EE31-4906-B38C-1DF20C481556}" ShortID="852690319">
+							<ChildrenList>
+								<Action Name="" ID="{4A2A4608-98B4-4886-96FE-FEBDBC55010D}" ShortID="928999741">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="303" ID="{D080338B-8420-418D-8A5F-CE3F8333D1D5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_all" ID="{579B0B26-E332-4E80-A3C5-CABEECF66519}">
+							<ChildrenList>
+								<Action Name="" ID="{559E9997-FAA3-4FBE-86A1-21A04E5BE73B}" ShortID="870380771">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="303" ID="{D080338B-8420-418D-8A5F-CE3F8333D1D5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{6C8E50FF-5E73-4C8E-8614-8229AD8CE33B}" ShortID="284829707">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{D6835668-A9B5-439A-9FEA-3C2CEA99B8AB}" ShortID="647333132">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="midi_Sw" ID="{F2870FD9-BC11-453B-8017-8D65848F67FA}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_pink" ID="{163530BD-83D6-4E14-A907-2BCA3EEFC5F0}">
 							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Color" Type="int16" Value="11"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Stop_celeste" ID="{8962B4D5-07E5-4B59-A54E-A22FD807FA52}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="2"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-					<ChildrenList>
-						<Action Name="" ID="{8FD5F7DD-3BF4-4A5F-B49C-A01489D77A30}" ShortID="633948287">
+							<ChildrenList>
+								<Action Name="" ID="{11475096-EE31-4906-B38C-1DF20C481556}" ShortID="852690319">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_pink" ID="{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}">
 							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Color" Type="int16" Value="11"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="303" ID="{D080338B-8420-418D-8A5F-CE3F8333D1D5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
+							<ChildrenList>
+								<Action Name="" ID="{90D0403B-2EE8-4D43-8DF1-C86370AC533A}" ShortID="58984440">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_neon_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="4"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{B8B7D832-C73E-4E87-9AE7-BF4170497226}" ShortID="1023398002">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Pad" ID="{574E4AFB-FBEC-4FF6-87FC-5B1C58AAAFF6}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_celeste" ID="{8962B4D5-07E5-4B59-A54E-A22FD807FA52}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="2"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{8FD5F7DD-3BF4-4A5F-B49C-A01489D77A30}" ShortID="633948287">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="303" ID="{D080338B-8420-418D-8A5F-CE3F8333D1D5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
-				</Event>
-				<Event Name="Play_all" ID="{579B0B26-E332-4E80-A3C5-CABEECF66519}">
+				</Folder>
+				<Folder Name="F2" ID="{3D5B8CEB-6F00-417B-8F5A-07881D2A84BD}" ShortID="1030167000">
 					<ChildrenList>
-						<Action Name="" ID="{559E9997-FAA3-4FBE-86A1-21A04E5BE73B}" ShortID="870380771">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="303" ID="{D080338B-8420-418D-8A5F-CE3F8333D1D5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-						<Action Name="" ID="{6C8E50FF-5E73-4C8E-8614-8229AD8CE33B}" ShortID="284829707">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-						<Action Name="" ID="{D6835668-A9B5-439A-9FEA-3C2CEA99B8AB}" ShortID="647333132">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="midi_Sw" ID="{F2870FD9-BC11-453B-8017-8D65848F67FA}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
+						<Event Name="Play_F2_Yellow" ID="{126CAAF2-762B-4F3C-9E4B-5A5411C15889}"/>
+						<Event Name="Play_F2_Pink" ID="{3E3BF32C-50E8-498B-83BC-CC9B1AE40626}"/>
+						<Event Name="Play_F2_N_Green" ID="{2752E2B2-4865-4AFC-91A6-C3CF430407B4}"/>
+						<Event Name="Play_F2_Celeste" ID="{0C3F0FBD-879D-4D05-8A91-3C68BFC2FB1A}"/>
 					</ChildrenList>
-				</Event>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

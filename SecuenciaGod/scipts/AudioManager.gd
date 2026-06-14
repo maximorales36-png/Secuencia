@@ -127,7 +127,6 @@ func _on_cycle_reset() -> void:
 
 func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 	if GestorFamilias.familia_activa != "familia_1":
-		_play_sound(piece.color, piece.y)
 		return
 	if piece.color == "yellow":
 		_yellow_v_target = 100.0
@@ -142,6 +141,8 @@ func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 
 
 func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
+	if GestorFamilias.familia_activa != "familia_1":
+		return
 	var key = str(sector_index) + "_" + color
 	if _sector_colors_triggered.has(key):
 		return
@@ -154,6 +155,10 @@ func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
 		return
 
 	_play_sound(color, y, sector_index)
+
+
+func play_color(color: String, y: float) -> void:
+	_play_sound(color, y)
 
 
 func _play_sound(color: String, y_position: float, sector_index: int = -1) -> void:

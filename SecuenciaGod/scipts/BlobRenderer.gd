@@ -11,6 +11,7 @@ class_name BlobRenderer
 @export var connection_threshold: float = 3.0
 
 var scanline_logic: ScanlineLogic
+var _audio_manager: Node = null
 var _waves: Array = []
 var _trails: Array = []
 var tracked_pieces: Dictionary = {}
@@ -58,18 +59,19 @@ class BlobPiece:
 func _ready() -> void:
 	scanline_logic = get_tree().root.find_child("ScanlineLogic", true, false)
 	if scanline_logic:
-		scanline_logic.crossing_detected.connect(_on_crossing_detected)
-		scanline_logic.sector_activated.connect(_on_sector_activated)
 		scanline_logic.cycle_reset.connect(_on_cycle_reset)
-		BPM = scanline_logic.bpm
-		BEAT = (60.0 / maxf(BPM, 1.0)) * 1000.0
-	else:
-		print("[BlobRenderer] ERROR: No se encontró ScanlineLogic")
+
+	_audio_manager = get_tree().root.find_child("AudioManager", true, false)
+	if not _audio_manager:
+		print("[BlobRenderer] ERROR: No se encontró AudioManager")
 
 	if IPCManager:
 		IPCManager.pieces_updated.connect(_on_pieces_updated)
 	else:
 		print("[BlobRenderer] ERROR: No se encontró IPCManager")
+
+	BPM = 76.0
+	BEAT = (60.0 / BPM) * 1000.0
 
 
 func _process(delta: float) -> void:
@@ -96,6 +98,8 @@ func _process(delta: float) -> void:
 		bp.energy *= 0.88
 		if bp.cool > 0:
 			bp.cool -= 1
+
+	_check_scan_hits()
 
 	var keep_trails: Array = []
 	for t in _trails:
@@ -168,47 +172,38 @@ func _on_pieces_updated(new_pieces: Array) -> void:
 		tracked_pieces.erase(key)
 
 
-func _on_crossing_detected(piece: IPCManager.Piece) -> void:
-	if GestorFamilias.familia_activa != "familia_2":
-		return
-	if not GestorFamilias.is_in_family(piece.color, "familia_2"):
-		return
-
-	var bp: BlobPiece = _find_piece(piece.color, piece.x, piece.y)
-	if bp != null:
-		bp.energy = 1.0
-		bp.cool = 7
-		_spawn_effect(piece)
-
-
-func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
-	if GestorFamilias.familia_activa != "familia_2":
-		return
-	if not GestorFamilias.is_in_family(color, "familia_2"):
-		return
-
-	var viewport := get_viewport_rect().size
-	if viewport.x <= 0:
-		return
-
-	if scanline_logic:
-		var s_count: int = scanline_logic.get_sector_count()
-		if s_count > 0:
-			var sec_w: float = viewport.x / s_count
-			var cx: float = (sector_index + 0.5) * sec_w
-			var cy: float = y * viewport.y
-			_spawn_effect_at(Vector2(cx, cy), color)
-
-
 func _on_cycle_reset() -> void:
 	_trails.clear()
 	_waves.clear()
 
 
-func _spawn_effect(piece: IPCManager.Piece) -> void:
-	var viewport := get_viewport_rect().size
-	var center := Vector2(piece.x * viewport.x, piece.y * viewport.y)
-	_spawn_effect_at(center, piece.color)
+const SCAN_THRESHOLD: float = 0.015
+
+func _check_scan_hits() -> void:
+	var piezas: Array = tracked_pieces.values()
+	if piezas.is_empty():
+		return
+
+	var viewport_size := get_viewport_rect().size
+	if viewport_size.x <= 0:
+		return
+
+	for bp in piezas:
+		if bp.cool > 0:
+			continue
+
+		var dist: float = abs(bp.x - scan_progress)
+		if dist < SCAN_THRESHOLD:
+			bp.energy = 1.0
+			bp.cool = 7
+			_hit_piece(bp, viewport_size)
+
+
+func _hit_piece(bp: BlobPiece, viewport_size: Vector2) -> void:
+	var center := Vector2(bp.x * viewport_size.x, bp.y * viewport_size.y)
+	_spawn_effect_at(center, bp.color)
+	if _audio_manager:
+		_audio_manager.call("play_color", bp.color, bp.y)
 
 
 func _spawn_effect_at(center: Vector2, color_name: String) -> void:

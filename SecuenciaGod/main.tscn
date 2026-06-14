@@ -22,7 +22,7 @@ texture = ExtResource("6_7mycd")
 
 [node name="ScanlineLogic" type="Node" parent="." unique_id=66086854]
 script = ExtResource("3")
-beats_per_cycle = 32
+beats_per_cycle = 4
 
 [node name="AudioManager" type="Node" parent="." unique_id=259813811]
 script = ExtResource("5")

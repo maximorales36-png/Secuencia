@@ -15,6 +15,10 @@ namespace AK
     {
         static const AkUniqueID PLAY_ALL = 2976310903U;
         static const AkUniqueID PLAY_CELESTE = 392139723U;
+        static const AkUniqueID PLAY_F2_CELESTE = 2304919038U;
+        static const AkUniqueID PLAY_F2_N_GREEN = 213815217U;
+        static const AkUniqueID PLAY_F2_PINK = 1884775769U;
+        static const AkUniqueID PLAY_F2_YELLOW = 3264414965U;
         static const AkUniqueID PLAY_NEON_GREEN = 3153919642U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID STOP_CELESTE = 3343818949U;

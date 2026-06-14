@@ -13,10 +13,6 @@
 							<ObjectRef Name="Play_pink" ID="{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
 							<Position X="1" Y="0"/>
 						</Module>
-						<Module>
-							<ObjectRef Name="Play_yellow" ID="{C6CA5608-0D65-477A-B8CF-4E3A5FB47858}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
-							<Position X="3" Y="0"/>
-						</Module>
 					</ModuleList>
 				</SoundcasterSession>
 			</ChildrenList>

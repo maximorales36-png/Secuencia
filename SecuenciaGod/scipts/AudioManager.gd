@@ -5,13 +5,7 @@ var scanline_logic: ScanlineLogic
 var color_cooldowns: Dictionary = {}
 var _sector_colors_triggered: Dictionary = {}
 
-# Estado del yellow monofónico
-var yellow_active: bool = false
-var yellow_note: int = -1
-const YELLOW_SWITCH_GROUP: String = "yellow_switch"
-const YELLOW_SWITCH_VALUES: Array = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
-
-# Violet RTPC (global controller)
+# Violet RTPC
 var _violet_current: float = 100.0
 var _violet_target: float = 100.0
 const VIOLET_RTPC_NAME: String = "RTPC_Violet"
@@ -26,13 +20,10 @@ var _pink_current: float = 100.0
 var _pink_target: float = 100.0
 const PINK_RTPC_NAME: String = "RTPC_Pink"
 
-# Familia 1 one-shot tracking
-var _pink_fired_this_cycle: bool = false
-var _celeste_fired_this_cycle: bool = false
-
-# Pink/Celeste presence RTPCs (Familia 1)
+# Presence RTPCs (Familia 1)
 const PINK_V_RTPC_NAME: String = "RTPC_V_Pink"
 const CELESTE_V_RTPC_NAME: String = "RTPC_V_Celeste"
+const YELLOW_V_RTPC_NAME: String = "RTPC_V_Yellow"
 
 
 func _ready() -> void:
@@ -47,6 +38,14 @@ func _ready() -> void:
 		scanline_logic.cycle_reset.connect(_on_cycle_reset)
 	else:
 		print("[AudioManager] ERROR: No se encontró ScanlineLogic")
+
+	if GestorFamilias.familia_activa == "familia_1":
+		Wwise.post_event("Play_all", self)
+
+
+func _exit_tree() -> void:
+	if GestorFamilias.familia_activa == "familia_1":
+		Wwise.post_event("Stop_all", self)
 
 
 func _process(delta: float) -> void:
@@ -119,18 +118,6 @@ func _update_presence_rtpcs(delta: float) -> void:
 	var pink_in_zone: bool = sector_data.has("pink")
 	var celeste_in_zone: bool = sector_data.has("celeste")
 
-	if pink_in_zone and not _pink_fired_this_cycle:
-		_pink_fired_this_cycle = true
-		var event := GestorFamilias.get_sound("pink")
-		if not event.is_empty():
-			Wwise.post_event(event, self)
-
-	if celeste_in_zone and not _celeste_fired_this_cycle:
-		_celeste_fired_this_cycle = true
-		var event := GestorFamilias.get_sound("celeste")
-		if not event.is_empty():
-			Wwise.post_event(event, self)
-
 	Wwise.set_rtpc_value(PINK_V_RTPC_NAME, 100.0 if pink_in_zone else 0.0, self)
 	Wwise.set_rtpc_value(CELESTE_V_RTPC_NAME, 100.0 if celeste_in_zone else 0.0, self)
 
@@ -138,15 +125,8 @@ func _update_presence_rtpcs(delta: float) -> void:
 func _on_cycle_reset() -> void:
 	color_cooldowns.clear()
 	_sector_colors_triggered.clear()
-	_pink_fired_this_cycle = false
-	_celeste_fired_this_cycle = false
 	if GestorFamilias.familia_activa == "familia_1":
-		Wwise.post_event("Stop_pink", self)
-		Wwise.post_event("Stop_celeste", self)
-	if yellow_active:
-		yellow_active = false
-		yellow_note = -1
-		Wwise.post_event("Stop_yellow", self)
+		Wwise.set_rtpc_value(YELLOW_V_RTPC_NAME, 0.0, self)
 
 
 func _on_crossing_detected(piece: IPCManager.Piece) -> void:
@@ -154,7 +134,7 @@ func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 		_play_sound(piece.color, piece.y)
 		return
 	if piece.color == "yellow":
-		_handle_yellow(piece.y)
+		Wwise.set_rtpc_value(YELLOW_V_RTPC_NAME, 100.0, self)
 	elif piece.color == "violet":
 		return
 	else:
@@ -170,19 +150,6 @@ func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
 		return
 
 	_play_sound(color, y, sector_index)
-
-
-func _handle_yellow(y: float) -> void:
-	var note := clampi(7 - int(y * 8), 0, 7)
-	if note == yellow_note and yellow_active:
-		return
-	yellow_note = note
-	Wwise.set_switch(YELLOW_SWITCH_GROUP, YELLOW_SWITCH_VALUES[note], self)
-	if not yellow_active:
-		yellow_active = true
-		var evento: String = GestorFamilias.get_sound("yellow")
-		if not evento.is_empty():
-			Wwise.post_event(evento, self)
 
 
 func _play_sound(color: String, y_position: float, sector_index: int = -1) -> void:

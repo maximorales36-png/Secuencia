@@ -7,13 +7,17 @@ signal sector_activated(sector_index: int, y: float, color: String)
 signal cycle_reset()
 
 @export var bpm: float = 87
-@export var beats_per_cycle: int = 32
+@export var beats_per_cycle: int = 16
 var scan_position: float = 0.0
 var prev_scan_position: float = -1.0
 var scan_speed: float = 0.0
 var pieces: Array = []
 var triggered_keys: Dictionary = {}
 var ipc_manager: IPCManager
+
+var _start_usec: int = 0
+var _last_cycle_idx: int = -1
+var _cycle_usec: int = 0
 
 const BEATS_PER_SECTOR: int = 4
 var sector_count: int = 0
@@ -31,6 +35,8 @@ var piece_memory: Dictionary = {}
 
 
 func _ready() -> void:
+	_start_usec = Time.get_ticks_usec()
+	_cycle_usec = int(beats_per_cycle * 60.0 * 1000000.0 / bpm)
 	_update_scan_speed()
 	_update_sector_count()
 
@@ -42,11 +48,15 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	prev_scan_position = scan_position
-	scan_position += scan_speed * delta
+	var elapsed_usec = Time.get_ticks_usec() - _start_usec
+	var cycle_idx = elapsed_usec / _cycle_usec
+	var pos_in_cycle = float(elapsed_usec % _cycle_usec) / float(_cycle_usec)
 
-	if scan_position >= 1.0:
-		scan_position = 0.0
+	prev_scan_position = scan_position
+	scan_position = pos_in_cycle
+
+	if cycle_idx != _last_cycle_idx:
+		_last_cycle_idx = cycle_idx
 		prev_scan_position = -1.0
 		prev_sector = -1
 		triggered_keys.clear()
@@ -168,11 +178,13 @@ func get_scan_position() -> float:
 
 func set_bpm(new_bpm: float) -> void:
 	bpm = new_bpm
+	_cycle_usec = int(beats_per_cycle * 60.0 * 1000000.0 / bpm)
 	_update_scan_speed()
 
 
 func set_beats_per_cycle(new_beats: int) -> void:
 	beats_per_cycle = new_beats
+	_cycle_usec = int(beats_per_cycle * 60.0 * 1000000.0 / bpm)
 	_update_scan_speed()
 	_update_sector_count()
 	beats_per_cycle_changed.emit(beats_per_cycle)

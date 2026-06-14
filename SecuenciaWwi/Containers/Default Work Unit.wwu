@@ -3942,6 +3942,8 @@
 				</Folder>
 				<Sound Name="New Synth One" ID="{D7D374A6-EAA3-4C86-A56B-A0E92A6D733C}" ShortID="304041963">
 					<PropertyList>
+						<Property Name="Color" Type="int16" Value="19"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
 						<Property Name="UserAuxSendHPF1" Type="int16">
 							<ValueList>
 								<Value>19</Value>
@@ -4048,6 +4050,39 @@
 									</Reference>
 								</ReferenceList>
 							</EffectSlot>
+						</ObjectList>
+						<ObjectList Name="RTPC">
+							<RTPC Name="" ID="{735FEB4C-87E9-407D-B71E-F39FF7E39C8F}" ShortID="1071950905">
+								<PropertyList>
+									<Property Name="PropertyName" Type="string" Value="Volume"/>
+								</PropertyList>
+								<ReferenceList>
+									<Reference Name="ControlInput">
+										<ObjectRef Name="RTPC_V_Yellow" ID="{2EEE9933-FB10-45F5-9425-EC35634A4D4B}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
+									</Reference>
+									<Reference Name="Curve">
+										<Custom>
+											<Curve Name="" ID="{5DFBB423-1BAE-475D-AABD-DBC03C96F725}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-200</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>0</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</Custom>
+									</Reference>
+								</ReferenceList>
+							</RTPC>
 						</ObjectList>
 					</ObjectLists>
 					<ActiveSourceList>

@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{955D52A7-DB0D-EC3A-4920-9C8F8105A3B1}",
+    "Hash": "{67908515-FB53-6CD9-8D89-FC7D37E2AF47}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -121,6 +121,13 @@
      }
     ],
     "GameParameters": [
+     {
+      "Id": "189860390",
+      "Name": "RTPC_V_Yellow",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Yellow",
+      "GUID": "{2EEE9933-FB10-45F5-9425-EC35634A4D4B}",
+      "Color": "6"
+     },
      {
       "Id": "822163944",
       "Name": "SS_Air_RPM",
@@ -754,6 +761,6 @@
     ]
    }
   ],
-  "FileHash": "{634973C0-49B9-1301-E10B-0921CC48ADB0}"
+  "FileHash": "{5CB3B7B2-857C-7936-63B4-96F26481C5A2}"
  }
 }

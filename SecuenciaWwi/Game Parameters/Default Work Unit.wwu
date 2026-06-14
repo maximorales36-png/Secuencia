@@ -38,6 +38,13 @@
 						<Property Name="OverrideColor" Type="bool" Value="True"/>
 					</PropertyList>
 				</GameParameter>
+				<GameParameter Name="RTPC_V_Yellow" ID="{2EEE9933-FB10-45F5-9425-EC35634A4D4B}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="6"/>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+				</GameParameter>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

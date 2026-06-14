@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{ADF7AC3A-9BB5-1DB7-3403-AFAD49DD7FEB}",
+    "Hash": "{9D2C2EAD-5545-908D-E2D7-F4B0FE9F26F9}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
@@ -295,6 +295,7 @@
        "Name": "Synth One",
        "ObjectPath": "\\Containers\\Default Work Unit\\New Synth One\\Synth One",
        "GUID": "{D142CAA1-AE42-4B26-BA5B-8B0EF753551B}",
+       "Color": "19",
        "LibName": "Wwise Synth One",
        "LibId": "9699330"
       }
@@ -311,6 +312,213 @@
      ]
     },
     "Events": [
+     {
+      "Id": "2976310903",
+      "Name": "Play_all",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_all",
+      "GUID": "{579B0B26-E332-4E80-A3C5-CABEECF66519}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "22529526"
+       },
+       {
+        "Id": "75870889"
+       },
+       {
+        "Id": "78081258"
+       },
+       {
+        "Id": "130499625"
+       },
+       {
+        "Id": "150619875"
+       },
+       {
+        "Id": "224751434"
+       },
+       {
+        "Id": "295558765"
+       },
+       {
+        "Id": "505471656"
+       },
+       {
+        "Id": "517232673"
+       },
+       {
+        "Id": "533691421"
+       },
+       {
+        "Id": "585049492"
+       },
+       {
+        "Id": "743979071"
+       },
+       {
+        "Id": "768119798"
+       },
+       {
+        "Id": "779203198"
+       },
+       {
+        "Id": "804058050"
+       },
+       {
+        "Id": "903860181"
+       },
+       {
+        "Id": "987452775"
+       },
+       {
+        "Id": "992317781"
+       }
+      ],
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "103395564"
+        }
+       ],
+       "ShareSets": [
+        {
+         "Id": "3657550167"
+        }
+       ]
+      },
+      "AuxBusRefs": [
+       {
+        "Id": "378875104",
+        "Name": "Del",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del",
+        "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}"
+       },
+       {
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
+       }
+      ],
+      "SwitchContainers": [
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "84696438",
+         "GUID": "{2B86FF34-C690-48E2-A33C-A509BB674F94}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "381532029"
+         }
+        ],
+        "PluginRefs": {
+         "Custom": [
+          {
+           "Id": "103395564"
+          }
+         ],
+         "ShareSets": [
+          {
+           "Id": "3657550167"
+          }
+         ]
+        }
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "1752637611",
+         "GUID": "{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "327823820"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "512257368",
+         "GUID": "{4D75717F-6B79-4081-BA7D-53B820D1E8DB}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "92740378"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "1752637620",
+         "GUID": "{45FCA14E-C811-4BB0-B897-8EA07E23A5E0}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "697493682"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "84696425",
+         "GUID": "{A2F78C76-2404-4B8F-9F74-98143393E8A5}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "554507038"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "1534528546",
+         "GUID": "{BC3CE909-3247-4709-9A42-8D5672F6F395}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "70615269"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "3437286228",
+         "GUID": "{98573E9C-D27F-47D5-9AD5-7DFF79316DE9}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "52741130"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "4133533608",
+         "Id": "510138863",
+         "GUID": "{4707DFE0-C196-40C0-BD1D-16E11EBE95BD}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "77226494"
+         }
+        ]
+       }
+      ]
+     },
      {
       "Id": "392139723",
       "Name": "Play_celeste",
@@ -617,6 +825,13 @@
     ],
     "GameParameters": [
      {
+      "Id": "189860390",
+      "Name": "RTPC_V_Yellow",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Yellow",
+      "GUID": "{2EEE9933-FB10-45F5-9425-EC35634A4D4B}",
+      "Color": "6"
+     },
+     {
       "Id": "1094048063",
       "Name": "RTPC_V_Celeste",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Celeste",
@@ -705,6 +920,6 @@
     ]
    }
   ],
-  "FileHash": "{356FCFAB-4ED8-3EA5-4C4B-860B6C921072}"
+  "FileHash": "{9E9130B3-5F2D-96C5-7AA0-920F0C10124D}"
  }
 }

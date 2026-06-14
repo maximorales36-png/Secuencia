@@ -117,6 +117,31 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_all" ID="{579B0B26-E332-4E80-A3C5-CABEECF66519}">
+					<ChildrenList>
+						<Action Name="" ID="{559E9997-FAA3-4FBE-86A1-21A04E5BE73B}" ShortID="870380771">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="303" ID="{D080338B-8420-418D-8A5F-CE3F8333D1D5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{6C8E50FF-5E73-4C8E-8614-8229AD8CE33B}" ShortID="284829707">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{D6835668-A9B5-439A-9FEA-3C2CEA99B8AB}" ShortID="647333132">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="midi_Sw" ID="{F2870FD9-BC11-453B-8017-8D65848F67FA}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

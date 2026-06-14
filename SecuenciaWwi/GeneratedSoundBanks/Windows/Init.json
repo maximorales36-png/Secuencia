@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{69590507-487F-390F-EDEB-38CBEE15EB5D}",
+    "Hash": "{955D52A7-DB0D-EC3A-4920-9C8F8105A3B1}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -134,6 +134,13 @@
       "GUID": "{A2AE79DC-CA3A-46BA-9652-9986C322A87B}"
      },
      {
+      "Id": "1094048063",
+      "Name": "RTPC_V_Celeste",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Celeste",
+      "GUID": "{0D98EEB3-65D0-4037-9EC1-AFF842A89486}",
+      "Color": "15"
+     },
+     {
       "Id": "1351367891",
       "Name": "SS_Air_Fear",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Fear",
@@ -151,6 +158,13 @@
       "Name": "SS_Air_Month",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Month",
       "GUID": "{09E2B445-C4A3-447F-B3CA-818A1D925EF7}"
+     },
+     {
+      "Id": "2699784114",
+      "Name": "RTPC_V_Pink",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Pink",
+      "GUID": "{66E92814-0C9B-4677-848A-C0AE9F9CB27F}",
+      "Color": "24"
      },
      {
       "Id": "3002758120",
@@ -740,6 +754,6 @@
     ]
    }
   ],
-  "FileHash": "{31E39EDF-0992-4DC8-CA66-14F4217B2E7C}"
+  "FileHash": "{634973C0-49B9-1301-E10B-0921CC48ADB0}"
  }
 }

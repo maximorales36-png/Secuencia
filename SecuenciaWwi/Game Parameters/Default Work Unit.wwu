@@ -24,6 +24,20 @@
 						<Property Name="OverrideColor" Type="bool" Value="True"/>
 					</PropertyList>
 				</GameParameter>
+				<GameParameter Name="RTPC_V_Pink" ID="{66E92814-0C9B-4677-848A-C0AE9F9CB27F}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="24"/>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="RTPC_V_Celeste" ID="{0D98EEB3-65D0-4037-9EC1-AFF842A89486}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="15"/>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+				</GameParameter>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

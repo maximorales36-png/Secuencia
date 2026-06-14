@@ -17,6 +17,8 @@ namespace AK
         static const AkUniqueID PLAY_NEON_GREEN = 3153919642U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID PLAY_YELLOW = 3406300906U;
+        static const AkUniqueID STOP_CELESTE = 3343818949U;
+        static const AkUniqueID STOP_PINK = 3839438860U;
         static const AkUniqueID STOP_YELLOW = 2252151776U;
     } // namespace EVENTS
 
@@ -45,6 +47,8 @@ namespace AK
     {
         static const AkUniqueID RTPC_N_GREEN = 3400130303U;
         static const AkUniqueID RTPC_PINK = 2005540895U;
+        static const AkUniqueID RTPC_V_CELESTE = 1094048063U;
+        static const AkUniqueID RTPC_V_PINK = 2699784114U;
         static const AkUniqueID RTPC_VIOLET = 3862788774U;
         static const AkUniqueID SS_AIR_FEAR = 1351367891U;
         static const AkUniqueID SS_AIR_FREEFALL = 3002758120U;

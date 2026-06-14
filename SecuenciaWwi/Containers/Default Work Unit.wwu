@@ -170,6 +170,7 @@
 									<Custom>
 										<MusicPlaylistItem Name="" ID="{6B2F19DC-2014-4EEE-9756-85A84C738373}" ShortID="898963516">
 											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
 												<Property Name="PlayMode" Type="int16" Value="3"/>
 											</PropertyList>
 											<ChildrenList>
@@ -1504,6 +1505,77 @@
 									</ObjectLists>
 								</MusicSegment>
 							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="RTPC">
+									<RTPC Name="" ID="{FCBCFC70-ED19-421D-A64B-DBB3E008C51C}" ShortID="802741743">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Highpass"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="RTPC_V_Pink" ID="{66E92814-0C9B-4677-848A-C0AE9F9CB27F}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{2B08F9AD-2F02-4843-9771-AAB9080490EA}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>100</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+									<RTPC Name="" ID="{A64BBA96-158C-4641-836D-B400B2B6BAFB}" ShortID="578305179">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Volume"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="RTPC_V_Pink" ID="{66E92814-0C9B-4677-848A-C0AE9F9CB27F}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{0CD0BC66-8CA9-4A44-AA0E-F9F97AE91CDB}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-200</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>50</XPos>
+																<YPos>-0.2712</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</ObjectList>
+							</ObjectLists>
 						</MusicPlaylistContainer>
 						<MusicPlaylistContainer Name="303" ID="{D080338B-8420-418D-8A5F-CE3F8333D1D5}" ShortID="964849784">
 							<PropertyList>
@@ -1522,6 +1594,7 @@
 									<Custom>
 										<MusicPlaylistItem Name="" ID="{E4431A72-FDD6-43C4-8D30-3FCBEAD5F6EE}" ShortID="741919863">
 											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
 												<Property Name="PlayMode" Type="int16" Value="3"/>
 											</PropertyList>
 											<ChildrenList>
@@ -1855,6 +1928,82 @@
 									</ObjectLists>
 								</MusicSegment>
 							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="RTPC">
+									<RTPC Name="" ID="{08258276-8265-4E99-A6D3-6B0B710CBEEA}" ShortID="281841858">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Highpass"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="RTPC_V_Celeste" ID="{0D98EEB3-65D0-4037-9EC1-AFF842A89486}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{D4CEC752-B7A2-403D-A8B6-88ED19595671}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>74</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>46.66667</XPos>
+																<YPos>29</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+									<RTPC Name="" ID="{AA25AD6A-AFF0-40EB-872C-094E17EB3072}" ShortID="1013982399">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Volume"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="RTPC_V_Celeste" ID="{0D98EEB3-65D0-4037-9EC1-AFF842A89486}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{DE36355D-7775-4C9D-B4D0-9C95D774F4E8}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-200</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>50</XPos>
+																<YPos>-0.271199999999993</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</ObjectList>
+							</ObjectLists>
 						</MusicPlaylistContainer>
 						<MusicPlaylistContainer Name="Pad" ID="{574E4AFB-FBEC-4FF6-87FC-5B1C58AAAFF6}" ShortID="594765211">
 							<PropertyList>

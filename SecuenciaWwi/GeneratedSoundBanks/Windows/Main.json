@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{CCEADF6B-A6AA-8147-58D5-18D5528C2CCE}",
+    "Hash": "{ADF7AC3A-9BB5-1DB7-3403-AFAD49DD7FEB}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
@@ -317,9 +317,7 @@
       "ObjectPath": "\\Events\\Default Work Unit\\Play_celeste",
       "GUID": "{949737E8-77D8-4A07-8775-5102B43EA667}",
       "Color": "2",
-      "DurationType": "OneShot",
-      "DurationMin": "2.7586167",
-      "DurationMax": "2.7586167",
+      "DurationType": "Infinite",
       "MediaRefs": [
        {
         "Id": "78081258"
@@ -385,9 +383,7 @@
       "ObjectPath": "\\Events\\Default Work Unit\\Play_pink",
       "GUID": "{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}",
       "Color": "11",
-      "DurationType": "OneShot",
-      "DurationMin": "2.7586167",
-      "DurationMax": "2.7586167",
+      "DurationType": "Infinite",
       "MediaRefs": [
        {
         "Id": "22529526"
@@ -586,6 +582,28 @@
       ]
      },
      {
+      "Id": "3343818949",
+      "Name": "Stop_celeste",
+      "ObjectPath": "\\Events\\Default Work Unit\\Stop_celeste",
+      "GUID": "{8962B4D5-07E5-4B59-A54E-A22FD807FA52}",
+      "Color": "2",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "3839438860",
+      "Name": "Stop_pink",
+      "ObjectPath": "\\Events\\Default Work Unit\\Stop_pink",
+      "GUID": "{163530BD-83D6-4E14-A907-2BCA3EEFC5F0}",
+      "Color": "11",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
       "Id": "2252151776",
       "Name": "Stop_yellow",
       "ObjectPath": "\\Events\\Default Work Unit\\Stop_yellow",
@@ -599,10 +617,24 @@
     ],
     "GameParameters": [
      {
+      "Id": "1094048063",
+      "Name": "RTPC_V_Celeste",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Celeste",
+      "GUID": "{0D98EEB3-65D0-4037-9EC1-AFF842A89486}",
+      "Color": "15"
+     },
+     {
       "Id": "2005540895",
       "Name": "RTPC_Pink",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_Pink",
       "GUID": "{2B441A2F-2D08-4ABE-8272-1C94B50150AE}",
+      "Color": "24"
+     },
+     {
+      "Id": "2699784114",
+      "Name": "RTPC_V_Pink",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Pink",
+      "GUID": "{66E92814-0C9B-4677-848A-C0AE9F9CB27F}",
       "Color": "24"
      },
      {
@@ -673,6 +705,6 @@
     ]
    }
   ],
-  "FileHash": "{5321D527-70E5-D3AC-D981-0843FCB5EEF3}"
+  "FileHash": "{27FC97B8-1C94-6245-6B0B-63D0DC829075}"
  }
 }

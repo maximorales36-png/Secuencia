@@ -81,6 +81,42 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Stop_pink" ID="{163530BD-83D6-4E14-A907-2BCA3EEFC5F0}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="11"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Action Name="" ID="{11475096-EE31-4906-B38C-1DF20C481556}" ShortID="852690319">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="707" ID="{32A8AB79-CB47-4BB4-A490-CBE3ECAA7D12}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_celeste" ID="{8962B4D5-07E5-4B59-A54E-A22FD807FA52}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="2"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Action Name="" ID="{8FD5F7DD-3BF4-4A5F-B49C-A01489D77A30}" ShortID="633948287">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="303" ID="{D080338B-8420-418D-8A5F-CE3F8333D1D5}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

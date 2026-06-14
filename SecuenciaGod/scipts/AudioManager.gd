@@ -3,6 +3,7 @@ class_name AudioManager
 
 var scanline_logic: ScanlineLogic
 var color_cooldowns: Dictionary = {}
+var _sector_colors_triggered: Dictionary = {}
 
 # Estado del yellow monofónico
 var yellow_active: bool = false
@@ -25,6 +26,14 @@ var _pink_current: float = 100.0
 var _pink_target: float = 100.0
 const PINK_RTPC_NAME: String = "RTPC_Pink"
 
+# Familia 1 one-shot tracking
+var _pink_fired_this_cycle: bool = false
+var _celeste_fired_this_cycle: bool = false
+
+# Pink/Celeste presence RTPCs (Familia 1)
+const PINK_V_RTPC_NAME: String = "RTPC_V_Pink"
+const CELESTE_V_RTPC_NAME: String = "RTPC_V_Celeste"
+
 
 func _ready() -> void:
 	Wwise.register_game_obj(self, "AudioManager")
@@ -44,6 +53,7 @@ func _process(delta: float) -> void:
 	_update_violet_rtpc(delta)
 	_update_green_rtpc(delta)
 	_update_pink_rtpc(delta)
+	_update_presence_rtpcs(delta)
 
 
 ## Smooths and sends the Violet RTPC value to Wwise.
@@ -98,8 +108,41 @@ func _update_pink_rtpc(delta: float) -> void:
 	Wwise.set_rtpc_value(PINK_RTPC_NAME, _pink_current, self)
 
 
+func _update_presence_rtpcs(delta: float) -> void:
+	if GestorFamilias.familia_activa != "familia_1":
+		return
+	if scanline_logic == null:
+		return
+
+	var current_sector: int = int(scanline_logic.scan_position * scanline_logic.sector_count)
+	var sector_data: Dictionary = scanline_logic.sector_colors.get(current_sector, {})
+	var pink_in_zone: bool = sector_data.has("pink")
+	var celeste_in_zone: bool = sector_data.has("celeste")
+
+	if pink_in_zone and not _pink_fired_this_cycle:
+		_pink_fired_this_cycle = true
+		var event := GestorFamilias.get_sound("pink")
+		if not event.is_empty():
+			Wwise.post_event(event, self)
+
+	if celeste_in_zone and not _celeste_fired_this_cycle:
+		_celeste_fired_this_cycle = true
+		var event := GestorFamilias.get_sound("celeste")
+		if not event.is_empty():
+			Wwise.post_event(event, self)
+
+	Wwise.set_rtpc_value(PINK_V_RTPC_NAME, 100.0 if pink_in_zone else 0.0, self)
+	Wwise.set_rtpc_value(CELESTE_V_RTPC_NAME, 100.0 if celeste_in_zone else 0.0, self)
+
+
 func _on_cycle_reset() -> void:
 	color_cooldowns.clear()
+	_sector_colors_triggered.clear()
+	_pink_fired_this_cycle = false
+	_celeste_fired_this_cycle = false
+	if GestorFamilias.familia_activa == "familia_1":
+		Wwise.post_event("Stop_pink", self)
+		Wwise.post_event("Stop_celeste", self)
 	if yellow_active:
 		yellow_active = false
 		yellow_note = -1
@@ -119,6 +162,13 @@ func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 
 
 func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
+	if _sector_colors_triggered.has(color):
+		return
+	_sector_colors_triggered[color] = true
+
+	if GestorFamilias.familia_activa == "familia_1" and color in ["pink", "celeste"]:
+		return
+
 	_play_sound(color, y, sector_index)
 
 

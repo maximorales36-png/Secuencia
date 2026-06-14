@@ -22,13 +22,15 @@ var scan_progress: float = 0.0
 const PIECE_TIMEOUT: float = 0.5
 const TRAIL_BG_ALPHA_NIGHT: float = 0.13
 const TRAIL_BG_ALPHA_LIGHT: float = 0.18
-const BPM_DEFAULT: float = 76.0
+
+@export var bpm: float = 76.0
+@export var beats_per_cycle: int = 4
 
 var is_night: bool = true
-var BPM: float = BPM_DEFAULT
-var BEAT: float = (60.0 / BPM_DEFAULT) * 1000.0
-var last_beat: float = 0.0
 var _viewport: Vector2 = Vector2.ZERO
+var _start_usec: int = 0
+var _cycle_usec: int = 0
+var _last_cycle_idx: int = -1
 
 
 class BlobPiece:
@@ -58,8 +60,6 @@ class BlobPiece:
 
 func _ready() -> void:
 	scanline_logic = get_tree().root.find_child("ScanlineLogic", true, false)
-	if scanline_logic:
-		scanline_logic.cycle_reset.connect(_on_cycle_reset)
 
 	_audio_manager = get_tree().root.find_child("AudioManager", true, false)
 	if not _audio_manager:
@@ -70,27 +70,35 @@ func _ready() -> void:
 	else:
 		print("[BlobRenderer] ERROR: No se encontró IPCManager")
 
-	BPM = 76.0
-	BEAT = (60.0 / BPM) * 1000.0
+	_start_usec = Time.get_ticks_usec()
+	_cycle_usec = int(beats_per_cycle * 60.0 * 1000000.0 / maxf(bpm, 1.0))
+
+
+func _sync_family_config() -> void:
+	var new_bpm := GestorFamilias.get_bpm()
+	var new_bpc := GestorFamilias.get_beats_per_cycle()
+	if new_bpm != bpm:
+		set_bpm(new_bpm)
+	if new_bpc != beats_per_cycle:
+		set_beats_per_cycle(new_bpc)
 
 
 func _process(delta: float) -> void:
+	_sync_family_config()
+
 	if GestorFamilias.familia_activa != "familia_2":
 		return
 
 	frame += 1
 	pattern_seed += delta * 0.8
 
-	var ahora: float = Time.get_ticks_msec() / 1000.0
+	var elapsed_usec := Time.get_ticks_usec() - _start_usec
+	var cycle_idx := elapsed_usec / _cycle_usec
+	scan_progress = float(elapsed_usec % _cycle_usec) / float(_cycle_usec)
 
-	if last_beat == 0.0:
-		last_beat = ahora * 1000.0
-	if (ahora * 1000.0) - last_beat > BEAT:
-		last_beat += BEAT
-		scan_progress = 0.0
-
-	if BEAT > 0:
-		scan_progress = minf((ahora * 1000.0 - last_beat) / BEAT, 1.0)
+	if cycle_idx != _last_cycle_idx:
+		_last_cycle_idx = cycle_idx
+		_on_cycle_reset()
 
 	for key in tracked_pieces:
 		var bp: BlobPiece = tracked_pieces[key]
@@ -491,5 +499,10 @@ func set_night(enabled: bool) -> void:
 
 
 func set_bpm(new_bpm: float) -> void:
-	BPM = new_bpm
-	BEAT = (60.0 / maxf(BPM, 1.0)) * 1000.0
+	bpm = new_bpm
+	_cycle_usec = int(beats_per_cycle * 60.0 * 1000000.0 / maxf(bpm, 1.0))
+
+
+func set_beats_per_cycle(new_beats: int) -> void:
+	beats_per_cycle = new_beats
+	_cycle_usec = int(beats_per_cycle * 60.0 * 1000000.0 / maxf(bpm, 1.0))

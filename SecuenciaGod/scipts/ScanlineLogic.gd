@@ -47,7 +47,22 @@ func _ready() -> void:
 		print("[ScanlineLogic] ERROR: No se encontró IPCManager")
 
 
+func _sync_family_config() -> void:
+	var new_bpm := GestorFamilias.get_bpm()
+	var new_bpc := GestorFamilias.get_beats_per_cycle()
+	if new_bpm != bpm:
+		bpm = new_bpm
+		_cycle_usec = int(beats_per_cycle * 60.0 * 1000000.0 / maxf(bpm, 1.0))
+		_update_scan_speed()
+	if new_bpc != beats_per_cycle:
+		beats_per_cycle = new_bpc
+		_cycle_usec = int(beats_per_cycle * 60.0 * 1000000.0 / maxf(bpm, 1.0))
+		_update_scan_speed()
+		_update_sector_count()
+
+
 func _process(delta: float) -> void:
+	_sync_family_config()
 	var elapsed_usec = Time.get_ticks_usec() - _start_usec
 	var cycle_idx = elapsed_usec / _cycle_usec
 	var pos_in_cycle = float(elapsed_usec % _cycle_usec) / float(_cycle_usec)

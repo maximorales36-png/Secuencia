@@ -1,12 +1,12 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cx8tuhfi6fg2v"]
 
-[ext_resource type="Script" path="res://scipts/FamilyMenu.gd" id="1"]
+[ext_resource type="Script" uid="uid://n5t4ob323btn" path="res://scipts/FamilyMenu.gd" id="1"]
 
-[node name="FamilyMenu" type="Control"]
-layout_mode = 1
+[node name="FamilyMenu" type="Control" unique_id=1309056030]
+layout_mode = 3
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1")

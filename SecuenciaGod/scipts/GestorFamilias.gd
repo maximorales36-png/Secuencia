@@ -27,6 +27,11 @@ const HTML_ATOM_DEFS: Dictionary = {
 
 @export var familia_activa: String = "familia_1"
 
+const SCAN_CONFIG: Dictionary = {
+	"familia_1": { "bpm": 87.0, "beats_per_cycle": 16 },
+	"familia_2": { "bpm": 76.0, "beats_per_cycle": 4 },
+}
+
 const FAMILIAS: Dictionary = {
 	"familia_1": {
 		"nombre": "Familia 1",
@@ -49,6 +54,16 @@ const FAMILIAS: Dictionary = {
 		}
 	},
 }
+
+
+func get_bpm(family: String = "") -> float:
+	var f = family if not family.is_empty() else familia_activa
+	return SCAN_CONFIG.get(f, {}).get("bpm", 87.0)
+
+
+func get_beats_per_cycle(family: String = "") -> int:
+	var f = family if not family.is_empty() else familia_activa
+	return SCAN_CONFIG.get(f, {}).get("beats_per_cycle", 16)
 
 
 func _get_family_id(id_familia: String = "") -> String:

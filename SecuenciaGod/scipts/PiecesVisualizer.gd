@@ -31,6 +31,10 @@ func _ready() -> void:
 	ipc_manager.pieces_updated.connect(_on_pieces_updated)
 	ipc_manager.connection_changed.connect(_on_connection_changed)
 
+	connected = ipc_manager.connected
+	pieces = ipc_manager.pieces.duplicate()
+	queue_redraw()
+
 
 func _on_pieces_updated(new_pieces: Array) -> void:
 	pieces = new_pieces

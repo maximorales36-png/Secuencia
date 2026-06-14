@@ -22,14 +22,15 @@
 |---|---|---|
 | Detección Python + WebSocket | ✅ COMPLETO | OpenCV detecta 6 colores, servidor WS envía a 10 Hz |
 | Cliente WebSocket Godot | ✅ COMPLETO | `WebSocketManager.gd` con reconexión automática |
-| Scanline Logic | ✅ COMPLETO | Barrido sincronizado a BPM, detección de cruces |
-| Efectos Visuales | ✅ COMPLETO | `EffectsRenderer.gd` con ondas, partículas, distorsión |
-| Audio Wwise | ✅ COMPLETO | `AudioManager.gd` con Wwise SDK integrado |
-| Proyecto Wwise | ✅ COMPLETO | 4 eventos, RTPC Timbre, soundbanks generados |
+| Scanline Logic | ✅ COMPLETO | Barrido sincronizado a BPM, detección de cruces y sectores |
+| Efectos Visuales | ✅ COMPLETO | `EffectsRenderer.gd` con ondas, partículas, distorsión, sombra yellow |
+| Audio Wwise | ✅ COMPLETO | `AudioManager.gd` con Wwise SDK, Familia 1 (Play_all continuo + RTPC por zona) y familias tradicionales |
+| Proyecto Wwise | ✅ COMPLETO | Events, RTPCs (Timbre, Violet, N_Green, Pink, V_Pink, V_Celeste, V_Yellow), soundbanks |
+| Sistema de Familias | ✅ COMPLETO | `GestorFamilias.gd` + IPCManager con 2 familias; Familia 1 con Play_all |
 | Fases futuras (5-8) | ⏳ PENDIENTE | Teachable Machine, parámetros dinámicos, multiplayer |
 
 ```
-► Sistema completamente funcional. MVP listo.
+► Sistema completamente funcional. MVP listo. 2 familias operativas.
 ```
 
 ---
@@ -165,20 +166,41 @@ class Piece:
 
 ### 3. Godot — Scanline Logic (`SecuenciaGod/scipts/ScanlineLogic.gd`)
 
-Gestiona la línea de barrido vertical sincronizada a BPM y detecta cruces con piezas.
+Gestiona la línea de barrido vertical sincronizada a BPM, detecta cruces con piezas y activación de sectores para colores sectoriales.
 
 **Parámetros:**
-- `BPM = 120` (fijo, futuro parametrizable)
+- `BPM = 87` (exportable, 87 default actual)
+- `beats_per_cycle = 16` (exportable, configurado en main.tscn)
 - Barrido: izquierda (x=0) → derecha (x=1)
-- 1 ciclo completo = 2 segundos (a 120 BPM)
-- `scan_speed = (bpm / 60.0) / 2.0`
+- 1 ciclo = 16 beats = ~11.03s (a 87 BPM)
+- `scan_speed = (bpm / 60.0) / beats_per_cycle` ≈ 0.090625
+- `sector_count = 4`
+- `sector_duration = ciclo / 4 ≈ 2.76s`
 
-**Detección de cruces:**
+**Timing absoluto (sin deriva):**
+- `_process` usa `Time.get_ticks_usec()` (tiempo absoluto del sistema).
+- `scan_position = float(elapsed_usec % _cycle_usec) / float(_cycle_usec)`
+- El cambio de ciclo se detecta comparando `cycle_idx` (deriva = 0).
+- `scan_position -= 1.0` en el wrap (preserva resto fraccional).
+
+**Detección de cruces (piezas individuales):**
 - Por frame compara `abs(scan_x - piece.x) < TOLERANCE` (tolerance ≈ 0.02)
 - Evita triggers múltiples con `last_triggered` tracking por ciclo
-- Reset al reiniciar ciclo (scan_x < 0.1)
+- Señal: `crossing_detected(piece: IPCManager.Piece)`
 
-**Signal emitida:** `crossing_detected(piece: WebSocketManager.Piece)`
+**Detección sectorial (pink, celeste, neon_green):**
+- Los colores en `sector_based_colors` activan sectores completos en vez de tracking por pieza.
+- `sector_colors`: dict `sector → {color: y, ...}` — múltiples colores por sector.
+- `_detect_sector_crossings()`: detecta cambio de sector y emite `sector_activated(sector, y, color)`.
+- Sector catch-up: si un sector fue alcanzado pero nunca disparó (frame drops), lo dispara retroactivamente.
+- Señal: `sector_activated(sector_index: int, y: float, color: String)`
+
+**Estabilización de piezas:**
+- `piece_memory` con timeout de 0.35s (retiene piezas que la cámara perdió momentáneamente).
+- `STABILIZE_SNAP = 0.015` (piezas que oscilan ±0.015 en X se agrupan).
+- `SMOOTHING_FACTOR = 0.35` (posición suavizada con lerp).
+
+**Señal:** `cycle_reset()` — emitida cuando la scanline vuelve a 0.
 
 ---
 
@@ -205,7 +227,7 @@ Renderiza la línea de barrido y efectos visuales reactivos en un Node2D.
 
 ### 5. Godot — Audio Manager (`SecuenciaGod/scipts/AudioManager.gd`)
 
-Interfaz entre Godot y Wwise SDK para reproducción de audio.
+Interfaz entre Godot y Wwise SDK para reproducción de audio. Soporta dos modos según la familia activa.
 
 **Inicialización en `_ready()`:**
 ```gdscript
@@ -214,17 +236,40 @@ Wwise.load_bank("Main")
 Wwise.add_default_listener(self)
 ```
 
-**Flujo de reproducción:**
-1. Recibe `crossing_detected(piece)` desde `ScanlineLogic`
-2. Mapea color a evento: `Play_Yellow`, `Play_Orange`, `Play_Pink`, `Play_Neon_Green`
-3. Calcula RTPC: `Timbre = y * 100.0` (0-100)
-4. Ejecuta: `Wwise.post_event(event_name, self)`
-5. Modula: `Wwise.set_rtpc_value("Timbre", rtpc_value, self)`
+**Modo Familia 1** (Play_all continuo + RTPCs por zona):
+- `Play_all` se dispara en `_ready()`, suena continuamente hasta `_exit_tree()`.
+- **No** se postean eventos individuales `Play_Pink`, `Play_Celeste`, `Play_Yellow`.
+- La presencia de colores se modula via RTPC:
+  - `RTPC_V_Pink` / `RTPC_V_Celeste` / `RTPC_V_Yellow`: 100 si la zona actual tiene el color, 0 si no. Con rampa lineal de 100ms (`RTPC_RAMP_SPEED = 1000.0`).
+  - Look-ahead: si la próxima zona tiene el color y faltan ≤100ms para el borde del sector, empieza fade up.
+- yellow + violet/others en Familia 1: retornan sin postear evento (el Play_all los cubre).
 
-**Validaciones:**
-- Solo colores válidos: yellow, orange, pink, neon_green
-- `y_position` clampeda a [0, 1]
-- Manejo especial para `neon_green` → `Neon_Green`
+**Modo Otras Familias** (eventos individuales por pieza):
+- Recibe `crossing_detected(piece)` desde `ScanlineLogic`
+- Mapea color a evento: `Play_Yellow`, `Play_Orange`, `Play_Pink`, `Play_Neon_Green`, `Play_Celeste`
+- Calcula RTPC: `Timbre = y * 100.0` (0-100)
+- Ejecuta: `Wwise.post_event(event_name, self)`
+- Modula: `Wwise.set_rtpc_value("Timbre", rtpc_value, self)`
+
+**Eventos por sector** (neon_green, pink, celeste):
+- Recibe `sector_activated(sector_index, y, color)` desde `ScanlineLogic`
+- neon_green dispara evento por sector (dedup por `sector_index + "_" + color`)
+- pink/celeste en Familia 1 son saltados (Play_all los cubre)
+
+**RTPCs continuos en `_process()`:**
+- `RTPC_Violet`: smooth lerp basado en la pieza más alta de violet (o safe=100 si no hay).
+- `RTPC_V_Pink`, `RTPC_V_Celeste`, `RTPC_V_Yellow`: rampa lineal por zona (solo Familia 1).
+
+**RTPCs por pieza al cruzar (en `_play_sound()`):**
+- `Timbre`: `y_position * 100` en cada post_event.
+- `RTPC_N_Green`: `(1 - y_position) * 100` al cruzar cada pieza neon_green.
+- `RTPC_Pink`: `(1 - y_position) * 100` al cruzar cada pieza pink (en familias donde pink postea evento).
+
+**Sistema de cooldown:**
+- Mismo color no puede sonar dos veces superpuesto; colores diferentes sí.
+- `color_cooldowns` bloquea por `sector_duration` (~2.76s a 87 BPM).
+- Se limpia en `cycle_reset()`.
+- neon_green usa cooldown por sector+color (per-sector dedup).
 
 ---
 
@@ -237,14 +282,24 @@ Wwise.add_default_listener(self)
 **Estructura:**
 ```
 SoundBank: Main
-├── Play_Yellow     → Síntesis amarilla
-├── Play_Orange     → Síntesis naranja
-├── Play_Pink       → Síntesis rosa
-└── Play_Neon_Green → Síntesis verde
+├── Play_Yellow       → Síntesis amarilla
+├── Play_Orange       → Síntesis naranja
+├── Play_Pink         → Síntesis rosa
+├── Play_Celeste      → Síntesis celeste
+├── Play_Neon_Green   → Síntesis verde
+├── Play_all          → Todos los segmentos en loop (Familia 1)
+├── Play_Violet       → Síntesis violeta
+├── Stop_all          → Detiene Play_all
+├── Stop_yellow       → Detiene yellow melódico
 
-RTPC: Timbre [0-100]
-├── Modula filtro, pitch y envelope
-└── Controlado por posición Y de la pieza
+RTPCs: 
+- Timbre [0-100]        → Modula filtro/pitch/envelope por posición Y
+- RTPC_Violet [0-100]   → Altura de pieza violet más alta
+- RTPC_N_Green [0-100]  → Altura de pieza neon_green más alta
+- RTPC_Pink [0-100]     → Altura de pieza pink más alta
+- RTPC_V_Pink [0-100]   → Presencia pink por zona (Familia 1)
+- RTPC_V_Celeste [0-100]→ Presencia celeste por zona (Familia 1)
+- RTPC_V_Yellow [0-100] → Presencia yellow por zona (Familia 1)
 ```
 
 **Integración Godot:**
@@ -485,21 +540,32 @@ WwiseGodot: Sound engine initialized successfully.
 
 ---
 
-### 2026-06-13 — Refactor audio Familia 1: Play_all + RTPCs por zona + fix deriva scanline
+### 2026-06-13 — Refactor audio Familia 1: Play_all + RTPCs por zona + fixes
 
 **`AudioManager.gd`:**
 - `Play_all` se dispara una vez en `_ready()` para Familia 1, suena hasta salir del juego. `Stop_all` en `_exit_tree()`.
 - Eliminado: `_handle_yellow` (switch de notas), `Play_Yellow`/`Stop_yellow`, `Play_Pink`/`Play_Celeste` one-shots, `Stop_pink`/`Stop_celeste` en cycle_reset.
-- Nuevos RTPC:
-  - `RTPC_V_Pink` (0-100): snap por zona actual. 100 si la zona tiene piezas pink, 0 si no.
-  - `RTPC_V_Celeste` (0-100): snap por zona actual. 100 si la zona tiene piezas celeste, 0 si no.
-  - `RTPC_V_Yellow` (0-100): 100 al cruzar yellow (`_on_crossing_detected`), 0 en cycle_reset.
+- RTPCs por zona (pink, celeste, yellow) con `_ramp()` (100ms lineales):
+  - `RTPC_V_Pink` y `RTPC_V_Celeste`: 100 si la zona actual tiene el color, 0 si no. Look-ahead 100ms desde el borde de sector.
+  - `RTPC_V_Yellow`: cambiado de crossing-based a zone-based (igual que pink/celeste). Mira piezas en zona actual/próxima.
 - `_on_sector_activated` saltea pink/celeste en Familia 1 (Play_all los cubre).
-- `_on_cycle_reset` solo resetea `RTPC_V_Yellow` a 0.
+- `_on_cycle_reset` ya no resetea RTPCs (se manejan por zona).
+- `_on_crossing_detected` yellow solo retorna (EffectsRenderer usa el signal).
+- **Fix neon_green**: `_sector_colors_triggered` key cambiado de `color` a `str(sector) + "_" + color` → cada sector con neon_green dispara su evento independentemente.
+- **Fix Parse Error**: anotaciones explícitas `: bool`, `: Dictionary` en líneas 118-120.
 
 **`ScanlineLogic.gd`:**
-- Fix deriva entre ciclos: `_process` ahora usa `Time.get_ticks_usec()` (tiempo absoluto) en vez de acumular `delta`. `scan_position = float(elapsed_usec % _cycle_usec) / float(_cycle_usec)`. El wrap se detecta comparando `cycle_idx`. Zero acumulación de error.
-- Default `beats_per_cycle` cambiado de 32 a 16 (coincide con main.tscn).
+- Fix deriva entre ciclos: `_process` usa `Time.get_ticks_usec()` (tiempo absoluto). `scan_position = float(elapsed_usec % _cycle_usec) / float(_cycle_usec)`. Wrap detectado por `cycle_idx`.
+- Fix wrap: `scan_position -= 1.0` en vez de `= 0.0` para preservar resto fraccional.
+- Default `beats_per_cycle` cambiado de 32 a 16.
+
+### 2026-06-13b — RTPC_N_Green y RTPC_Pink ahora por pieza al cruzar
+
+**`AudioManager.gd`:**
+- `RTPC_N_Green` y `RTPC_Pink` ya no se setean continuamente en `_process()`.
+- Se setean en `_play_sound()` por cada pieza: `(1 - y_position) * 100` al postear el evento.
+- 4 piezas neon_green → 4 valores diferentes de `RTPC_N_Green`, uno por cruce.
+- Eliminados: `_green_current`, `_green_target`, `_pink_current`, `_pink_target`, `_update_green_rtpc()`, `_update_pink_rtpc()`.
 
 ---
 

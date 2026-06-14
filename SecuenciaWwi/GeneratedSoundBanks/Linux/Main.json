@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{9D2C2EAD-5545-908D-E2D7-F4B0FE9F26F9}",
+    "Hash": "{8F8E0467-AD44-3DFC-D918-6D551E3D8ED1}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
@@ -638,158 +638,6 @@
       ]
      },
      {
-      "Id": "3406300906",
-      "Name": "Play_yellow",
-      "ObjectPath": "\\Events\\Default Work Unit\\Play_yellow",
-      "GUID": "{C6CA5608-0D65-477A-B8CF-4E3A5FB47858}",
-      "Color": "6",
-      "DurationType": "Infinite",
-      "PluginRefs": {
-       "Custom": [
-        {
-         "Id": "103395564"
-        }
-       ],
-       "ShareSets": [
-        {
-         "Id": "3657550167"
-        }
-       ]
-      },
-      "AuxBusRefs": [
-       {
-        "Id": "378875104",
-        "Name": "Del",
-        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del",
-        "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}"
-       },
-       {
-        "Id": "980603520",
-        "Name": "Rev",
-        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
-        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
-       }
-      ],
-      "SwitchContainers": [
-       {
-        "SwitchValue": {
-         "GroupType": "Switch",
-         "GroupId": "4133533608",
-         "Id": "84696438",
-         "GUID": "{2B86FF34-C690-48E2-A33C-A509BB674F94}"
-        },
-        "MediaRefs": [
-         {
-          "Id": "381532029"
-         }
-        ],
-        "PluginRefs": {
-         "Custom": [
-          {
-           "Id": "103395564"
-          }
-         ],
-         "ShareSets": [
-          {
-           "Id": "3657550167"
-          }
-         ]
-        }
-       },
-       {
-        "SwitchValue": {
-         "GroupType": "Switch",
-         "GroupId": "4133533608",
-         "Id": "1752637611",
-         "GUID": "{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"
-        },
-        "MediaRefs": [
-         {
-          "Id": "327823820"
-         }
-        ]
-       },
-       {
-        "SwitchValue": {
-         "GroupType": "Switch",
-         "GroupId": "4133533608",
-         "Id": "512257368",
-         "GUID": "{4D75717F-6B79-4081-BA7D-53B820D1E8DB}"
-        },
-        "MediaRefs": [
-         {
-          "Id": "92740378"
-         }
-        ]
-       },
-       {
-        "SwitchValue": {
-         "GroupType": "Switch",
-         "GroupId": "4133533608",
-         "Id": "1752637620",
-         "GUID": "{45FCA14E-C811-4BB0-B897-8EA07E23A5E0}"
-        },
-        "MediaRefs": [
-         {
-          "Id": "697493682"
-         }
-        ]
-       },
-       {
-        "SwitchValue": {
-         "GroupType": "Switch",
-         "GroupId": "4133533608",
-         "Id": "84696425",
-         "GUID": "{A2F78C76-2404-4B8F-9F74-98143393E8A5}"
-        },
-        "MediaRefs": [
-         {
-          "Id": "554507038"
-         }
-        ]
-       },
-       {
-        "SwitchValue": {
-         "GroupType": "Switch",
-         "GroupId": "4133533608",
-         "Id": "1534528546",
-         "GUID": "{BC3CE909-3247-4709-9A42-8D5672F6F395}"
-        },
-        "MediaRefs": [
-         {
-          "Id": "70615269"
-         }
-        ]
-       },
-       {
-        "SwitchValue": {
-         "GroupType": "Switch",
-         "GroupId": "4133533608",
-         "Id": "3437286228",
-         "GUID": "{98573E9C-D27F-47D5-9AD5-7DFF79316DE9}"
-        },
-        "MediaRefs": [
-         {
-          "Id": "52741130"
-         }
-        ]
-       },
-       {
-        "SwitchValue": {
-         "GroupType": "Switch",
-         "GroupId": "4133533608",
-         "Id": "510138863",
-         "GUID": "{4707DFE0-C196-40C0-BD1D-16E11EBE95BD}"
-        },
-        "MediaRefs": [
-         {
-          "Id": "77226494"
-         }
-        ]
-       }
-      ]
-     },
-     {
       "Id": "3343818949",
       "Name": "Stop_celeste",
       "ObjectPath": "\\Events\\Default Work Unit\\Stop_celeste",
@@ -806,17 +654,6 @@
       "ObjectPath": "\\Events\\Default Work Unit\\Stop_pink",
       "GUID": "{163530BD-83D6-4E14-A907-2BCA3EEFC5F0}",
       "Color": "11",
-      "MaxAttenuation": "0",
-      "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
-     },
-     {
-      "Id": "2252151776",
-      "Name": "Stop_yellow",
-      "ObjectPath": "\\Events\\Default Work Unit\\Stop_yellow",
-      "GUID": "{4A86DD87-6BEC-4876-9C11-E333D029349F}",
-      "Color": "6",
       "MaxAttenuation": "0",
       "DurationType": "OneShot",
       "DurationMin": "0",
@@ -920,6 +757,6 @@
     ]
    }
   ],
-  "FileHash": "{9E9130B3-5F2D-96C5-7AA0-920F0C10124D}"
+  "FileHash": "{1887A51C-F8C8-5347-33A4-8B7CB33E2DB3}"
  }
 }

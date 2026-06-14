@@ -10,20 +10,19 @@ var _violet_current: float = 100.0
 var _violet_target: float = 100.0
 const VIOLET_RTPC_NAME: String = "RTPC_Violet"
 
-# Green RTPC
-var _green_current: float = 100.0
-var _green_target: float = 100.0
 const GREEN_RTPC_NAME: String = "RTPC_N_Green"
-
-# Pink RTPC
-var _pink_current: float = 100.0
-var _pink_target: float = 100.0
 const PINK_RTPC_NAME: String = "RTPC_Pink"
 
 # Presence RTPCs (Familia 1)
 const PINK_V_RTPC_NAME: String = "RTPC_V_Pink"
 const CELESTE_V_RTPC_NAME: String = "RTPC_V_Celeste"
 const YELLOW_V_RTPC_NAME: String = "RTPC_V_Yellow"
+
+const RTPC_RAMP_SPEED: float = 1000.0  # 0→100 en 100ms
+var _pink_v_value: float = 0.0
+var _celeste_v_value: float = 0.0
+var _yellow_v_value: float = 0.0
+var _yellow_v_target: float = 0.0
 
 
 func _ready() -> void:
@@ -50,9 +49,8 @@ func _exit_tree() -> void:
 
 func _process(delta: float) -> void:
 	_update_violet_rtpc(delta)
-	_update_green_rtpc(delta)
-	_update_pink_rtpc(delta)
 	_update_presence_rtpcs(delta)
+	_update_yellow_rtpc(delta)
 
 
 ## Smooths and sends the Violet RTPC value to Wwise.
@@ -81,52 +79,50 @@ func _update_violet_rtpc(delta: float) -> void:
 	Wwise.set_rtpc_value(VIOLET_RTPC_NAME, _violet_current, self)
 
 
-func _update_green_rtpc(delta: float) -> void:
-	if scanline_logic == null:
-		return
-	var highest_y := _get_highest_y_for("neon_green")
-	if highest_y >= 0.0:
-		_green_target = (1.0 - highest_y) * 100.0
+func _ramp(current: float, target: float, delta: float) -> float:
+	if current < target:
+		return min(current + RTPC_RAMP_SPEED * delta, target)
 	else:
-		_green_target = 100.0
-	var smoothing := 1.0 - exp(-delta * 0.5)
-	_green_current = lerp(_green_current, _green_target, smoothing)
-	Wwise.set_rtpc_value(GREEN_RTPC_NAME, _green_current, self)
+		return max(current - RTPC_RAMP_SPEED * delta, target)
 
 
-func _update_pink_rtpc(delta: float) -> void:
-	if scanline_logic == null:
+func _update_yellow_rtpc(delta: float) -> void:
+	if GestorFamilias.familia_activa != "familia_1":
 		return
-	var highest_y := _get_highest_y_for("pink")
-	if highest_y >= 0.0:
-		_pink_target = (1.0 - highest_y) * 100.0
-	else:
-		_pink_target = 100.0
-	var smoothing := 1.0 - exp(-delta * 0.5)
-	_pink_current = lerp(_pink_current, _pink_target, smoothing)
-	Wwise.set_rtpc_value(PINK_RTPC_NAME, _pink_current, self)
+	_yellow_v_value = _ramp(_yellow_v_value, _yellow_v_target, delta)
+	Wwise.set_rtpc_value(YELLOW_V_RTPC_NAME, _yellow_v_value, self)
 
 
 func _update_presence_rtpcs(delta: float) -> void:
 	if GestorFamilias.familia_activa != "familia_1":
 		return
-	if scanline_logic == null:
+	if scanline_logic == null or scanline_logic.scan_speed == 0.0:
 		return
 
-	var current_sector: int = int(scanline_logic.scan_position * scanline_logic.sector_count)
-	var sector_data: Dictionary = scanline_logic.sector_colors.get(current_sector, {})
-	var pink_in_zone: bool = sector_data.has("pink")
-	var celeste_in_zone: bool = sector_data.has("celeste")
+	var sector_count: int = scanline_logic.sector_count
+	var current_sector: int = int(scanline_logic.scan_position * sector_count)
+	var sector_width: float = 1.0 / sector_count
+	var pos_in_sector: float = fmod(scanline_logic.scan_position, sector_width)
+	var dist_to_boundary: float = sector_width - pos_in_sector
+	var time_to_boundary: float = dist_to_boundary / scanline_logic.scan_speed
+	var next_sector: int = (current_sector + 1) % sector_count
 
-	Wwise.set_rtpc_value(PINK_V_RTPC_NAME, 100.0 if pink_in_zone else 0.0, self)
-	Wwise.set_rtpc_value(CELESTE_V_RTPC_NAME, 100.0 if celeste_in_zone else 0.0, self)
+	var current_data: Dictionary = scanline_logic.sector_colors.get(current_sector, {})
+	var next_data: Dictionary = scanline_logic.sector_colors.get(next_sector, {})
+
+	var pink_target: float = 100.0 if (current_data.has("pink") or (next_data.has("pink") and time_to_boundary <= 0.1)) else 0.0
+	_pink_v_value = _ramp(_pink_v_value, pink_target, delta)
+	Wwise.set_rtpc_value(PINK_V_RTPC_NAME, _pink_v_value, self)
+
+	var celeste_target: float = 100.0 if (current_data.has("celeste") or (next_data.has("celeste") and time_to_boundary <= 0.1)) else 0.0
+	_celeste_v_value = _ramp(_celeste_v_value, celeste_target, delta)
+	Wwise.set_rtpc_value(CELESTE_V_RTPC_NAME, _celeste_v_value, self)
 
 
 func _on_cycle_reset() -> void:
 	color_cooldowns.clear()
 	_sector_colors_triggered.clear()
-	if GestorFamilias.familia_activa == "familia_1":
-		Wwise.set_rtpc_value(YELLOW_V_RTPC_NAME, 0.0, self)
+	_yellow_v_target = 0.0
 
 
 func _on_crossing_detected(piece: IPCManager.Piece) -> void:
@@ -134,7 +130,11 @@ func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 		_play_sound(piece.color, piece.y)
 		return
 	if piece.color == "yellow":
-		Wwise.set_rtpc_value(YELLOW_V_RTPC_NAME, 100.0, self)
+		_yellow_v_target = 100.0
+		var yellow_switch: int = clampi(int((1.0 - piece.y) * 8.0), 0, 7)
+		var switch_names: Array[String] = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
+		Wwise.set_switch("yellow_switch", switch_names[yellow_switch], self)
+		return
 	elif piece.color == "violet":
 		return
 	else:
@@ -142,9 +142,13 @@ func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 
 
 func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
-	if _sector_colors_triggered.has(color):
+	var key = str(sector_index) + "_" + color
+	if _sector_colors_triggered.has(key):
 		return
-	_sector_colors_triggered[color] = true
+	_sector_colors_triggered[key] = true
+
+	if color == "pink":
+		Wwise.set_rtpc_value(PINK_RTPC_NAME, (1.0 - y) * 100.0, self)
 
 	if GestorFamilias.familia_activa == "familia_1" and color in ["pink", "celeste"]:
 		return
@@ -171,5 +175,8 @@ func _play_sound(color: String, y_position: float, sector_index: int = -1) -> vo
 
 	Wwise.post_event(event_name, self)
 	Wwise.set_rtpc_value("Timbre", y_position * 100.0, self)
+
+	if color == "neon_green":
+		Wwise.set_rtpc_value(GREEN_RTPC_NAME, (1.0 - y_position) * 100.0, self)
 
 	color_cooldowns[cooldown_key] = now + scanline_logic.get_sector_duration()

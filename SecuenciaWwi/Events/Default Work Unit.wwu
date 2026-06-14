@@ -51,6 +51,7 @@
 				<Event Name="Play_yellow" ID="{C6CA5608-0D65-477A-B8CF-4E3A5FB47858}">
 					<PropertyList>
 						<Property Name="Color" Type="int16" Value="6"/>
+						<Property Name="Inclusion" Type="bool" Value="False"/>
 						<Property Name="OverrideColor" Type="bool" Value="True"/>
 					</PropertyList>
 					<ChildrenList>
@@ -66,6 +67,7 @@
 				<Event Name="Stop_yellow" ID="{4A86DD87-6BEC-4876-9C11-E333D029349F}">
 					<PropertyList>
 						<Property Name="Color" Type="int16" Value="6"/>
+						<Property Name="Inclusion" Type="bool" Value="False"/>
 						<Property Name="OverrideColor" Type="bool" Value="True"/>
 					</PropertyList>
 					<ChildrenList>

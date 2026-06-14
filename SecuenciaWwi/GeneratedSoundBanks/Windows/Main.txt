@@ -1,11 +1,9 @@
 Event	ID	Name			Wwise Object Path	Notes
 	392139723	Play_celeste			\Default Work Unit\Play_celeste	
 	1568289110	Play_pink			\Default Work Unit\Play_pink	
-	2252151776	Stop_yellow			\Default Work Unit\Stop_yellow	
 	2976310903	Play_all			\Default Work Unit\Play_all	
 	3153919642	Play_neon_green			\Default Work Unit\Play_neon_green	
 	3343818949	Stop_celeste			\Default Work Unit\Stop_celeste	
-	3406300906	Play_yellow			\Default Work Unit\Play_yellow	
 	3839438860	Stop_pink			\Default Work Unit\Stop_pink	
 
 Switch Group	ID	Name			Wwise Object Path	Notes

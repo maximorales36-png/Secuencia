@@ -34,6 +34,8 @@ class_name EffectsRenderer
 # SECCIÓN 2: VARIABLES INTERNAS
 # ============================================================================
 @export var contrast: float = 1.0
+@export var max_trails: int = 6
+@export var dynamic_spacing_weight: float = 1.5
 
 var scanline_logic: ScanlineLogic
 var scan_position: float = 0.0
@@ -44,6 +46,7 @@ var sector_count: int = 0
 var pattern_seed: float = 0.0
 var _violet_saturation: float = 1.0
 var last_viewport_size: Vector2 = Vector2.ZERO
+var _dynamic_spacing: float = 10.0
 
 
 # ============================================================================
@@ -68,6 +71,14 @@ func _process(delta: float) -> void:
 
 	_update_waves(ahora)
 	_update_trails(ahora)
+
+	while active_trails.size() > max_trails:
+		active_trails.pop_front()
+
+	var trail_count: int = active_trails.size()
+	_dynamic_spacing = pattern_spacing + trail_count * dynamic_spacing_weight
+	_dynamic_spacing = min(_dynamic_spacing, pattern_spacing * 3.0)
+
 	pattern_seed += delta * 0.8
 	_update_violet_saturation()
 
@@ -355,7 +366,8 @@ func _draw_circular_trail(trail: Dictionary) -> void:
 	if color_patron.a < 0.02:
 		return
 
-	var jitter_amount: float = pattern_spacing * 0.45
+	var spacing: float = _dynamic_spacing
+	var jitter_amount: float = spacing * 0.45
 	var inicio_x: float = centro.x - radio
 	var fin_x: float = centro.x + radio
 	var inicio_y: float = centro.y - radio
@@ -374,23 +386,23 @@ func _draw_circular_trail(trail: Dictionary) -> void:
 			var dist: float = sqrt(dx * dx + dy * dy)
 
 			if dist > radio:
-				cy += pattern_spacing
+				cy += spacing
 				continue
 
 			var alpha_punto: float = intensidad * contrast
 
 			if alpha_punto < 0.05:
-				cy += pattern_spacing
+				cy += spacing
 				continue
 
 			if _eval_pattern(color_name, dx, dy, pattern_seed + dist * 0.1):
 				var c: Color = color_patron
 				c.a = alpha_punto
-				var radio_celula: float = pattern_spacing * circle_diameter
+				var radio_celula: float = spacing * circle_diameter
 				draw_circle(Vector2(sx, sy), radio_celula, c)
 
-			cy += pattern_spacing
-		cx += pattern_spacing
+			cy += spacing
+		cx += spacing
 
 
 func _draw_sector_trail(trail: Dictionary) -> void:
@@ -407,7 +419,8 @@ func _draw_sector_trail(trail: Dictionary) -> void:
 	if color_patron.a < 0.02:
 		return
 
-	var jitter_amount: float = pattern_spacing * 0.45
+	var spacing: float = _dynamic_spacing
+	var jitter_amount: float = spacing * 0.45
 
 	var cx: float = sector_rect.position.x
 	while cx < sector_rect.position.x + sector_rect.size.x:
@@ -418,7 +431,7 @@ func _draw_sector_trail(trail: Dictionary) -> void:
 			var sy: float = cy + j.y
 
 			if not Geometry2D.is_point_in_polygon(Vector2(sx, sy), polygon):
-				cy += pattern_spacing
+				cy += spacing
 				continue
 
 			var dx: float = sx - trail.center.x
@@ -428,17 +441,17 @@ func _draw_sector_trail(trail: Dictionary) -> void:
 			var alpha_punto: float = intensidad * contrast
 
 			if alpha_punto < 0.05:
-				cy += pattern_spacing
+				cy += spacing
 				continue
 
 			if _eval_pattern(color_name, dx, dy, pattern_seed + dist * 0.1):
 				var c: Color = color_patron
 				c.a = alpha_punto
-				var radio_celula: float = pattern_spacing * circle_diameter
+				var radio_celula: float = spacing * circle_diameter
 				draw_circle(Vector2(sx, sy), radio_celula, c)
 
-			cy += pattern_spacing
-		cx += pattern_spacing
+			cy += spacing
+		cx += spacing
 
 
 # --------------------------------------------------------------------------

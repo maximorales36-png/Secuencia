@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{107004E4-B8A0-2CEB-0A36-6F0E7E52D093}",
+    "Hash": "{849B3B37-18B5-2A0C-B63F-F9D67803B884}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -124,7 +124,7 @@
      {
       "Id": "189860390",
       "Name": "RTPC_V_Yellow",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Yellow",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Yellow",
       "GUID": "{2EEE9933-FB10-45F5-9425-EC35634A4D4B}",
       "Color": "6"
      },
@@ -143,9 +143,15 @@
      {
       "Id": "1094048063",
       "Name": "RTPC_V_Celeste",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Celeste",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Celeste",
       "GUID": "{0D98EEB3-65D0-4037-9EC1-AFF842A89486}",
       "Color": "15"
+     },
+     {
+      "Id": "1272335850",
+      "Name": "RTPC_F4_N_Green",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_N_Green",
+      "GUID": "{4D1D4E12-4FF4-4975-B027-7A3335A26143}"
      },
      {
       "Id": "1351367891",
@@ -154,9 +160,15 @@
       "GUID": "{F72E0659-4346-4E1C-A1B1-DAB46A05101E}"
      },
      {
+      "Id": "1381600912",
+      "Name": "RTPC_F4_Yellow",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Yellow",
+      "GUID": "{81D55804-CD0D-44D2-9B0C-B6D3B495B240}"
+     },
+     {
       "Id": "2005540895",
       "Name": "RTPC_Pink",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_Pink",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_Pink",
       "GUID": "{2B441A2F-2D08-4ABE-8272-1C94B50150AE}",
       "Color": "24"
      },
@@ -169,7 +181,7 @@
      {
       "Id": "2699784114",
       "Name": "RTPC_V_Pink",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_V_Pink",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Pink",
       "GUID": "{66E92814-0C9B-4677-848A-C0AE9F9CB27F}",
       "Color": "24"
      },
@@ -194,9 +206,21 @@
      {
       "Id": "3400130303",
       "Name": "RTPC_N_Green",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_N_Green",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_N_Green",
       "GUID": "{775EB99E-20BD-4B98-92A5-5EB73EFA9783}",
       "Color": "4"
+     },
+     {
+      "Id": "3483819669",
+      "Name": "RTPC_F4_Celeste",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Celeste",
+      "GUID": "{EEB932A9-AEFF-49D6-A547-1449C7741688}"
+     },
+     {
+      "Id": "3534726620",
+      "Name": "RTPC_F4_Pink",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Pink",
+      "GUID": "{6F467136-1851-4A93-B2E2-6EFB00DDC05C}"
      },
      {
       "Id": "3715662592",
@@ -213,7 +237,7 @@
      {
       "Id": "3862788774",
       "Name": "RTPC_Violet",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\RTPC_Violet",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_Violet",
       "GUID": "{FBB67A9A-E3D3-4A30-BAB7-5F36764CA1A0}",
       "Color": "12"
      },
@@ -761,6 +785,6 @@
     ]
    }
   ],
-  "FileHash": "{C6208635-A2DD-F80A-2C13-BEDE921BAEAC}"
+  "FileHash": "{E9872A31-2EBB-1FCA-B119-54651F40715F}"
  }
 }

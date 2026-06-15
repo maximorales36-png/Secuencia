@@ -6,12 +6,20 @@
 				<SoundcasterSession Name="Pruebas" ID="{F475B6CF-8C10-493B-B578-52E7A8CAF461}">
 					<ModuleList>
 						<Module>
-							<ObjectRef Name="Play_neon_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<ObjectRef Name="Play_F4_Celeste" ID="{48D613A4-7EAD-49C4-BBAA-1AE5326E5B64}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
 							<Position X="0" Y="0"/>
 						</Module>
 						<Module>
-							<ObjectRef Name="Play_pink" ID="{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<ObjectRef Name="Play_F4_N_Green" ID="{B7793B5D-7673-48AF-86B4-D9CD7A571944}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
 							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_F4_Pink" ID="{C242E4FF-4E9F-4EB6-8D07-29EF9B1B47E1}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<Position X="2" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_F4_Yellow" ID="{ACEFE6D9-554E-4EA8-9767-ACC5A9F380FC}" WorkUnitID="{65A7F10F-C680-492A-ADD8-54B0A747BFE6}"/>
+							<Position X="3" Y="0"/>
 						</Module>
 					</ModuleList>
 				</SoundcasterSession>

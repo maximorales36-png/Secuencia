@@ -19,6 +19,10 @@ namespace AK
         static const AkUniqueID PLAY_F2_N_GREEN = 213815217U;
         static const AkUniqueID PLAY_F2_PINK = 1884775769U;
         static const AkUniqueID PLAY_F2_YELLOW = 3264414965U;
+        static const AkUniqueID PLAY_F4_CELESTE = 2542044052U;
+        static const AkUniqueID PLAY_F4_N_GREEN = 1363114883U;
+        static const AkUniqueID PLAY_F4_PINK = 2787262691U;
+        static const AkUniqueID PLAY_F4_YELLOW = 2836426935U;
         static const AkUniqueID PLAY_NEON_GREEN = 3153919642U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID STOP_CELESTE = 3343818949U;
@@ -48,6 +52,10 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID RTPC_F4_CELESTE = 3483819669U;
+        static const AkUniqueID RTPC_F4_N_GREEN = 1272335850U;
+        static const AkUniqueID RTPC_F4_PINK = 3534726620U;
+        static const AkUniqueID RTPC_F4_YELLOW = 1381600912U;
         static const AkUniqueID RTPC_N_GREEN = 3400130303U;
         static const AkUniqueID RTPC_PINK = 2005540895U;
         static const AkUniqueID RTPC_V_CELESTE = 1094048063U;

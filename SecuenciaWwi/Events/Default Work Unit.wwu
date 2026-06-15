@@ -121,6 +121,75 @@
 						<Event Name="Play_F2_Celeste" ID="{0C3F0FBD-879D-4D05-8A91-3C68BFC2FB1A}"/>
 					</ChildrenList>
 				</Folder>
+				<Folder Name="F4" ID="{1174F4FD-63CD-49A5-BBE3-57B541FBBD94}" ShortID="1058446659">
+					<ChildrenList>
+						<Event Name="Play_F4_Celeste" ID="{48D613A4-7EAD-49C4-BBAA-1AE5326E5B64}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="2"/>
+								<Property Name="InstanceLimit" Type="int16">
+									<ValueList>
+										<Value>4</Value>
+									</ValueList>
+								</Property>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{D3D59D7C-FA3F-4356-8B90-11A8EC212069}" ShortID="802561328">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ArpCh" ID="{25BDF022-51D6-4DA5-A350-1819A0C79AC4}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_F4_N_Green" ID="{B7793B5D-7673-48AF-86B4-D9CD7A571944}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="4"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{A42BAD14-CB49-4B9A-95BB-5DE748A7C36F}" ShortID="133019678">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Acople" ID="{31C3C2D8-1005-4BA9-98EB-45CE12E41DF6}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_F4_Pink" ID="{C242E4FF-4E9F-4EB6-8D07-29EF9B1B47E1}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="24"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{B4C88A4D-250F-43D5-8298-E42A2CF413CD}" ShortID="1066337386">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Tabla" ID="{B4342A5C-1BD4-4DD1-AB1C-D6DFA4556197}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_F4_Yellow" ID="{ACEFE6D9-554E-4EA8-9767-ACC5A9F380FC}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="19"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{AE747CEE-043C-4307-94C0-5ED3C0053467}" ShortID="400841252">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Glock" ID="{9934FF00-8ADB-430D-A2B0-AAB44DCF245B}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

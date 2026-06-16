@@ -20,6 +20,7 @@ var _pieces: Array = []
 
 var _hit_waves: Array = []
 var _hit_trails: Array = []
+var _fading_pieces: Dictionary = {}  # key -> {color, x, y, alpha}
 
 
 func _ready() -> void:
@@ -31,7 +32,26 @@ func _ready() -> void:
 
 
 func _on_pieces_updated(new_pieces: Array) -> void:
+	var old_active: Dictionary = {}
+	for piece in _pieces:
+		var key: String = str(piece.color, "_", snapped(piece.x, 0.01), "_", snapped(piece.y, 0.01))
+		old_active[key] = piece
+
 	_pieces = new_pieces
+
+	var new_active: Dictionary = {}
+	for piece in _pieces:
+		var key: String = str(piece.color, "_", snapped(piece.x, 0.01), "_", snapped(piece.y, 0.01))
+		new_active[key] = piece
+
+	for key in old_active:
+		if not new_active.has(key):
+			var p = old_active[key]
+			_fading_pieces[key] = { color = p.color, x = p.x, y = p.y, alpha = 1.0 }
+
+	for key in new_active:
+		if _fading_pieces.has(key):
+			_fading_pieces.erase(key)
 
 
 func _init_balls() -> void:
@@ -65,6 +85,7 @@ func _process(delta: float) -> void:
 		_update_ball(i, delta)
 
 	_update_hit_effects(delta)
+	_update_fading_pieces(delta)
 
 	queue_redraw()
 
@@ -139,7 +160,10 @@ func _draw() -> void:
 	_draw_hit_waves()
 	for piece in _pieces:
 		if GestorFamilias.is_in_family(piece.color, "familia_4"):
-			_draw_piece(piece)
+			_draw_piece(piece, 1.0)
+	for key in _fading_pieces:
+		var f = _fading_pieces[key]
+		_draw_piece(f, f.alpha)
 	for i in range(balls.size()):
 		_draw_trail(i)
 		_draw_ball(i)
@@ -161,7 +185,7 @@ func _draw_background_noise() -> void:
 		cx += spacing
 
 
-func _draw_piece(piece) -> void:
+func _draw_piece(piece, alpha_mult: float = 1.0) -> void:
 	var center := Vector2(piece.x * _viewport.x, piece.y * _viewport.y)
 	var base_color := GestorFamilias.get_color(piece.color)
 	var layers := [
@@ -174,7 +198,7 @@ func _draw_piece(piece) -> void:
 	for layer in layers:
 		var pts = layer.segments
 		var r = layer.radius
-		var a = layer.alpha
+		var a = layer.alpha * alpha_mult
 		var poly := PackedVector2Array()
 
 		for j in range(pts + 1):
@@ -255,7 +279,7 @@ func _spawn_hit_effect(center: Vector2, color_name: String) -> void:
 func _update_hit_effects(delta: float) -> void:
 	var keep_trails: Array = []
 	for t in _hit_trails:
-		t.life -= 0.002
+		t.life -= 0.010
 		if t.life > 0:
 			keep_trails.append(t)
 	_hit_trails = keep_trails
@@ -268,6 +292,16 @@ func _update_hit_effects(delta: float) -> void:
 		if w.life > 0 and w.r < w.max_r * 1.1:
 			keep_waves.append(w)
 	_hit_waves = keep_waves
+
+
+func _update_fading_pieces(delta: float) -> void:
+	var keep: Dictionary = {}
+	for key in _fading_pieces:
+		var f = _fading_pieces[key]
+		f.alpha -= delta * 3.0
+		if f.alpha > 0.0:
+			keep[key] = f
+	_fading_pieces = keep
 
 
 func _draw_hit_trails() -> void:

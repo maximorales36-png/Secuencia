@@ -4242,7 +4242,7 @@
 															<MusicTrackSequence Name="" ID="{F9B1D205-6305-4A9F-9795-8E61ACBCD4E2}">
 																<ObjectLists>
 																	<ObjectList Name="Clips">
-																		<MusicClip Name="F4_Tabla_10" ID="{78FEA9C4-ADFB-4760-8824-435BFAEDD819}">
+																		<MusicClip Name="F4_Tabla_9" ID="{78FEA9C4-ADFB-4760-8824-435BFAEDD819}">
 																			<PropertyList>
 																				<Property Name="EndTrimOffset" Type="Real64" Value="5000"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
@@ -4452,7 +4452,7 @@
 															<MusicTrackSequence Name="" ID="{DE85CE1D-665B-486A-84AF-C6F32E80A6DA}">
 																<ObjectLists>
 																	<ObjectList Name="Clips">
-																		<MusicClip Name="F4_Tabla_9" ID="{6B356F9E-13D7-4586-B6D6-DDF36E50C815}">
+																		<MusicClip Name="F4_Tabla_8" ID="{6B356F9E-13D7-4586-B6D6-DDF36E50C815}">
 																			<PropertyList>
 																				<Property Name="EndTrimOffset" Type="Real64" Value="5000"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>

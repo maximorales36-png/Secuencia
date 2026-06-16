@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{8D04AB29-1289-969E-396F-66F7FE0E53D3}",
+    "Hash": "{26BCC0F0-D97E-A6E5-2EB2-068384DEE57A}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
@@ -750,40 +750,10 @@
       ]
      },
      {
-      "Id": "2304919038",
-      "Name": "Play_F2_Celeste",
-      "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_F2_Celeste",
+      "Id": "2421176694",
+      "Name": "Play_Celeste_F2",
+      "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_Celeste_F2",
       "GUID": "{0C3F0FBD-879D-4D05-8A91-3C68BFC2FB1A}",
-      "MaxAttenuation": "0",
-      "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
-     },
-     {
-      "Id": "213815217",
-      "Name": "Play_F2_N_Green",
-      "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_F2_N_Green",
-      "GUID": "{2752E2B2-4865-4AFC-91A6-C3CF430407B4}",
-      "MaxAttenuation": "0",
-      "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
-     },
-     {
-      "Id": "1884775769",
-      "Name": "Play_F2_Pink",
-      "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_F2_Pink",
-      "GUID": "{3E3BF32C-50E8-498B-83BC-CC9B1AE40626}",
-      "MaxAttenuation": "0",
-      "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
-     },
-     {
-      "Id": "3264414965",
-      "Name": "Play_F2_Yellow",
-      "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_F2_Yellow",
-      "GUID": "{126CAAF2-762B-4F3C-9E4B-5A5411C15889}",
       "MaxAttenuation": "0",
       "DurationType": "OneShot",
       "DurationMin": "0",
@@ -916,6 +886,16 @@
       ]
      },
      {
+      "Id": "4213925647",
+      "Name": "Play_N_Green_F2",
+      "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_N_Green_F2",
+      "GUID": "{2752E2B2-4865-4AFC-91A6-C3CF430407B4}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
       "Id": "3153919642",
       "Name": "Play_neon_green",
       "ObjectPath": "\\Events\\Default Work Unit\\F1\\Play_neon_green",
@@ -1010,6 +990,36 @@
         "Id": "992317781"
        }
       ]
+     },
+     {
+      "Id": "3593761409",
+      "Name": "Play_Pink_F2",
+      "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_Pink_F2",
+      "GUID": "{3E3BF32C-50E8-498B-83BC-CC9B1AE40626}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "168358390",
+      "Name": "Play_Violet_F2",
+      "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_Violet_F2",
+      "GUID": "{045B31E3-8198-459B-B354-FCE0B17677BC}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "2374354589",
+      "Name": "Play_Yellow_F2",
+      "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_Yellow_F2",
+      "GUID": "{126CAAF2-762B-4F3C-9E4B-5A5411C15889}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
      },
      {
       "Id": "3343818949",
@@ -1131,6 +1141,6 @@
     ]
    }
   ],
-  "FileHash": "{B70B67F8-9729-2828-99F7-36BCA41895E0}"
+  "FileHash": "{1B1A8036-256F-9E82-2677-EBD91950D034}"
  }
 }

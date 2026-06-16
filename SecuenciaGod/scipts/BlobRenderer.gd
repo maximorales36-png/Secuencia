@@ -20,17 +20,13 @@ var pattern_seed: float = 0.0
 var scan_progress: float = 0.0
 
 const PIECE_TIMEOUT: float = 0.5
-const TRAIL_BG_ALPHA_NIGHT: float = 0.13
-const TRAIL_BG_ALPHA_LIGHT: float = 0.18
+const TRAIL_BG_ALPHA: float = 0.18
 
 @export var bpm: float = 76.0
 @export var beats_per_cycle: int = 4
-
-var is_night: bool = true
 var _viewport: Vector2 = Vector2.ZERO
 var _start_usec: int = 0
 var _cycle_usec: int = 0
-var _last_cycle_idx: int = -1
 
 
 class BlobPiece:
@@ -73,6 +69,11 @@ func _ready() -> void:
 	_start_usec = Time.get_ticks_usec()
 	_cycle_usec = int(beats_per_cycle * 60.0 * 1000000.0 / maxf(bpm, 1.0))
 
+	if GestorFamilias.familia_activa == "familia_2":
+		var parallax := get_tree().root.find_child("Parallax2D", true, false)
+		if parallax is CanvasItem:
+			parallax.visible = false
+
 
 func _sync_family_config() -> void:
 	var new_bpm := GestorFamilias.get_bpm()
@@ -93,12 +94,7 @@ func _process(delta: float) -> void:
 	pattern_seed += delta * 0.8
 
 	var elapsed_usec := Time.get_ticks_usec() - _start_usec
-	var cycle_idx := int(elapsed_usec / _cycle_usec)
 	scan_progress = float(elapsed_usec % _cycle_usec) / float(_cycle_usec)
-
-	if cycle_idx != _last_cycle_idx:
-		_last_cycle_idx = cycle_idx
-		_on_cycle_reset()
 
 	for key in tracked_pieces:
 		var bp: BlobPiece = tracked_pieces[key]
@@ -279,12 +275,7 @@ static func _fbm(x: float, y: float, t: float) -> float:
 
 
 func _draw_background_trail() -> void:
-	var bg_a: float = TRAIL_BG_ALPHA_NIGHT if is_night else TRAIL_BG_ALPHA_LIGHT
-	var bg_col: Color
-	if is_night:
-		bg_col = Color(0.024, 0.024, 0.039, bg_a)
-	else:
-		bg_col = Color(0.91, 0.91, 0.94, bg_a)
+	var bg_col := Color(0.3, 0.7, 0.94, TRAIL_BG_ALPHA)
 	draw_rect(Rect2(0, 0, _viewport.x, _viewport.y), bg_col)
 
 
@@ -488,14 +479,6 @@ func _draw_labels() -> void:
 		var conn_y: float = label_y + line_h * 2.5
 		var conn_col: Color = _rgb(col_arr, 0.2)
 		draw_line(Vector2(label_x, conn_y), Vector2(sx, sy - bp.radius), conn_col, 0.5)
-
-
-func toggle_mode() -> void:
-	is_night = not is_night
-
-
-func set_night(enabled: bool) -> void:
-	is_night = enabled
 
 
 func set_bpm(new_bpm: float) -> void:

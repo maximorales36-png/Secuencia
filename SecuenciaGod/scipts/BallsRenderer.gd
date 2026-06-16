@@ -279,7 +279,7 @@ func _spawn_hit_effect(center: Vector2, color_name: String) -> void:
 func _update_hit_effects(delta: float) -> void:
 	var keep_trails: Array = []
 	for t in _hit_trails:
-		t.life -= 0.010
+		t.life -= 0.008
 		if t.life > 0:
 			keep_trails.append(t)
 	_hit_trails = keep_trails

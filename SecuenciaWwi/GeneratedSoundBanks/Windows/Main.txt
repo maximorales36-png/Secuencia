@@ -1,18 +1,19 @@
 Event	ID	Name			Wwise Object Path	Notes
-	213815217	Play_F2_N_Green			\Default Work Unit\F2\Play_F2_N_Green	
+	168358390	Play_Violet_F2			\Default Work Unit\F2\Play_Violet_F2	
 	392139723	Play_celeste			\Default Work Unit\F1\Play_celeste	
 	1363114883	Play_F4_N_Green			\Default Work Unit\F4\Play_F4_N_Green	
 	1568289110	Play_pink			\Default Work Unit\F1\Play_pink	
-	1884775769	Play_F2_Pink			\Default Work Unit\F2\Play_F2_Pink	
-	2304919038	Play_F2_Celeste			\Default Work Unit\F2\Play_F2_Celeste	
+	2374354589	Play_Yellow_F2			\Default Work Unit\F2\Play_Yellow_F2	
+	2421176694	Play_Celeste_F2			\Default Work Unit\F2\Play_Celeste_F2	
 	2542044052	Play_F4_Celeste			\Default Work Unit\F4\Play_F4_Celeste	
 	2787262691	Play_F4_Pink			\Default Work Unit\F4\Play_F4_Pink	
 	2836426935	Play_F4_Yellow			\Default Work Unit\F4\Play_F4_Yellow	
 	2976310903	Play_all			\Default Work Unit\F1\Play_all	
 	3153919642	Play_neon_green			\Default Work Unit\F1\Play_neon_green	
-	3264414965	Play_F2_Yellow			\Default Work Unit\F2\Play_F2_Yellow	
 	3343818949	Stop_celeste			\Default Work Unit\F1\Stop_celeste	
+	3593761409	Play_Pink_F2			\Default Work Unit\F2\Play_Pink_F2	
 	3839438860	Stop_pink			\Default Work Unit\F1\Stop_pink	
+	4213925647	Play_N_Green_F2			\Default Work Unit\F2\Play_N_Green_F2	
 
 Switch Group	ID	Name			Wwise Object Path	Notes
 	4133533608	yellow_switch			\Default Work Unit\yellow_switch	
@@ -28,11 +29,11 @@ Switch	ID	Name	Switch Group			Notes
 	3437286228	VIII	yellow_switch			
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
-	189860390	RTPC_V_Yellow			\Default Work Unit\RTPC_V_Yellow	
-	1094048063	RTPC_V_Celeste			\Default Work Unit\RTPC_V_Celeste	
-	2005540895	RTPC_Pink			\Default Work Unit\RTPC_Pink	
-	2699784114	RTPC_V_Pink			\Default Work Unit\RTPC_V_Pink	
-	3400130303	RTPC_N_Green			\Default Work Unit\RTPC_N_Green	
+	189860390	RTPC_V_Yellow			\Default Work Unit\F1\RTPC_V_Yellow	
+	1094048063	RTPC_V_Celeste			\Default Work Unit\F1\RTPC_V_Celeste	
+	2005540895	RTPC_Pink			\Default Work Unit\F1\RTPC_Pink	
+	2699784114	RTPC_V_Pink			\Default Work Unit\F1\RTPC_V_Pink	
+	3400130303	RTPC_N_Green			\Default Work Unit\F1\RTPC_N_Green	
 
 Modulator Envelope	ID	Name			Wwise Object Path	Notes
 	687605534	Modulator Envelope (Custom)				

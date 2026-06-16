@@ -15,16 +15,17 @@ namespace AK
     {
         static const AkUniqueID PLAY_ALL = 2976310903U;
         static const AkUniqueID PLAY_CELESTE = 392139723U;
-        static const AkUniqueID PLAY_F2_CELESTE = 2304919038U;
-        static const AkUniqueID PLAY_F2_N_GREEN = 213815217U;
-        static const AkUniqueID PLAY_F2_PINK = 1884775769U;
-        static const AkUniqueID PLAY_F2_YELLOW = 3264414965U;
+        static const AkUniqueID PLAY_CELESTE_F2 = 2421176694U;
         static const AkUniqueID PLAY_F4_CELESTE = 2542044052U;
         static const AkUniqueID PLAY_F4_N_GREEN = 1363114883U;
         static const AkUniqueID PLAY_F4_PINK = 2787262691U;
         static const AkUniqueID PLAY_F4_YELLOW = 2836426935U;
+        static const AkUniqueID PLAY_N_GREEN_F2 = 4213925647U;
         static const AkUniqueID PLAY_NEON_GREEN = 3153919642U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
+        static const AkUniqueID PLAY_PINK_F2 = 3593761409U;
+        static const AkUniqueID PLAY_VIOLET_F2 = 168358390U;
+        static const AkUniqueID PLAY_YELLOW_F2 = 2374354589U;
         static const AkUniqueID STOP_CELESTE = 3343818949U;
         static const AkUniqueID STOP_PINK = 3839438860U;
     } // namespace EVENTS

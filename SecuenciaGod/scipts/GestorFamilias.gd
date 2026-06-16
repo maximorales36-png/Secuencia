@@ -30,6 +30,7 @@ const HTML_ATOM_DEFS: Dictionary = {
 const SCAN_CONFIG: Dictionary = {
 	"familia_1": { "bpm": 87.0, "beats_per_cycle": 16 },
 	"familia_2": { "bpm": 76.0, "beats_per_cycle": 4 },
+	"familia_4": { "bpm": 72.0, "beats_per_cycle": 4 },
 }
 
 const FAMILIAS: Dictionary = {
@@ -51,6 +52,15 @@ const FAMILIAS: Dictionary = {
 			"yellow":     { "patron": "blob", "sonido": "Play_Yellow_F2" },
 			"orange":     { "patron": "blob", "sonido": "Play_Orange_F2" },
 			"violet":     { "patron": "blob", "sonido": "Play_Violet_F2" }
+		}
+	},
+	"familia_4": {
+		"nombre": "Familia 4",
+		"colores": {
+			"pink":       { "patron": "balls", "sonido": "Play_F4_Pink" },
+			"yellow":     { "patron": "balls", "sonido": "Play_F4_Yellow" },
+			"neon_green": { "patron": "balls", "sonido": "Play_F4_N_Green" },
+			"celeste":    { "patron": "balls", "sonido": "Play_F4_Celeste" }
 		}
 	},
 }

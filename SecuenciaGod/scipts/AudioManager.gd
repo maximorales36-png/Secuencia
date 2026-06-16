@@ -24,6 +24,18 @@ var _celeste_v_value: float = 0.0
 var _yellow_v_value: float = 0.0
 var _yellow_v_target: float = 0.0
 
+# F4 RTPCs
+const F4_PINK_RTPC: String = "RTPC_F4_Pink"
+const F4_YELLOW_RTPC: String = "RTPC_F4_Yellow"
+const F4_N_GREEN_RTPC: String = "RTPC_F4_N_Green"
+const F4_CELESTE_RTPC: String = "RTPC_F4_Celeste"
+
+# F4 beat clock & queue
+var _f4_hit_queue: Array = []
+var _f4_next_beat_time: float = 0.0
+var _f4_beat_interval: float = 60.0 / 72.0
+var _f4_initialized: bool = false
+
 
 func _ready() -> void:
 	Wwise.register_game_obj(self, "AudioManager")
@@ -48,6 +60,9 @@ func _exit_tree() -> void:
 
 
 func _process(delta: float) -> void:
+	if GestorFamilias.familia_activa == "familia_4":
+		_process_f4(delta)
+		return
 	_update_violet_rtpc(delta)
 	_update_presence_rtpcs(delta)
 	_update_yellow_rtpc(delta)
@@ -185,3 +200,53 @@ func _play_sound(color: String, y_position: float, sector_index: int = -1) -> vo
 		Wwise.set_rtpc_value(GREEN_RTPC_NAME, (1.0 - y_position) * 100.0, self)
 
 	color_cooldowns[cooldown_key] = now + scanline_logic.get_sector_duration()
+
+
+func schedule_f4_hit(color: String, y: float) -> void:
+	if GestorFamilias.familia_activa != "familia_4":
+		return
+	if not GestorFamilias.is_in_active_family(color):
+		return
+
+	if not _f4_initialized:
+		var now := Time.get_ticks_msec() / 1000.0
+		var current_beat := int(now / _f4_beat_interval)
+		_f4_next_beat_time = (current_beat + 1) * _f4_beat_interval
+		_f4_initialized = true
+
+	_f4_hit_queue.append({ color = color, y = y })
+
+
+func _process_f4(_delta: float) -> void:
+	if not _f4_initialized:
+		return
+
+	var now := Time.get_ticks_msec() / 1000.0
+
+	while _f4_next_beat_time <= now:
+		var current_hits := _f4_hit_queue.duplicate()
+		_f4_hit_queue.clear()
+		for hit in current_hits:
+			_play_f4_sound(hit.color, hit.y)
+		_f4_next_beat_time += _f4_beat_interval
+
+
+func _play_f4_sound(color: String, y: float) -> void:
+	var event_name: String = GestorFamilias.get_sound(color)
+	if event_name.is_empty():
+		return
+
+	y = clampf(y, 0.0, 1.0)
+	var rtpc_value := (1.0 - y) * 100.0
+
+	Wwise.post_event(event_name, self)
+
+	match color:
+		"pink":
+			Wwise.set_rtpc_value(F4_PINK_RTPC, rtpc_value, self)
+		"yellow":
+			Wwise.set_rtpc_value(F4_YELLOW_RTPC, rtpc_value, self)
+		"neon_green":
+			Wwise.set_rtpc_value(F4_N_GREEN_RTPC, rtpc_value, self)
+		"celeste":
+			Wwise.set_rtpc_value(F4_CELESTE_RTPC, rtpc_value, self)

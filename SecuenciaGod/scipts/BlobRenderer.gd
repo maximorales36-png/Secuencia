@@ -93,7 +93,7 @@ func _process(delta: float) -> void:
 	pattern_seed += delta * 0.8
 
 	var elapsed_usec := Time.get_ticks_usec() - _start_usec
-	var cycle_idx := elapsed_usec / _cycle_usec
+	var cycle_idx := int(elapsed_usec / _cycle_usec)
 	scan_progress = float(elapsed_usec % _cycle_usec) / float(_cycle_usec)
 
 	if cycle_idx != _last_cycle_idx:

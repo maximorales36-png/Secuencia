@@ -306,7 +306,7 @@ func _generate_organic_polygon(rect: Rect2, semilla: float) -> PackedVector2Arra
 	var pts_per_side: int = 10
 
 	for i in range(4 * pts_per_side):
-		var side: int = i / pts_per_side
+		var side: int = int(float(i) / pts_per_side)
 		var t: float = float(i % pts_per_side) / float(pts_per_side)
 
 		var base: Vector2

@@ -111,6 +111,8 @@ func _draw() -> void:
 			_draw_turing_pattern(s)
 		"familia_2":
 			_draw_blob_pattern(s)
+		"familia_4":
+			_draw_balls_pattern(s)
 		_:
 			_draw_abstract_pattern(s)
 
@@ -185,9 +187,42 @@ func _draw_blob_pattern(s: Vector2) -> void:
 		draw_circle(pos, radius, col)
 
 
-func _draw_abstract_pattern(s: Vector2) -> void:
+func _draw_balls_pattern(s: Vector2) -> void:
+	var cols: Array[Color] = [
+		GestorFamilias.get_color("pink"),
+		GestorFamilias.get_color("celeste"),
+		GestorFamilias.get_color("yellow"),
+		GestorFamilias.get_color("neon_green")
+	]
 	var center := s * 0.5
-	var r := minf(s.x, s.y) * 0.4
+	var r := minf(s.x, s.y) * 0.35
+
+	for i in range(3):
+		var angle := i * TAU / 3 + _time * (0.7 + i * 0.15)
+		var dist := r * (0.4 + 0.3 * sin(_time * 0.5 + i * 2.3))
+		var pos := center + Vector2(cos(angle), sin(angle)) * dist
+		var radius := 7.0 + 5.0 * (0.5 + 0.5 * sin(_time * 0.8 + i * 1.7))
+		var col: Color = cols[i % cols.size()]
+		col.a = 0.6 + 0.3 * sin(_time * 1.2 + i * 3.1)
+
+		var glow := col
+		glow.a = 0.15
+		draw_circle(pos, radius * 3.0, glow)
+		draw_circle(pos, radius, col)
+
+	var num_lines := 4
+	for i in range(num_lines):
+		var a1 := i * TAU / num_lines + _time * 0.2
+		var a2 := a1 + 0.3
+		var d1 := r * 0.5
+		var d2 := r * 0.9
+		var p1 := center + Vector2(cos(a1), sin(a1)) * d1
+		var p2 := center + Vector2(cos(a2), sin(a2)) * d2
+		var line_col := Color(1.0, 1.0, 1.0, 0.1 + 0.1 * sin(_time + i))
+		draw_line(p1, p2, line_col, 1.0)
+
+
+func _draw_abstract_pattern(s: Vector2) -> void:
 	var grid := 5
 	var spacing := minf(s.x, s.y) / float(grid + 1)
 	var start := (s - Vector2.ONE * spacing * (grid - 1)) * 0.5

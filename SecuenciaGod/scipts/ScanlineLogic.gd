@@ -61,10 +61,10 @@ func _sync_family_config() -> void:
 		_update_sector_count()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	_sync_family_config()
 	var elapsed_usec = Time.get_ticks_usec() - _start_usec
-	var cycle_idx = elapsed_usec / _cycle_usec
+	var cycle_idx = int(elapsed_usec / _cycle_usec)
 	var pos_in_cycle = float(elapsed_usec % _cycle_usec) / float(_cycle_usec)
 
 	prev_scan_position = scan_position
@@ -210,7 +210,7 @@ func _update_scan_speed() -> void:
 
 
 func _update_sector_count() -> void:
-	sector_count = max(1, int(beats_per_cycle / BEATS_PER_SECTOR))
+	sector_count = max(1, int(float(beats_per_cycle) / BEATS_PER_SECTOR))
 
 
 func get_sector_count() -> int:

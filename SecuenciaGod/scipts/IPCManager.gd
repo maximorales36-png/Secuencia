@@ -52,9 +52,18 @@ func _read_pieces() -> void:
 	if file == null:
 		return
 
-	var text = file.get_as_text().strip_edges()
+	var file_size = file.get_length()
+	if file_size <= 0:
+		file.close()
+		return
+
+	var buffer = file.get_buffer(file_size)
 	file.close()
 
+	if buffer.is_empty():
+		return
+
+	var text = buffer.get_string_from_utf8().strip_edges()
 	if text.is_empty():
 		return
 

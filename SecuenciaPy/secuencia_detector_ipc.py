@@ -20,7 +20,7 @@ import tempfile
 import shutil
 
 CAPTURE_WIDTH = 640
-CAPTURE_HEIGHT = 300
+CAPTURE_HEIGHT = 400
 CAMERA_INDEX = 0
 CAMERA_AUTO_DETECT = True
 CAMERA_BACKEND = cv2.CAP_DSHOW
@@ -312,13 +312,14 @@ def calibrate_corners(cap):
                        (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
             h_f, w_f = frame.shape[:2]
             corners_frac = [(x / w_f, y / h_f) for (x, y) in raw_corners]
-            preview_size = 160
-            warped, _ = apply_perspective_crop(frame, corners_frac, preview_size, preview_size)
-            preview_y = h_f - preview_size - 10
-            preview_x = w_f - preview_size - 10
-            display[preview_y:preview_y + preview_size, preview_x:preview_x + preview_size] = warped
+            preview_h = 160
+            preview_w = int(preview_h * RECTIFIED_WIDTH / RECTIFIED_HEIGHT)
+            warped, _ = apply_perspective_crop(frame, corners_frac, preview_w, preview_h)
+            preview_y = h_f - preview_h - 10
+            preview_x = w_f - preview_w - 10
+            display[preview_y:preview_y + preview_h, preview_x:preview_x + preview_w] = warped
             cv2.rectangle(display, (preview_x - 2, preview_y - 2),
-                         (preview_x + preview_size + 2, preview_y + preview_size + 2),
+                         (preview_x + preview_w + 2, preview_y + preview_h + 2),
                          (255, 255, 255), 1)
             cv2.putText(display, "Vista previa", (preview_x + 4, preview_y + 16),
                        cv2.FONT_HERSHEY_SIMPLEX, 0.35, (255, 255, 255), 1)
@@ -341,7 +342,8 @@ def calibrate_corners(cap):
     cv2.destroyWindow(window_name)
 
     if len(raw_corners) == 4:
-        corners_frac = [(x / CAPTURE_WIDTH, y / 480) for (x, y) in raw_corners]
+        h_f, w_f = frame.shape[:2]
+        corners_frac = [(x / w_f, y / h_f) for (x, y) in raw_corners]
         save_crop_config(corners_frac)
         return corners_frac
     return None
@@ -521,6 +523,14 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, CAPTURE_WIDTH)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, CAPTURE_HEIGHT)
 
+    actual_w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    actual_h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    if (actual_w, actual_h) != (CAPTURE_WIDTH, CAPTURE_HEIGHT):
+        print(f"[Video] ATENCION: resolucion solicitada {CAPTURE_WIDTH}x{CAPTURE_HEIGHT} "
+              f"pero la camara entrega {actual_w}x{actual_h}", file=sys.stderr)
+    else:
+        print(f"[Video] Resolucion confirmada: {actual_w}x{actual_h}", file=sys.stderr)
+
     corners_frac = load_crop_config()
 
     if calibrate_mode or corners_frac is None:
@@ -571,13 +581,14 @@ def main():
                 h_f, w_f = frame.shape[:2]
                 corners_px = corners_to_pixels(corners_frac, w_f, h_f)
                 display = draw_corners_overlay(frame, corners_px)
-                preview_size = 160
-                warped_small = cv2.resize(warped, (preview_size, preview_size))
-                preview_y = h_f - preview_size - 10
-                preview_x = w_f - preview_size - 10
-                display[preview_y:preview_y + preview_size, preview_x:preview_x + preview_size] = warped_small
+                preview_h = 160
+                preview_w = int(preview_h * RECTIFIED_WIDTH / RECTIFIED_HEIGHT)
+                warped_small = cv2.resize(warped, (preview_w, preview_h))
+                preview_y = h_f - preview_h - 10
+                preview_x = w_f - preview_w - 10
+                display[preview_y:preview_y + preview_h, preview_x:preview_x + preview_w] = warped_small
                 cv2.rectangle(display, (preview_x - 2, preview_y - 2),
-                             (preview_x + preview_size + 2, preview_y + preview_size + 2),
+                             (preview_x + preview_w + 2, preview_y + preview_h + 2),
                              (255, 255, 255), 1)
             else:
                 display = warped.copy()

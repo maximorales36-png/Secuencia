@@ -3,7 +3,7 @@ class_name FamilyButton
 
 @export var family_name: String = "familia_1"
 @export var hold_time: float = 3.0
-@export var movement_threshold: float = 5.0
+@export var movement_threshold: float = 20.0
 @export var label_text: String = ""
 
 signal family_selected(family_name: String)
@@ -12,6 +12,8 @@ var _time: float = 0.0
 var _tracked: Dictionary = {}
 var _is_selected: bool = false
 var _flash_timer: float = 0.0
+var _bouncing_balls: Array = []
+var _balls_initialized: bool = false
 
 
 func _ready() -> void:
@@ -26,6 +28,12 @@ func _process(delta: float) -> void:
 
 	_time += delta
 	_check_pieces()
+
+	if family_name == "familia_4":
+		if not _balls_initialized:
+			_init_bouncing_balls()
+		_update_bouncing_balls(delta)
+
 	queue_redraw()
 
 
@@ -108,6 +116,8 @@ func _draw() -> void:
 			_draw_turing_pattern(s)
 		"familia_2":
 			_draw_blob_pattern(s)
+		"familia_4":
+			_draw_familia4_pattern(s)
 		_:
 			_draw_abstract_pattern(s)
 
@@ -123,12 +133,11 @@ func _draw() -> void:
 		var now := Time.get_ticks_msec() / 1000.0
 		var progress := clampf((now - stable.stable_since) / hold_time, 0.0, 1.0)
 		if progress > 0.01:
-			var bar_w := s.x * 0.5
-			var bar_h := 4.0
-			var bar_x := (s.x - bar_w) * 0.5
-			var bar_y := s.y - 24
-			draw_rect(Rect2(bar_x, bar_y, bar_w, bar_h), Color(1, 1, 1, 0.15), true)
-			draw_rect(Rect2(bar_x, bar_y, bar_w * progress, bar_h), border_col, true)
+			var center := s * 0.5
+			var ring_r := minf(s.x, s.y) * 0.3
+			var ring_w := 6.0
+			draw_arc(center, ring_r, 0, TAU, 48, Color(1, 1, 1, 0.1), ring_w, true)
+			draw_arc(center, ring_r, -PI / 2.0, -PI / 2.0 + progress * TAU, 48, border_col, ring_w, true)
 
 
 func _draw_turing_pattern(s: Vector2) -> void:
@@ -212,3 +221,82 @@ func _draw_abstract_pattern(s: Vector2) -> void:
 			var p2 := start + Vector2(gx, gy + 1) * spacing
 			var alpha := 0.15 + 0.2 * sin(gx * 0.5 + gy * 0.7 + _time * 1.0)
 			draw_line(p1, p2, Color(0.4, 0.4, 0.6, alpha), 1.0)
+
+
+func _init_bouncing_balls() -> void:
+	_balls_initialized = true
+	var s := size
+	var colors: Array[Color] = [
+		Color(0.3, 0.7, 1.0, 0.9),
+		Color(0.6, 0.8, 1.0, 0.9),
+		Color(0.1, 0.4, 0.7, 0.9),
+		Color(0.5, 0.9, 1.0, 0.9),
+		Color(0.2, 0.6, 0.9, 0.9),
+	]
+	for i in range(5):
+		_bouncing_balls.append({
+			x = randf() * s.x,
+			y = randf() * s.y,
+			vx = (randf() - 0.5) * 120.0,
+			vy = (randf() - 0.5) * 120.0,
+			radius = 3.0 + randi() % 4,
+			color = colors[i],
+		})
+
+
+func _update_bouncing_balls(delta: float) -> void:
+	var s := size
+	if s.x <= 0 or s.y <= 0:
+		return
+	for ball in _bouncing_balls:
+		ball.x += ball.vx * delta
+		ball.y += ball.vy * delta
+		if ball.x < ball.radius:
+			ball.x = ball.radius
+			ball.vx = abs(ball.vx)
+		elif ball.x > s.x - ball.radius:
+			ball.x = s.x - ball.radius
+			ball.vx = -abs(ball.vx)
+		if ball.y < ball.radius:
+			ball.y = ball.radius
+			ball.vy = abs(ball.vy)
+		elif ball.y > s.y - ball.radius:
+			ball.y = s.y - ball.radius
+			ball.vy = -abs(ball.vy)
+
+
+func _draw_familia4_pattern(s: Vector2) -> void:
+	var center := s * 0.5
+	var r := minf(s.x, s.y) * 0.4
+
+	for i in range(8):
+		var angle := i * TAU / 8 + _time * 0.12
+		var dist := r * (0.2 + 0.5 * (0.5 + 0.5 * sin(_time * 0.35 + i * 0.9)))
+		var pos := center + Vector2(cos(angle), sin(angle)) * dist
+		var noise_r := 14.0 + 12.0 * (0.5 + 0.5 * sin(_time * 0.5 + i * 1.5))
+		var deform := 0.85 + 0.15 * sin(_time * 0.7 + i * 2.3)
+
+		var col: Color = Color(0.15 + 0.08 * i, 0.4 + 0.06 * i, 0.7 + 0.04 * i, 0.25)
+		draw_circle(pos, noise_r * deform * 1.5, col)
+		col.a = 0.4
+		draw_circle(pos, noise_r * deform * 0.9, col)
+		col.a = 0.65
+		draw_circle(pos, noise_r * deform * 0.45, col)
+
+	for i in range(4):
+		var angle := i * TAU / 4 + _time * -0.08
+		var dist := r * 0.55
+		var pos := center + Vector2(cos(angle), sin(angle)) * dist
+		var pulse := 8.0 + 6.0 * (0.5 + 0.5 * sin(_time * 0.3 + i * 2.7))
+		var col: Color = Color(0.4, 0.7, 1.0, 0.2)
+		draw_circle(pos, pulse * 1.8, col)
+		col.a = 0.35
+		draw_circle(pos, pulse, col)
+
+	for ball in _bouncing_balls:
+		var pos := Vector2(ball.x, ball.y)
+		var col: Color = ball.color
+		var glow: Color = col
+		glow.a = 0.25
+		draw_circle(pos, ball.radius * 3.0, glow)
+		draw_circle(pos, ball.radius, col)

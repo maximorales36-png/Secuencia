@@ -20,8 +20,9 @@ namespace AK
         static const AkUniqueID PLAY_F4_N_GREEN = 1363114883U;
         static const AkUniqueID PLAY_F4_PINK = 2787262691U;
         static const AkUniqueID PLAY_F4_YELLOW = 2836426935U;
-        static const AkUniqueID PLAY_N_GREEN_F2 = 4213925647U;
         static const AkUniqueID PLAY_NEON_GREEN = 3153919642U;
+        static const AkUniqueID PLAY_NEON_GREEN_F2 = 384389037U;
+        static const AkUniqueID PLAY_ORANGE_F2 = 1259331539U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID PLAY_PINK_F2 = 3593761409U;
         static const AkUniqueID PLAY_VIOLET_F2 = 168358390U;

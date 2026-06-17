@@ -372,6 +372,8 @@ func _draw_blobs() -> void:
 
 
 func _draw_blob(x: float, y: float, r: float, color_name: String, phase: float, energy: float, rings: int) -> void:
+	if r < 4.0 or energy < 0.01:
+		return
 	var col_arr: Array = GestorFamilias.get_html_color(color_name)
 	var drift_arr: Array = GestorFamilias.get_html_drift(color_name)
 	var bc: Array = lerp_col(col_arr, drift_arr, 0.06 + energy * 0.22)
@@ -382,6 +384,8 @@ func _draw_blob(x: float, y: float, r: float, color_name: String, phase: float, 
 		if base_a <= 0.0:
 			continue
 		base_a = clampf(base_a, 0.0, 1.0)
+		if rr * (1.0 + abs(_fbm(0.0, 0.0, 1.0)) * (0.05 + energy * 0.07)) < 1.0:
+			continue
 
 		var pts: int = 12 + ring * 3
 		var poly: PackedVector2Array = []
@@ -398,9 +402,11 @@ func _draw_blob(x: float, y: float, r: float, color_name: String, phase: float, 
 		var c: Color = _rgb(bc, base_a)
 		draw_colored_polygon(poly, c)
 
+	var glow_r: float = r * 0.35
+	if glow_r < 2.0:
+		return
 	var glow_a: float = clampf(0.28 + energy * 0.38, 0.0, 1.0)
 	var glow_col: Color = _rgb(bc, glow_a * 0.7)
-	var glow_r: float = r * 0.35
 	var glow_pts: int = 8
 	var glow_poly: PackedVector2Array = []
 	for i in range(glow_pts + 1):

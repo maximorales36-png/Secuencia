@@ -1,6 +1,6 @@
 extends Control
 
-const PiecesOverlay = preload("res://scipts/PiecesOverlay.gd")
+var _pieces_viz: Node = null
 
 
 func _ready() -> void:
@@ -22,22 +22,15 @@ func _ready() -> void:
 		btn.family_selected.connect(_on_family_selected)
 		add_child(btn)
 
-	_pieces_overlay()
-
-
-func _pieces_overlay() -> void:
-	var overlay := Control.new()
-	overlay.set_script(PiecesOverlay)
-	overlay.name = "PiecesOverlay"
-	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	overlay.anchors_preset = Control.PRESET_FULL_RECT
-	add_child(overlay)
+	_pieces_viz = PiecesVisualizer.new()
+	_pieces_viz.name = "PiecesVisualizer"
+	_pieces_viz.piece_radius = 18.0
+	add_child(_pieces_viz)
 
 
 func _process(_delta: float) -> void:
-	var overlay = find_child("PiecesOverlay", true, false)
-	if overlay is Control:
-		overlay.queue_redraw()
+	if _pieces_viz:
+		_pieces_viz.queue_redraw()
 
 
 func _draw() -> void:

@@ -20,7 +20,7 @@ import tempfile
 import shutil
 
 CAPTURE_WIDTH = 640
-CAPTURE_HEIGHT = 480
+CAPTURE_HEIGHT = 300
 CAMERA_INDEX = 0
 CAMERA_AUTO_DETECT = True
 CAMERA_BACKEND = cv2.CAP_DSHOW
@@ -341,7 +341,7 @@ def calibrate_corners(cap):
     cv2.destroyWindow(window_name)
 
     if len(raw_corners) == 4:
-        corners_frac = [(x / CAPTURE_WIDTH, y / CAPTURE_HEIGHT) for (x, y) in raw_corners]
+        corners_frac = [(x / CAPTURE_WIDTH, y / 480) for (x, y) in raw_corners]
         save_crop_config(corners_frac)
         return corners_frac
     return None

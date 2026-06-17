@@ -30,6 +30,7 @@ const F4_YELLOW_RTPC: String = "RTPC_F4_Yellow"
 const F4_N_GREEN_RTPC: String = "RTPC_F4_N_Green"
 const F4_CELESTE_RTPC: String = "RTPC_F4_Celeste"
 
+
 # F4 beat clock & queue
 var _f4_hit_queue: Array = []
 var _f4_next_beat_time: float = 0.0

@@ -3,7 +3,7 @@ class_name FamilyButton
 
 @export var family_name: String = "familia_1"
 @export var hold_time: float = 3.0
-@export var movement_threshold: float = 25.0
+@export var movement_threshold: float = 5.0
 @export var label_text: String = ""
 
 signal family_selected(family_name: String)
@@ -35,7 +35,6 @@ func _check_pieces() -> void:
 	var vp_size := get_viewport_rect().size
 	var pieces := IPCManager.pieces
 	var new_tracked: Dictionary = {}
-	var match_dist := movement_threshold * 2
 
 	for piece in pieces:
 		var sx := piece.x * vp_size.x
@@ -49,22 +48,20 @@ func _check_pieces() -> void:
 			if matched_key != "":
 				break
 			var t = _tracked[key]
-			if abs(sx - t.last_x) < match_dist and abs(sy - t.last_y) < match_dist:
+			if abs(sx - t.last_x) < movement_threshold * 2 and abs(sy - t.last_y) < movement_threshold * 2:
 				matched_key = key
 
 		var tracker: Dictionary
 		if matched_key != "" and _tracked.has(matched_key):
 			tracker = _tracked[matched_key]
+			var dx = sx - tracker.last_x
+			var dy = sy - tracker.last_y
 			tracker.last_x = sx
 			tracker.last_y = sy
-			var edx = sx - tracker.entry_x
-			var edy = sy - tracker.entry_y
-			if sqrt(edx * edx + edy * edy) > movement_threshold:
-				tracker.entry_x = sx
-				tracker.entry_y = sy
+			if sqrt(dx * dx + dy * dy) > movement_threshold:
 				tracker.stable_since = now
 		else:
-			tracker = { stable_since = now, last_x = sx, last_y = sy, entry_x = sx, entry_y = sy }
+			tracker = { stable_since = now, last_x = sx, last_y = sy }
 
 		new_tracked[matched_key if matched_key != "" else str(randi())] = tracker
 
@@ -111,8 +108,6 @@ func _draw() -> void:
 			_draw_turing_pattern(s)
 		"familia_2":
 			_draw_blob_pattern(s)
-		"familia_4":
-			_draw_balls_pattern(s)
 		_:
 			_draw_abstract_pattern(s)
 
@@ -187,45 +182,12 @@ func _draw_blob_pattern(s: Vector2) -> void:
 		draw_circle(pos, radius, col)
 
 
-func _draw_balls_pattern(s: Vector2) -> void:
-	var cols: Array[Color] = [
-		GestorFamilias.get_color("pink"),
-		GestorFamilias.get_color("celeste"),
-		GestorFamilias.get_color("yellow"),
-		GestorFamilias.get_color("neon_green")
-	]
-	var center := s * 0.5
-	var r := minf(s.x, s.y) * 0.35
-
-	for i in range(3):
-		var angle := i * TAU / 3 + _time * (0.7 + i * 0.15)
-		var dist := r * (0.4 + 0.3 * sin(_time * 0.5 + i * 2.3))
-		var pos := center + Vector2(cos(angle), sin(angle)) * dist
-		var radius := 7.0 + 5.0 * (0.5 + 0.5 * sin(_time * 0.8 + i * 1.7))
-		var col: Color = cols[i % cols.size()]
-		col.a = 0.6 + 0.3 * sin(_time * 1.2 + i * 3.1)
-
-		var glow := col
-		glow.a = 0.15
-		draw_circle(pos, radius * 3.0, glow)
-		draw_circle(pos, radius, col)
-
-	var num_lines := 4
-	for i in range(num_lines):
-		var a1 := i * TAU / num_lines + _time * 0.2
-		var a2 := a1 + 0.3
-		var d1 := r * 0.5
-		var d2 := r * 0.9
-		var p1 := center + Vector2(cos(a1), sin(a1)) * d1
-		var p2 := center + Vector2(cos(a2), sin(a2)) * d2
-		var line_col := Color(1.0, 1.0, 1.0, 0.1 + 0.1 * sin(_time + i))
-		draw_line(p1, p2, line_col, 1.0)
-
-
 func _draw_abstract_pattern(s: Vector2) -> void:
-	var grid := 5
+	var center := s * 0.5
+	var r := minf(s.x, s.y) * 0.4
+	var grid := 6
 	var spacing := minf(s.x, s.y) / float(grid + 1)
-	var start := (s - Vector2.ONE * spacing * (grid - 1)) * 0.5
+	var start := (s - Vector2.ONE * spacing * grid) * 0.5 + Vector2.ONE * spacing * 0.5
 
 	for gx in range(grid):
 		for gy in range(grid):
@@ -234,7 +196,7 @@ func _draw_abstract_pattern(s: Vector2) -> void:
 			var dy := float(gy) / float(grid - 1) - 0.5
 			var wave := 0.5 + 0.5 * sin(dx * 5.0 + _time * 2.0) * cos(dy * 5.0 + _time * 1.5)
 			var radius := 2.0 + 5.0 * wave
-			var col: Color = Color(0.25 + 0.3 * wave, 0.15 + 0.2 * (1.0 - wave), 0.4 + 0.3 * wave, 0.6)
+			var col: Color = Color(0.3 + 0.4 * wave, 0.2 + 0.3 * (1.0 - wave), 0.5, 0.7)
 			draw_circle(pos, radius, col)
 
 	for gx in range(grid - 1):

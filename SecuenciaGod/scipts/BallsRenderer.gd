@@ -8,6 +8,9 @@ class_name BallsRenderer
 @export var background_noise_spacing: float = 16.0
 @export var piece_glow_radius: float = 140.0
 @export var trail_length: int = 6
+@export var speed_boost_per_hit: float = 50.0
+@export var max_ball_speed: float = 2000.0
+@export var max_violet_boosts: int = 8
 
 var balls: Array = []
 var trails: Array = []
@@ -21,6 +24,8 @@ var _pieces: Array = []
 var _hit_waves: Array = []
 var _hit_trails: Array = []
 var _fading_pieces: Dictionary = {}  # key -> {color, x, y, alpha}
+var _violet_boost_count: int = 0
+var _was_f4_active: bool = false
 
 
 func _ready() -> void:
@@ -73,7 +78,12 @@ func _init_balls() -> void:
 
 func _process(delta: float) -> void:
 	if GestorFamilias.familia_activa != "familia_4":
+		_was_f4_active = false
 		return
+
+	if not _was_f4_active:
+		_was_f4_active = true
+		_violet_boost_count = 0
 
 	frame += 1
 	pattern_seed += delta * 0.25
@@ -134,11 +144,19 @@ func _update_ball(idx: int, delta: float) -> void:
 			ball.vel = normal * minf(_viewport.x, _viewport.y) * ball_speed_factor
 		ball.pos = piece_pos + normal * (hit_radius + 2.0)
 
-		if _audio_manager:
+		if _audio_manager and piece.color != "violet":
 			_audio_manager.call("schedule_f4_hit", piece.color, piece.y)
 
 		var center := Vector2(piece.x * _viewport.x, piece.y * _viewport.y)
 		_spawn_hit_effect(center, piece.color)
+
+		if piece.color == "violet" and _violet_boost_count < max_violet_boosts:
+			_violet_boost_count += 1
+			for b in balls:
+				var len: float = b.vel.length()
+				var new_len := minf(len + speed_boost_per_hit, max_ball_speed)
+				if len > 0.0:
+					b.vel = b.vel.normalized() * new_len
 
 	var trail = trails[idx]
 	trail.append({ pos = ball.pos, time = now })

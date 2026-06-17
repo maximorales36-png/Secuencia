@@ -60,7 +60,8 @@ const FAMILIAS: Dictionary = {
 			"pink":       { "patron": "balls", "sonido": "Play_F4_Pink" },
 			"yellow":     { "patron": "balls", "sonido": "Play_F4_Yellow" },
 			"neon_green": { "patron": "balls", "sonido": "Play_F4_N_Green" },
-			"celeste":    { "patron": "balls", "sonido": "Play_F4_Celeste" }
+			"celeste":    { "patron": "balls", "sonido": "Play_F4_Celeste" },
+			"violet":     { "patron": "balls", "sonido": "Play_F4_Violet" }
 		}
 	},
 }

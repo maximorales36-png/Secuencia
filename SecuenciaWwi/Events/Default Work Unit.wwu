@@ -117,9 +117,10 @@
 					<ChildrenList>
 						<Event Name="Play_Yellow_F2" ID="{126CAAF2-762B-4F3C-9E4B-5A5411C15889}"/>
 						<Event Name="Play_Pink_F2" ID="{3E3BF32C-50E8-498B-83BC-CC9B1AE40626}"/>
-						<Event Name="Play_N_Green_F2" ID="{2752E2B2-4865-4AFC-91A6-C3CF430407B4}"/>
+						<Event Name="Play_Neon_Green_F2" ID="{2752E2B2-4865-4AFC-91A6-C3CF430407B4}"/>
 						<Event Name="Play_Celeste_F2" ID="{0C3F0FBD-879D-4D05-8A91-3C68BFC2FB1A}"/>
 						<Event Name="Play_Violet_F2" ID="{045B31E3-8198-459B-B354-FCE0B17677BC}"/>
+						<Event Name="Play_Orange_F2" ID="{57C09648-30B8-4B22-81E0-9A356046D15F}"/>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="F4" ID="{1174F4FD-63CD-49A5-BBE3-57B541FBBD94}" ShortID="1058446659">

@@ -39,13 +39,15 @@ MAX_CONTOUR_AREA = 50000
 SHAPE_DETECTION_ENABLED = True
 CLASSIFY_EPSILON = 0.05
 CIRCULARITY_THRESHOLD = 0.80
-SOLIDITY_THRESHOLD = 0.85
-SIZE_TOLERANCE = 0.80
+SOLIDITY_THRESHOLD = 0.0
+SIZE_TOLERANCE = 1.50
 PX_PER_MM = None
 MIN_CONSECUTIVE_FRAMES = 3
 DETECTION_MEMORY_TIMEOUT = 0.5
 DETECTION_STABILIZE_SNAP = 0.02
 SHAPE_MATCH_PERMISSIVE = True
+MIRROR_X = True
+DEBUG_MODE = False
 
 COLOR_SHAPE_MAP = {
     "pink":       {"shape": "polygon",  "size_mm": 55},   # Cubo
@@ -169,8 +171,12 @@ def verify_size_raw(contour, color_name, M):
     warped_size = max(wr[2], wr[3])
 
     expected_px = expected["size_mm"] * PX_PER_MM
-    lower = expected_px * (1.0 - SIZE_TOLERANCE)
-    upper = expected_px * (1.0 + SIZE_TOLERANCE)
+    lower = max(0, expected_px * (1.0 - SIZE_TOLERANCE))
+    upper = max(1, expected_px * (1.0 + SIZE_TOLERANCE))
+
+    if DEBUG_MODE and color_name == "pink":
+        print(f"[DBG] pink: size raw_bbox=({w}x{h}) warped={warped_size:.0f}px expected={expected_px:.0f} range=[{lower:.0f}-{upper:.0f}] {'OK' if lower <= warped_size <= upper else 'FAIL'}", file=sys.stderr)
+
     return lower <= warped_size <= upper
 
 
@@ -219,6 +225,8 @@ def update_detection_memory(raw_detections, memory, now):
             if c not in confirmed:
                 confirmed[c] = []
             confirmed[c].append((mem["x"], mem["y"]))
+        elif DEBUG_MODE and mem["color"] == "pink":
+            print(f"[DBG] pink: mem {key} consecutive={mem['consecutive']}/{MIN_CONSECUTIVE_FRAMES}", file=sys.stderr)
 
     return confirmed
 
@@ -261,12 +269,22 @@ def load_crop_config():
 
 
 def save_crop_config(corners_frac, screen_width_mm=None):
+    existing = {}
+    if os.path.exists(CROP_CONFIG_FILE):
+        try:
+            with open(CROP_CONFIG_FILE, 'r') as f:
+                existing = json.load(f)
+        except Exception:
+            pass
+
     config = {
         "order": CORNERS_ORDER,
         "corners": [{"x": round(x, 4), "y": round(y, 4)} for (x, y) in corners_frac]
     }
     if screen_width_mm is not None and screen_width_mm > 0:
         config["screen_width_mm"] = screen_width_mm
+    elif "screen_width_mm" in existing:
+        config["screen_width_mm"] = existing["screen_width_mm"]
     tmp = CROP_CONFIG_FILE + ".tmp"
     with open(tmp, 'w') as f:
         json.dump(config, f, indent=2)
@@ -389,33 +407,57 @@ def detect_color(frame, color_name, color_range, M_persp=None, region_mask=None)
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if DEBUG_MODE and color_name == "pink":
+        pix = cv2.countNonZero(mask) if mask is not None else 0
+        print(f"[DBG] pink: pix={pix} contours={len(contours)}", file=sys.stderr)
     centers = []
     for contour in contours:
         area = cv2.contourArea(contour)
         if area <= MIN_CONTOUR_AREA or area >= MAX_CONTOUR_AREA:
+            if DEBUG_MODE and color_name == "pink":
+                print(f"[DBG] pink: REJECT area={area:.0f}", file=sys.stderr)
             continue
 
         shape_name = classify_shape(contour) if SHAPE_DETECTION_ENABLED else "unknown"
         if SHAPE_DETECTION_ENABLED and shape_name == "unknown":
+            if DEBUG_MODE:
+                peri = cv2.arcLength(contour, True)
+                hull = cv2.convexHull(contour)
+                hull_area = cv2.contourArea(hull)
+                solidity = area / hull_area if hull_area > 0 else 0
+                approx = cv2.approxPolyDP(contour, CLASSIFY_EPSILON * peri, True) if peri > 0 else contour
+                vertices = len(approx)
+                circularity = 4.0 * math.pi * area / (peri * peri) if peri > 0 else 0
+                print(f"[DBG] {color_name}: REJECT classify area={area:.0f} sol={solidity:.3f} verts={vertices} circ={circularity:.3f}", file=sys.stderr)
             continue
 
         if SHAPE_DETECTION_ENABLED and SHAPE_MATCH_PERMISSIVE:
             expected = COLOR_SHAPE_MAP.get(color_name, {}).get("shape", "unknown")
             if expected != "unknown" and expected != shape_name:
                 if expected == "circle" and shape_name != "circle":
+                    if DEBUG_MODE and color_name == "pink":
+                        print(f"[DBG] pink: REJECT shape_match (expected={expected} got={shape_name})", file=sys.stderr)
                     continue
                 if expected == "polygon" and shape_name == "circle":
+                    if DEBUG_MODE and color_name == "pink":
+                        print(f"[DBG] pink: REJECT shape_match (expected={expected} got={shape_name})", file=sys.stderr)
                     continue
                 if expected == "hexagon" and shape_name == "circle":
+                    if DEBUG_MODE and color_name == "pink":
+                        print(f"[DBG] pink: REJECT shape_match (expected={expected} got={shape_name})", file=sys.stderr)
                     continue
 
         if M_persp is not None and not verify_size_raw(contour, color_name, M_persp):
+            if DEBUG_MODE and color_name == "pink":
+                print(f"[DBG] pink: REJECT size area={area:.0f}", file=sys.stderr)
             continue
 
         Mo = cv2.moments(contour)
         if Mo["m00"] > 0:
             cx = int(Mo["m10"] / Mo["m00"])
             cy = int(Mo["m01"] / Mo["m00"])
+            if DEBUG_MODE and color_name == "pink":
+                print(f"[DBG] pink: ACCEPTED at ({cx},{cy}) area={area:.0f} shape={shape_name}", file=sys.stderr)
             centers.append((cx, cy, shape_name))
     return centers
 
@@ -441,9 +483,12 @@ def format_data(detections, frame_w, frame_h):
     for color_name, centers in detections.items():
         for entry in centers:
             cx, cy = entry[0], entry[1]
+            x_norm = round(cx / frame_w, 3) if frame_w > 0 else 0
+            if MIRROR_X:
+                x_norm = round(1.0 - x_norm, 3)
             data["piezas"].append({
                 "color": color_name,
-                "x": round(cx / frame_w, 3) if frame_w > 0 else 0,
+                "x": x_norm,
                 "y": round(cy / frame_h, 3) if frame_h > 0 else 0
             })
     return data
@@ -476,7 +521,7 @@ def find_camera():
 
 def calibrate_corners(cap):
     raw_corners = []
-    window_name = "Calibracion - Marque 4 esquinas del TV"
+    window_name = "Calibracion - Marque 4 esquinas (orden camara TL->TR->BR->BL)"
 
     def mouse_handler(event, x, y, flags, param):
         nonlocal raw_corners
@@ -549,7 +594,10 @@ def calibrate_corners(cap):
         except (ValueError, EOFError):
             print("[Crop] Ancho no ingresado, se usara deteccion sin filtro de tamaño", file=sys.stderr)
 
-        save_crop_config(corners_frac, screen_width_mm)
+        try:
+            save_crop_config(corners_frac, screen_width_mm)
+        except Exception as e:
+            print(f"[Crop] Error al guardar config: {e}", file=sys.stderr)
         return corners_frac
     return None
 
@@ -575,7 +623,7 @@ def calibrate_colors(cap, corners_frac, current_ranges):
             "bgr": data["bgr"]
         }
 
-    window_name = "Cal HSV - [1-6] Color  [R] Reset  [S] Guardar  [Q] Salir"
+    window_name = f"Cal HSV - [1-{len(COLOR_NAMES_LIST)}] Color  [R] Reset  [S] Guardar  [Q] Salir"
     cv2.namedWindow(window_name)
 
     cv2.createTrackbar("H_Low", window_name, 0, 179, lambda x: None)
@@ -655,12 +703,14 @@ def calibrate_colors(cap, corners_frac, current_ranges):
         if SHAPE_DETECTION_ENABLED and expected_shape != "unknown":
             shape_text = f"  esperado: {expected_shape}"
 
-        cv2.putText(display, f"{color_name} [{current_idx + 1}/6]{shape_text}",
+        num_colors = len(COLOR_NAMES_LIST)
+        cv2.putText(display, f"{color_name} [{current_idx + 1}/{num_colors}]{shape_text}",
                     (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.55, bgr, 2)
         cv2.putText(display,
                     f"H:{lo[0]:3d}-{hi[0]:3d}  S:{lo[1]:3d}-{hi[1]:3d}  V:{lo[2]:3d}-{hi[2]:3d}",
                     (10, 48), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (200, 200, 200), 1)
-        cv2.putText(display, "[1-6] Color  [R] Reset  [S] Guardar  [Q] Salir",
+        num_colors = len(COLOR_NAMES_LIST)
+        cv2.putText(display, f"[1-{num_colors}] Color  [R] Reset  [S] Guardar  [Q] Salir",
                     (10, 72), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (120, 120, 120), 1)
 
         cv2.imshow(window_name, display)
@@ -677,9 +727,11 @@ def calibrate_colors(cap, corners_frac, current_ranges):
             working[color_name]["lower"] = defaults[color_name]["lower"].copy()
             working[color_name]["upper"] = defaults[color_name]["upper"].copy()
             set_trackbars(color_name)
-        elif ord('1') <= key <= ord('6'):
-            current_idx = key - ord('1')
-            set_trackbars(COLOR_NAMES_LIST[current_idx])
+        elif ord('1') <= key <= ord('9'):
+            idx = key - ord('1')
+            if idx < len(COLOR_NAMES_LIST):
+                current_idx = idx
+                set_trackbars(COLOR_NAMES_LIST[current_idx])
 
     cv2.destroyWindow(window_name)
     return None
@@ -694,11 +746,13 @@ def print_usage():
     print("  C: Re-calibrar esquinas   B: Calibrar colores HSV", file=sys.stderr)
     print("  V: Ver raw (camara sin rectificar)   Q: Salir", file=sys.stderr)
     print("  S: Alternar filtro de forma geometrica ON/OFF", file=sys.stderr)
+    print("  D: Debug de forma ON/OFF", file=sys.stderr)
+    print("  M: Alternar Mirror X (espejar coordenadas) ON/OFF", file=sys.stderr)
     print(file=sys.stderr)
 
 
 def main():
-    global CAMERA_INDEX, SHAPE_DETECTION_ENABLED, PX_PER_MM
+    global CAMERA_INDEX, SHAPE_DETECTION_ENABLED, PX_PER_MM, MIRROR_X, DEBUG_MODE
 
     calibrate_mode = False
     calibrate_colors_mode = False
@@ -727,6 +781,7 @@ def main():
     print(f"Frecuencia: {SEND_FREQUENCY} Hz", file=sys.stderr)
     print(f"Shape detection: {'ON' if SHAPE_DETECTION_ENABLED else 'OFF'}", file=sys.stderr)
     print(f"Persistencia temporal: {MIN_CONSECUTIVE_FRAMES} frames", file=sys.stderr)
+    print(f"Mirror X: {'ON' if MIRROR_X else 'OFF'}", file=sys.stderr)
     if PX_PER_MM:
         print(f"px_per_mm: {PX_PER_MM:.4f}", file=sys.stderr)
     else:
@@ -848,8 +903,9 @@ def main():
             raw_count = sum(len(c) for c in raw_detections.values())
             mem_count = len(detection_memory)
             shape_status = "ON" if SHAPE_DETECTION_ENABLED else "OFF"
+            mirror_status = "MX" if MIRROR_X else ""
 
-            cv2.putText(display, f"Frame: {frame_count} | {mode_label} | Shape:{shape_status}",
+            cv2.putText(display, f"Frame: {frame_count} | {mode_label} | S:{shape_status} {mirror_status}",
                        (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.50, (200, 200, 200), 1)
             cv2.putText(display, f"Piezas: {total_pieces} (raw:{raw_count} mem:{mem_count})",
                        (10, 55), cv2.FONT_HERSHEY_SIMPLEX, 0.50, (200, 200, 200), 1)
@@ -894,9 +950,12 @@ def main():
             elif key == ord('s') or key == ord('S'):
                 SHAPE_DETECTION_ENABLED = not SHAPE_DETECTION_ENABLED
                 print(f"\n[v2] Filtro de forma: {'ON' if SHAPE_DETECTION_ENABLED else 'OFF'}", file=sys.stderr)
+            elif key == ord('m') or key == ord('M'):
+                MIRROR_X = not MIRROR_X
+                print(f"\n[v2] Mirror X: {'ON' if MIRROR_X else 'OFF'}", file=sys.stderr)
             elif key == ord('d') or key == ord('D'):
-                show_shape_debug = not show_shape_debug
-                print(f"\n[v2] Debug de forma: {'ON' if show_shape_debug else 'OFF'}", file=sys.stderr)
+                DEBUG_MODE = not DEBUG_MODE
+                print(f"\n[v2] Debug: {'ON' if DEBUG_MODE else 'OFF'}", file=sys.stderr)
 
     except KeyboardInterrupt:
         print("\n[OK] Interrumpido por usuario.", file=sys.stderr)

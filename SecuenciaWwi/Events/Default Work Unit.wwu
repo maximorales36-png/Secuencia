@@ -192,6 +192,63 @@
 						</Event>
 					</ChildrenList>
 				</Folder>
+				<Event Name="mx_play_menu" ID="{DB3A4F0A-FCD5-4A73-8C84-A20A2BCF8303}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="9"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Action Name="" ID="{88FFAA70-5F3C-43C4-9F4A-C7379CEF93CC}" ShortID="980694300">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Mx_Menu_Pl" ID="{CD69816B-A4BD-4BDD-A3CE-E8A707583785}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Enter_F_01" ID="{B7A62C5B-1BEC-40D6-863E-F8CC705BEC3C}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="7"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+				</Event>
+				<Event Name="Enter_F_02" ID="{694DB9F1-A96E-40EB-B642-3BE3A8CF4984}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="7"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+				</Event>
+				<Event Name="Enter_F_03" ID="{14E7B600-7C9F-4745-A76E-4236FCD66E84}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="7"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+				</Event>
+				<Event Name="Enter_F_04" ID="{38023756-3E3C-4F2C-9A8E-5E37B2E913B6}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="7"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+				</Event>
+				<Event Name="mx_stop_menu" ID="{E32296A9-1468-4E6C-A85D-B5F1C2E8782C}">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="9"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Action Name="" ID="{3BC61CDA-275B-4B56-BBC1-DF3436C1B054}" ShortID="636479955">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Mx_Menu_Pl" ID="{CD69816B-A4BD-4BDD-A3CE-E8A707583785}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

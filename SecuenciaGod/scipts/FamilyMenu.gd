@@ -4,6 +4,12 @@ var _pieces_viz: Node = null
 
 
 func _ready() -> void:
+	Wwise.register_game_obj(self, "FamilyMenu")
+	Wwise.load_bank("Main")
+	Wwise.add_default_listener(self)
+	Wwise.post_event("mx_play_menu", self)
+
+
 	var vp := get_viewport_rect().size
 	var btn_w := vp.x * 0.18
 	var btn_h := vp.y * 0.42
@@ -48,4 +54,11 @@ func _draw() -> void:
 func _on_family_selected(family_name: String) -> void:
 	GestorFamilias.familia_activa = family_name
 	print("[FamilyMenu] Selected: %s" % family_name)
+
+	Wwise.post_event("mx_stop_menu", self)
+
+	var family_num := family_name.trim_prefix("familia_")
+	var event_name := "Enter_F_%02d" % int(family_num)
+	Wwise.post_event(event_name, self)
+
 	get_tree().change_scene_to_file("res://main.tscn")

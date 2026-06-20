@@ -13,6 +13,12 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID ENTER_F_01 = 1341855576U;
+        static const AkUniqueID ENTER_F_02 = 1341855579U;
+        static const AkUniqueID ENTER_F_03 = 1341855578U;
+        static const AkUniqueID ENTER_F_04 = 1341855581U;
+        static const AkUniqueID MX_PLAY_MENU = 3073348995U;
+        static const AkUniqueID MX_STOP_MENU = 4057456165U;
         static const AkUniqueID PLAY_ALL = 2976310903U;
         static const AkUniqueID PLAY_CELESTE = 392139723U;
         static const AkUniqueID PLAY_CELESTE_F2 = 2421176694U;

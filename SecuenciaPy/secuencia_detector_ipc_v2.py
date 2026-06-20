@@ -37,18 +37,20 @@ MAX_CONTOUR_AREA = 50000
 # --- NUEVOS PARAMETROS v2 ---
 
 SHAPE_DETECTION_ENABLED = True
-CLASSIFY_EPSILON = 0.04
-CIRCULARITY_THRESHOLD = 0.85
-SIZE_TOLERANCE = 0.30
+CLASSIFY_EPSILON = 0.05
+CIRCULARITY_THRESHOLD = 0.80
+SOLIDITY_THRESHOLD = 0.85
+SIZE_TOLERANCE = 0.80
 PX_PER_MM = None
 MIN_CONSECUTIVE_FRAMES = 3
 DETECTION_MEMORY_TIMEOUT = 0.5
 DETECTION_STABILIZE_SNAP = 0.02
+SHAPE_MATCH_PERMISSIVE = True
 
 COLOR_SHAPE_MAP = {
-    "pink":       {"shape": "square",   "size_mm": 55},   # Cubo
-    "yellow":     {"shape": "triangle", "size_mm": 65},   # Piramide
-    "celeste":    {"shape": "hexagon",  "size_mm": 27},   # Hexagono
+    "pink":       {"shape": "polygon",  "size_mm": 55},   # Cubo
+    "yellow":     {"shape": "polygon",  "size_mm": 65},   # Piramide
+    "celeste":    {"shape": "hexagon",  "size_mm": 54},   # Hexagono (ancho total ~54mm)
     "neon_green": {"shape": "circle",   "size_mm": 55},   # Semiesfera
     "violet":     {"shape": "circle",   "size_mm": 65},   # Cono
     "orange":     {"shape": "unknown",  "size_mm": 0},    # Sin figura
@@ -103,84 +105,86 @@ CORNERS_OVERLAY_COLORS = [(0, 255, 255), (255, 0, 0), (0, 0, 255), (0, 255, 0)]
 
 def classify_shape(contour):
     """
-    Clasifica un contorno en una de las formas conocidas:
-    'square', 'triangle', 'circle', 'hexagon' o 'unknown'.
+    Clasifica un contorno segun su forma, tolerante a deformacion
+    por perspectiva. Retorna 'polygon', 'hexagon', 'circle' o 'unknown'.
+
+    El filtro principal es SOLIDITY (compacidad):
+      - Pieza fisica -> contorno compacto -> solidity > 0.85
+      - Luz proyectada -> contorno irregular -> solidity bajo
     """
     peri = cv2.arcLength(contour, True)
     if peri <= 0:
         return "unknown"
-    approx = cv2.approxPolyDP(contour, CLASSIFY_EPSILON * peri, True)
-    vertices = len(approx)
     area = cv2.contourArea(contour)
     if area <= 0:
         return "unknown"
 
-    if vertices == 3:
-        return "triangle"
+    hull = cv2.convexHull(contour)
+    hull_area = cv2.contourArea(hull)
+    solidity = area / hull_area if hull_area > 0 else 0
+    if solidity < SOLIDITY_THRESHOLD:
+        return "unknown"
 
-    if vertices == 4:
-        x, y, w, h = cv2.boundingRect(approx)
-        if w <= 0 or h <= 0:
-            return "unknown"
-        aspect_ratio = w / float(h)
-        if 0.8 <= aspect_ratio <= 1.2:
-            return "square"
-        return "rectangle"
+    approx = cv2.approxPolyDP(contour, CLASSIFY_EPSILON * peri, True)
+    vertices = len(approx)
+    circularity = 4.0 * math.pi * area / (peri * peri) if peri > 0 else 0
 
-    if 6 <= vertices <= 8:
-        return "hexagon"
+    if circularity > CIRCULARITY_THRESHOLD:
+        return "circle"
 
-    if vertices > 8:
-        circularity = 4.0 * math.pi * area / (peri * peri)
-        if circularity > CIRCULARITY_THRESHOLD:
-            return "circle"
+    if vertices <= 10:
+        return "polygon"
 
-    return "unknown"
+    if circularity > 0.70:
+        return "circle"
+
+    return "polygon"
 
 
-def verify_size(contour, shape_name, color_name):
+def create_roi_mask(frame_shape, corners_px):
+    mask = np.zeros(frame_shape[:2], dtype=np.uint8)
+    pts = np.array(corners_px, np.int32)
+    cv2.fillPoly(mask, [pts], 255)
+    return mask
+
+
+def verify_size_raw(contour, color_name, M):
     """
-    Verifica que el tamaño del contorno coincida con el tamaño real esperado
-    de la pieza, usando px_per_mm calibrado.
-    Retorna True si pasa el filtro, False si se descarta.
+    Verifica tamaño de la pieza transformando el bounding box del contorno
+    (en RAW) al espacio rectificado a traves de la homografia M.
+    Retorna True si pasa el filtro.
     """
     if not SHAPE_DETECTION_ENABLED:
         return True
-
     expected = COLOR_SHAPE_MAP.get(color_name)
-    if expected is None:
-        return True
-    if expected["shape"] == "unknown":
-        return True
-    if expected["size_mm"] <= 0:
+    if expected is None or expected["shape"] == "unknown" or expected["size_mm"] <= 0:
         return True
     if PX_PER_MM is None or PX_PER_MM <= 0:
         return True
 
-    _, _, w, h = cv2.boundingRect(contour)
-    bb_size = max(w, h)
-    expected_px = expected["size_mm"] * PX_PER_MM
+    x, y, w, h = cv2.boundingRect(contour)
+    pts = np.array([[x, y], [x+w, y], [x+w, y+h], [x, y+h]], dtype=np.float32)
+    warped_pts = cv2.perspectiveTransform(pts.reshape(-1, 1, 2), M)
+    wr = cv2.boundingRect(warped_pts)
+    warped_size = max(wr[2], wr[3])
 
+    expected_px = expected["size_mm"] * PX_PER_MM
     lower = expected_px * (1.0 - SIZE_TOLERANCE)
     upper = expected_px * (1.0 + SIZE_TOLERANCE)
-
-    return lower <= bb_size <= upper
+    return lower <= warped_size <= upper
 
 
 def update_detection_memory(raw_detections, memory, now):
     """
     Filtra detecciones por persistencia temporal.
-    Una pieza debe detectarse MIN_CONSECUTIVE_FRAMES frames seguidos
-    en la misma posicion (±DETECTION_STABILIZE_SNAP) para ser confirmada.
-
     memory: dict key = "color_snappedX" -> {color, x, y, consecutive, last_seen, matched}
-    Retorna dict de detecciones confirmadas: {color: [(cx, cy, contour)]}
+    Retorna dict de detecciones confirmadas: {color: [(cx, cy)]}
     """
     for key in memory:
         memory[key]["matched"] = False
 
     for color_name, centers in raw_detections.items():
-        for cx, cy, contour, _ in centers:
+        for cx, cy, _ in centers:
             snapped_x = round(cx / RECTIFIED_WIDTH, 2)
             key = f"{color_name}_{snapped_x}"
 
@@ -191,7 +195,6 @@ def update_detection_memory(raw_detections, memory, now):
                 mem["consecutive"] += 1
                 mem["last_seen"] = now
                 mem["matched"] = True
-                mem["contour"] = contour
             else:
                 memory[key] = {
                     "color": color_name,
@@ -199,8 +202,7 @@ def update_detection_memory(raw_detections, memory, now):
                     "y": cy,
                     "consecutive": 1,
                     "last_seen": now,
-                    "matched": True,
-                    "contour": contour
+                    "matched": True
                 }
 
     expired = []
@@ -216,7 +218,7 @@ def update_detection_memory(raw_detections, memory, now):
             c = mem["color"]
             if c not in confirmed:
                 confirmed[c] = []
-            confirmed[c].append((mem["x"], mem["y"], mem["contour"]))
+            confirmed[c].append((mem["x"], mem["y"]))
 
     return confirmed
 
@@ -370,15 +372,19 @@ def draw_corners_overlay(frame, corners_px):
     return result
 
 
-def detect_color(frame, color_name, color_range):
+def detect_color(frame, color_name, color_range, M_persp=None, region_mask=None):
     """
-    Detecta un color en el frame y filtra por forma y tamaño.
-    Retorna lista de (cx, cy, contour, shape_name).
+    Detecta un color en el frame RAW y filtra por forma + tamaño.
+    region_mask: mascara poligonal para limitar el area de busqueda.
+    M_persp: matriz de homografia raw->warped para verify_size_raw().
+    Retorna lista de (cx, cy, shape_name) en coordenadas RAW.
     """
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     lower = color_range["lower"]
     upper = color_range["upper"]
     mask = cv2.inRange(hsv, lower, upper)
+    if region_mask is not None:
+        mask = cv2.bitwise_and(mask, region_mask)
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
@@ -390,25 +396,27 @@ def detect_color(frame, color_name, color_range):
             continue
 
         shape_name = classify_shape(contour) if SHAPE_DETECTION_ENABLED else "unknown"
-
-        expected_shape = COLOR_SHAPE_MAP.get(color_name, {}).get("shape", "unknown")
-        if SHAPE_DETECTION_ENABLED and expected_shape != "unknown":
-            if shape_name == "unknown":
-                continue
-            if shape_name != expected_shape:
-                if expected_shape == "circle" and shape_name not in ("circle",):
-                    continue
-                if expected_shape != "circle" and shape_name != expected_shape:
-                    continue
-
-        if not verify_size(contour, shape_name, color_name):
+        if SHAPE_DETECTION_ENABLED and shape_name == "unknown":
             continue
 
-        M = cv2.moments(contour)
-        if M["m00"] > 0:
-            cx = int(M["m10"] / M["m00"])
-            cy = int(M["m01"] / M["m00"])
-            centers.append((cx, cy, contour, shape_name))
+        if SHAPE_DETECTION_ENABLED and SHAPE_MATCH_PERMISSIVE:
+            expected = COLOR_SHAPE_MAP.get(color_name, {}).get("shape", "unknown")
+            if expected != "unknown" and expected != shape_name:
+                if expected == "circle" and shape_name != "circle":
+                    continue
+                if expected == "polygon" and shape_name == "circle":
+                    continue
+                if expected == "hexagon" and shape_name == "circle":
+                    continue
+
+        if M_persp is not None and not verify_size_raw(contour, color_name, M_persp):
+            continue
+
+        Mo = cv2.moments(contour)
+        if Mo["m00"] > 0:
+            cx = int(Mo["m10"] / Mo["m00"])
+            cy = int(Mo["m01"] / Mo["m00"])
+            centers.append((cx, cy, shape_name))
     return centers
 
 
@@ -416,14 +424,15 @@ def draw_detections(frame, detections):
     for color_name, centers in detections.items():
         color_bgr = COLOR_RANGES[color_name]["bgr"]
         for item in centers:
-            cx, cy, contour = item[0], item[1], item[2]
-            shape_name = item[3] if len(item) > 3 else ""
-            cv2.drawContours(frame, [contour], 0, color_bgr, 2)
-            cv2.circle(frame, (cx, cy), 5, color_bgr, -1)
+            cx = item[0]
+            cy = item[1]
+            shape_name = item[2] if len(item) > 2 else ""
+            cv2.circle(frame, (cx, cy), 8, color_bgr, -1)
+            cv2.circle(frame, (cx, cy), 10, (255, 255, 255), 1)
             label = f"{color_name}"
             if shape_name and shape_name != "unknown":
                 label = f"{shape_name} {color_name}"
-            cv2.putText(frame, label, (cx + 10, cy - 10),
+            cv2.putText(frame, label, (cx + 12, cy - 10),
                        cv2.FONT_HERSHEY_SIMPLEX, 0.4, color_bgr, 1)
 
 
@@ -775,6 +784,9 @@ def main():
     show_shape_debug = True
 
     detection_memory = {}
+    prev_frame_size = None
+    roi_mask = None
+    corners_px = None
 
     try:
         while running:
@@ -783,22 +795,38 @@ def main():
                 print("[ERROR] No se pudo leer frame.", file=sys.stderr)
                 break
 
+            h_f, w_f = frame.shape[:2]
+            if prev_frame_size != (h_f, w_f) or roi_mask is None:
+                corners_px = corners_to_pixels(corners_frac, w_f, h_f)
+                roi_mask = create_roi_mask(frame.shape, corners_px)
+                prev_frame_size = (h_f, w_f)
+
             warped, M = apply_perspective_crop(
                 frame, corners_frac, RECTIFIED_WIDTH, RECTIFIED_HEIGHT
             )
 
             raw_detections = {}
             for color_name in COLOR_RANGES.keys():
-                centers = detect_color(warped, color_name, COLOR_RANGES[color_name])
+                centers = detect_color(frame, color_name, COLOR_RANGES[color_name],
+                                      M_persp=M, region_mask=roi_mask)
                 if centers:
                     raw_detections[color_name] = centers
 
+            warped_detections = {}
+            for color_name, centers in raw_detections.items():
+                warped_centers = []
+                for cx, cy, shape_name in centers:
+                    pt = np.array([[cx, cy]], dtype=np.float32).reshape(-1, 1, 2)
+                    w_pt = cv2.perspectiveTransform(pt, M)
+                    wx, wy = int(round(w_pt[0][0][0])), int(round(w_pt[0][0][1]))
+                    warped_centers.append((wx, wy, shape_name))
+                if warped_centers:
+                    warped_detections[color_name] = warped_centers
+
             now = time.time()
-            detections = update_detection_memory(raw_detections, detection_memory, now)
+            detections = update_detection_memory(warped_detections, detection_memory, now)
 
             if show_raw:
-                h_f, w_f = frame.shape[:2]
-                corners_px = corners_to_pixels(corners_frac, w_f, h_f)
                 display = draw_corners_overlay(frame, corners_px)
                 preview_h = 160
                 preview_w = int(preview_h * RECTIFIED_WIDTH / RECTIFIED_HEIGHT)
@@ -809,6 +837,7 @@ def main():
                 cv2.rectangle(display, (preview_x - 2, preview_y - 2),
                              (preview_x + preview_w + 2, preview_y + preview_h + 2),
                              (255, 255, 255), 1)
+                draw_detections(display, detections)
             else:
                 display = warped.copy()
                 draw_detections(display, detections)
@@ -826,10 +855,8 @@ def main():
                        (10, 55), cv2.FONT_HERSHEY_SIMPLEX, 0.50, (200, 200, 200), 1)
 
             if show_shape_debug and not show_raw:
-                y_offset = 75
-                for color_name, centers in raw_detections.items():
-                    for item in centers:
-                        cx, cy, _, shape_name = item
+                for color_name, centers in warped_detections.items():
+                    for cx, cy, shape_name in centers:
                         cv2.putText(display, f"{shape_name}",
                                    (cx - 20, cy + 20), cv2.FONT_HERSHEY_SIMPLEX,
                                    0.35, (255, 255, 255), 1)
@@ -854,6 +881,8 @@ def main():
                 result = calibrate_corners(cap)
                 if result is not None:
                     corners_frac = result
+                    roi_mask = None
+                    prev_frame_size = None
             elif key == ord('b') or key == ord('B'):
                 print("\n[Color] Calibrando colores...", file=sys.stderr)
                 result = calibrate_colors(cap, corners_frac, COLOR_RANGES)

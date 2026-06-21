@@ -5,7 +5,9 @@ var _pieces_viz: Node = null
 
 func _ready() -> void:
 	Wwise.register_game_obj(self, "FamilyMenu")
-	Wwise.load_bank("Main")
+	if not GestorFamilias.wwise_main_bank_loaded:
+		Wwise.load_bank("Main")
+		GestorFamilias.wwise_main_bank_loaded = true
 	Wwise.add_default_listener(self)
 	Wwise.post_event("mx_play_menu", self)
 

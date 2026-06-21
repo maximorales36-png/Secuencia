@@ -40,7 +40,7 @@ SHAPE_DETECTION_ENABLED = True
 CLASSIFY_EPSILON = 0.05
 CIRCULARITY_THRESHOLD = 0.80
 SOLIDITY_THRESHOLD = 0.0
-SIZE_TOLERANCE = 1.50
+SIZE_TOLERANCE = 0.80
 PX_PER_MM = None
 MIN_CONSECUTIVE_FRAMES = 3
 DETECTION_MEMORY_TIMEOUT = 0.5
@@ -150,10 +150,12 @@ def create_roi_mask(frame_shape, corners_px):
     return mask
 
 
-def verify_size_raw(contour, color_name, M):
+def verify_size_raw(contour, color_name, corners_frac, frame_shape):
     """
-    Verifica tamaño de la pieza transformando el bounding box del contorno
-    (en RAW) al espacio rectificado a traves de la homografia M.
+    Verifica tamaño de la pieza midiendo el bounding box en RAW contra el
+    tamaño esperado derivado del area de proyeccion y screen_width_mm.
+    corners_frac: esquinas del area de proyeccion (fracciones 0-1).
+    frame_shape: (h, w) del frame RAW.
     Retorna True si pasa el filtro.
     """
     if not SHAPE_DETECTION_ENABLED:
@@ -164,20 +166,31 @@ def verify_size_raw(contour, color_name, M):
     if PX_PER_MM is None or PX_PER_MM <= 0:
         return True
 
-    x, y, w, h = cv2.boundingRect(contour)
-    pts = np.array([[x, y], [x+w, y], [x+w, y+h], [x, y+h]], dtype=np.float32)
-    warped_pts = cv2.perspectiveTransform(pts.reshape(-1, 1, 2), M)
-    wr = cv2.boundingRect(warped_pts)
-    warped_size = max(wr[2], wr[3])
+    h_raw, w_raw = frame_shape
+    tl = (corners_frac[0][0] * w_raw, corners_frac[0][1] * h_raw)
+    tr = (corners_frac[1][0] * w_raw, corners_frac[1][1] * h_raw)
+    br = (corners_frac[2][0] * w_raw, corners_frac[2][1] * h_raw)
+    bl = (corners_frac[3][0] * w_raw, corners_frac[3][1] * h_raw)
 
-    expected_px = expected["size_mm"] * PX_PER_MM
-    lower = max(0, expected_px * (1.0 - SIZE_TOLERANCE))
-    upper = max(1, expected_px * (1.0 + SIZE_TOLERANCE))
+    top_w = abs(tr[0] - tl[0])
+    bot_w = abs(br[0] - bl[0])
+    raw_proj_width = (top_w + bot_w) / 2.0
+
+    x, y, w, h = cv2.boundingRect(contour)
+    raw_size = max(w, h)
+
+    # expected_raw = (piece_mm / screen_width_mm) * raw_proj_width
+    # screen_width_mm = RECTIFIED_WIDTH / PX_PER_MM
+    piece_frac = expected["size_mm"] * PX_PER_MM / RECTIFIED_WIDTH
+    expected_raw = piece_frac * raw_proj_width
+
+    lower = max(0, expected_raw * (1.0 - SIZE_TOLERANCE))
+    upper = max(1, expected_raw * (1.0 + SIZE_TOLERANCE))
 
     if DEBUG_MODE and color_name == "pink":
-        print(f"[DBG] pink: size raw_bbox=({w}x{h}) warped={warped_size:.0f}px expected={expected_px:.0f} range=[{lower:.0f}-{upper:.0f}] {'OK' if lower <= warped_size <= upper else 'FAIL'}", file=sys.stderr)
+        print(f"[DBG] pink: size raw_bbox=({w}x{h}) raw_size={raw_size} proj_width={raw_proj_width:.0f} expected_raw={expected_raw:.0f} range=[{lower:.0f}-{upper:.0f}] {'OK' if lower <= raw_size <= upper else 'FAIL'}", file=sys.stderr)
 
-    return lower <= warped_size <= upper
+    return lower <= raw_size <= upper
 
 
 def update_detection_memory(raw_detections, memory, now):
@@ -390,11 +403,11 @@ def draw_corners_overlay(frame, corners_px):
     return result
 
 
-def detect_color(frame, color_name, color_range, M_persp=None, region_mask=None):
+def detect_color(frame, color_name, color_range, corners_frac=None, region_mask=None):
     """
     Detecta un color en el frame RAW y filtra por forma + tamaño.
     region_mask: mascara poligonal para limitar el area de busqueda.
-    M_persp: matriz de homografia raw->warped para verify_size_raw().
+    corners_frac: esquinas del area de proyeccion para verify_size_raw().
     Retorna lista de (cx, cy, shape_name) en coordenadas RAW.
     """
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -447,7 +460,7 @@ def detect_color(frame, color_name, color_range, M_persp=None, region_mask=None)
                         print(f"[DBG] pink: REJECT shape_match (expected={expected} got={shape_name})", file=sys.stderr)
                     continue
 
-        if M_persp is not None and not verify_size_raw(contour, color_name, M_persp):
+        if corners_frac is not None and not verify_size_raw(contour, color_name, corners_frac, frame.shape[:2]):
             if DEBUG_MODE and color_name == "pink":
                 print(f"[DBG] pink: REJECT size area={area:.0f}", file=sys.stderr)
             continue
@@ -863,7 +876,7 @@ def main():
             raw_detections = {}
             for color_name in COLOR_RANGES.keys():
                 centers = detect_color(frame, color_name, COLOR_RANGES[color_name],
-                                      M_persp=M, region_mask=roi_mask)
+                                      corners_frac=corners_frac, region_mask=roi_mask)
                 if centers:
                     raw_detections[color_name] = centers
 

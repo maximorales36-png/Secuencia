@@ -40,7 +40,9 @@ var _f4_initialized: bool = false
 
 func _ready() -> void:
 	Wwise.register_game_obj(self, "AudioManager")
-	Wwise.load_bank("Main")
+	if not GestorFamilias.wwise_main_bank_loaded:
+		Wwise.load_bank("Main")
+		GestorFamilias.wwise_main_bank_loaded = true
 	Wwise.add_default_listener(self)
 
 	scanline_logic = get_tree().root.find_child("ScanlineLogic", true, false)

@@ -26,6 +26,7 @@ const HTML_ATOM_DEFS: Dictionary = {
 }
 
 @export var familia_activa: String = "familia_1"
+var wwise_main_bank_loaded: bool = false
 
 const SCAN_CONFIG: Dictionary = {
 	"familia_1": { "bpm": 87.0, "beats_per_cycle": 16 },

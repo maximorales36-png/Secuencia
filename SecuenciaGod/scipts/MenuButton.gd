@@ -143,10 +143,10 @@ func _draw() -> void:
 func _draw_turing_pattern(s: Vector2) -> void:
 	var cols: Array[Color] = [
 		GestorFamilias.get_color("pink"),
-		GestorFamilias.get_color("celeste"),
-		GestorFamilias.get_color("yellow"),
+		GestorFamilias.get_color("blue"),
+		GestorFamilias.get_color("red"),
 		GestorFamilias.get_color("violet"),
-		GestorFamilias.get_color("neon_green")
+		GestorFamilias.get_color("green")
 	]
 	var center := s * 0.5
 	var r := minf(s.x, s.y) * 0.4
@@ -163,10 +163,9 @@ func _draw_turing_pattern(s: Vector2) -> void:
 
 func _draw_blob_pattern(s: Vector2) -> void:
 	var cols: Array[Color] = [
-		GestorFamilias.get_color("celeste"),
-		GestorFamilias.get_color("yellow"),
-		GestorFamilias.get_color("neon_green"),
-		GestorFamilias.get_color("orange"),
+		GestorFamilias.get_color("blue"),
+		GestorFamilias.get_color("red"),
+		GestorFamilias.get_color("green"),
 		GestorFamilias.get_color("violet")
 	]
 	var center := s * 0.5

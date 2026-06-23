@@ -1,7 +1,7 @@
 # PATRONES DE TURING (Familia 1):
-#   Celeste    → Espiral     (como concha de caracol)
-#   Neon Green → Laberinto   (como ameba)
-#   Yellow     → Manchas     (como leopardo)
+#   Blue       → Espiral     (como concha de caracol)
+#   Green      → Laberinto   (como ameba)
+#   Red        → Manchas     (como leopardo)
 #   Pink       → Pufferfish  (como pez globo: retícula hexagonal)
 #
 # CÓMO MODIFICAR:
@@ -202,7 +202,7 @@ func _update_violet_saturation() -> void:
 
 
 func _adjust_saturation(color: Color, nombre_color: String) -> Color:
-	if nombre_color in ["pink", "celeste"]:
+	if nombre_color in ["pink", "blue"]:
 		var c: Color = color
 		c.s = c.s * _violet_saturation
 		return c
@@ -230,7 +230,7 @@ func _eval_pattern(color_name: String, x: float, y: float, semilla: float) -> bo
 			return false
 
 
-## PATRÓN: MANCHAS (SPOTS)  →  Yellow
+## PATRÓN: MANCHAS (SPOTS)  →  Red
 func _pattern_spots(x: float, y: float, semilla: float) -> bool:
 	var f: float = 0.04
 	var v1: float = sin(x * f + semilla) * cos(y * f * 1.3 + semilla * 0.7)
@@ -252,7 +252,7 @@ func _pattern_stripes(x: float, y: float, semilla: float) -> bool:
 	return abs(valor) > 0.15
 
 
-## PATRÓN: ESPIRAL (SPIRAL)  →  Celeste
+## PATRÓN: ESPIRAL (SPIRAL)  →  Blue
 func _pattern_spiral(x: float, y: float, semilla: float) -> bool:
 	var r: float = sqrt(x * x + y * y)
 	if r < 4.0:
@@ -264,7 +264,7 @@ func _pattern_spiral(x: float, y: float, semilla: float) -> bool:
 	return v > 0.0
 
 
-## PATRÓN: LABERINTO (LABYRINTH)  →  Neon Green
+## PATRÓN: LABERINTO (LABYRINTH)  →  Green
 func _pattern_labyrinth(x: float, y: float, semilla: float) -> bool:
 	var f: float = 0.03
 	var v1: float = sin(x * f + y * f * 1.2 + semilla)
@@ -329,7 +329,7 @@ func _generate_organic_polygon(rect: Rect2, semilla: float) -> PackedVector2Arra
 func _draw() -> void:
 	_draw_trails()
 	_draw_sector_rectangles()
-	_draw_yellow_shadow()
+	_draw_red_shadow()
 	_draw_waves()
 	_draw_scanline()
 
@@ -526,33 +526,33 @@ func _draw_sector_rectangles() -> void:
 
 
 # --------------------------------------------------------------------------
-# 9.4: SOMBRA AMARILLA (soga)  — igual que en v1
+# 9.4: SOMBRA ROJA (soga)  — igual que en v1
 # --------------------------------------------------------------------------
-func _draw_yellow_shadow() -> void:
+func _draw_red_shadow() -> void:
 	if scanline_logic == null:
 		return
-	var yellows = scanline_logic.get_yellow_pieces()
-	if yellows.is_empty():
+	var reds = scanline_logic.get_red_pieces()
+	if reds.is_empty():
 		return
 	var viewport = get_viewport_rect().size
 	if viewport.x <= 0 or viewport.y <= 0:
 		return
 
-	yellows.sort_custom(func(a, b): return a.x < b.x)
+	reds.sort_custom(func(a, b): return a.x < b.x)
 	var h = rect_height
-	var color = Color(1.0, 1.0, 0.0, yellow_shadow_alpha * contrast)
+	var color = Color(1.0, 0.2, 0.2, yellow_shadow_alpha * contrast)
 	var w = viewport.x
-	var first = yellows[0]
-	var last = yellows[yellows.size() - 1]
+	var first = reds[0]
+	var last = reds[reds.size() - 1]
 
 	var points = PackedVector2Array()
 	points.append(Vector2(0, first.y * viewport.y - h / 2.0))
-	for yp in yellows:
+	for yp in reds:
 		points.append(Vector2(yp.x * w, yp.y * viewport.y - h / 2.0))
 	points.append(Vector2(w, last.y * viewport.y - h / 2.0))
 	points.append(Vector2(w, last.y * viewport.y + h / 2.0))
-	for i in range(yellows.size() - 1, -1, -1):
-		var yp = yellows[i]
+	for i in range(reds.size() - 1, -1, -1):
+		var yp = reds[i]
 		points.append(Vector2(yp.x * w, yp.y * viewport.y + h / 2.0))
 	points.append(Vector2(0, first.y * viewport.y + h / 2.0))
 

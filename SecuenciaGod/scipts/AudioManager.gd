@@ -15,20 +15,20 @@ const PINK_RTPC_NAME: String = "RTPC_Pink"
 
 # Presence RTPCs (Familia 1)
 const PINK_V_RTPC_NAME: String = "RTPC_V_Pink"
-const CELESTE_V_RTPC_NAME: String = "RTPC_V_Celeste"
-const YELLOW_V_RTPC_NAME: String = "RTPC_V_Yellow"
+const BLUE_V_RTPC_NAME: String = "RTPC_V_Blue"
+const RED_V_RTPC_NAME: String = "RTPC_V_Red"
 
 const RTPC_RAMP_SPEED: float = 1000.0  # 0→100 en 100ms
 var _pink_v_value: float = 0.0
-var _celeste_v_value: float = 0.0
-var _yellow_v_value: float = 0.0
-var _yellow_v_target: float = 0.0
+var _blue_v_value: float = 0.0
+var _red_v_value: float = 0.0
+var _red_v_target: float = 0.0
 
 # F4 RTPCs
 const F4_PINK_RTPC: String = "RTPC_F4_Pink"
-const F4_YELLOW_RTPC: String = "RTPC_F4_Yellow"
-const F4_N_GREEN_RTPC: String = "RTPC_F4_N_Green"
-const F4_CELESTE_RTPC: String = "RTPC_F4_Celeste"
+const F4_RED_RTPC: String = "RTPC_F4_Red"
+const F4_GREEN_RTPC: String = "RTPC_F4_Green"
+const F4_BLUE_RTPC: String = "RTPC_F4_Blue"
 
 
 # F4 beat clock & queue
@@ -68,7 +68,7 @@ func _process(delta: float) -> void:
 		return
 	_update_violet_rtpc(delta)
 	_update_presence_rtpcs(delta)
-	_update_yellow_rtpc(delta)
+	_update_red_rtpc(delta)
 
 
 ## Smooths and sends the Violet RTPC value to Wwise.
@@ -104,11 +104,11 @@ func _ramp(current: float, target: float, delta: float) -> float:
 		return max(current - RTPC_RAMP_SPEED * delta, target)
 
 
-func _update_yellow_rtpc(delta: float) -> void:
+func _update_red_rtpc(delta: float) -> void:
 	if GestorFamilias.familia_activa != "familia_1":
 		return
-	_yellow_v_value = _ramp(_yellow_v_value, _yellow_v_target, delta)
-	Wwise.set_rtpc_value(YELLOW_V_RTPC_NAME, _yellow_v_value, self)
+	_red_v_value = _ramp(_red_v_value, _red_v_target, delta)
+	Wwise.set_rtpc_value(RED_V_RTPC_NAME, _red_v_value, self)
 
 
 func _update_presence_rtpcs(delta: float) -> void:
@@ -132,25 +132,25 @@ func _update_presence_rtpcs(delta: float) -> void:
 	_pink_v_value = _ramp(_pink_v_value, pink_target, delta)
 	Wwise.set_rtpc_value(PINK_V_RTPC_NAME, _pink_v_value, self)
 
-	var celeste_target: float = 100.0 if (current_data.has("celeste") or (next_data.has("celeste") and time_to_boundary <= 0.1)) else 0.0
-	_celeste_v_value = _ramp(_celeste_v_value, celeste_target, delta)
-	Wwise.set_rtpc_value(CELESTE_V_RTPC_NAME, _celeste_v_value, self)
+	var blue_target: float = 100.0 if (current_data.has("blue") or (next_data.has("blue") and time_to_boundary <= 0.1)) else 0.0
+	_blue_v_value = _ramp(_blue_v_value, blue_target, delta)
+	Wwise.set_rtpc_value(BLUE_V_RTPC_NAME, _blue_v_value, self)
 
 
 func _on_cycle_reset() -> void:
 	color_cooldowns.clear()
 	_sector_colors_triggered.clear()
-	_yellow_v_target = 0.0
+	_red_v_target = 0.0
 
 
 func _on_crossing_detected(piece: IPCManager.Piece) -> void:
 	if GestorFamilias.familia_activa != "familia_1":
 		return
-	if piece.color == "yellow":
-		_yellow_v_target = 100.0
-		var yellow_switch: int = clampi(int((1.0 - piece.y) * 8.0), 0, 7)
+	if piece.color == "red":
+		_red_v_target = 100.0
+		var red_switch: int = clampi(int((1.0 - piece.y) * 8.0), 0, 7)
 		var switch_names: Array[String] = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
-		Wwise.set_switch("yellow_switch", switch_names[yellow_switch], self)
+		Wwise.set_switch("red_switch", switch_names[red_switch], self)
 		return
 	elif piece.color == "violet":
 		return
@@ -169,7 +169,7 @@ func _on_sector_activated(sector_index: int, y: float, color: String) -> void:
 	if color == "pink":
 		Wwise.set_rtpc_value(PINK_RTPC_NAME, (1.0 - y) * 100.0, self)
 
-	if GestorFamilias.familia_activa == "familia_1" and color in ["pink", "celeste"]:
+	if GestorFamilias.familia_activa == "familia_1" and color in ["pink", "blue"]:
 		return
 
 	_play_sound(color, y, sector_index)
@@ -199,7 +199,7 @@ func _play_sound(color: String, y_position: float, sector_index: int = -1) -> vo
 	Wwise.post_event(event_name, self)
 	Wwise.set_rtpc_value("Timbre", y_position * 100.0, self)
 
-	if color == "neon_green":
+	if color == "green":
 		Wwise.set_rtpc_value(GREEN_RTPC_NAME, (1.0 - y_position) * 100.0, self)
 
 	color_cooldowns[cooldown_key] = now + scanline_logic.get_sector_duration()
@@ -247,9 +247,9 @@ func _play_f4_sound(color: String, y: float) -> void:
 	match color:
 		"pink":
 			Wwise.set_rtpc_value(F4_PINK_RTPC, rtpc_value, self)
-		"yellow":
-			Wwise.set_rtpc_value(F4_YELLOW_RTPC, rtpc_value, self)
-		"neon_green":
-			Wwise.set_rtpc_value(F4_N_GREEN_RTPC, rtpc_value, self)
-		"celeste":
-			Wwise.set_rtpc_value(F4_CELESTE_RTPC, rtpc_value, self)
+		"red":
+			Wwise.set_rtpc_value(F4_RED_RTPC, rtpc_value, self)
+		"green":
+			Wwise.set_rtpc_value(F4_GREEN_RTPC, rtpc_value, self)
+		"blue":
+			Wwise.set_rtpc_value(F4_BLUE_RTPC, rtpc_value, self)

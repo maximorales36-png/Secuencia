@@ -26,7 +26,7 @@ var triggered_sectors: Dictionary = {}
 var prev_sector: int = -1
 
 const CYCLE_RESET_THRESHOLD: float = 0.1
-const SECTOR_BASED_COLORS: Array = ["pink", "celeste", "neon_green"]
+const SECTOR_BASED_COLORS: Array = ["pink", "blue", "green"]
 
 const PIECE_TIMEOUT: float = 0.35
 const STABILIZE_SNAP: float = 0.015
@@ -135,10 +135,10 @@ func _detect_crossings() -> void:
 		if not prev_scan_position < piece.x or not scan_position >= piece.x:
 			continue
 
-		if piece.color == "yellow":
+		if piece.color == "red":
 			var skip := false
 			for other in pieces:
-				if other.color == "yellow" and other != piece:
+				if other.color == "red" and other != piece:
 					if snapped(other.x, 0.01) == snapped(piece.x, 0.01) and other.y < piece.y:
 						skip = true
 						break
@@ -179,10 +179,10 @@ func _trigger_sector(sector: int) -> void:
 			sector_activated.emit(sector, y, color)
 
 
-func get_yellow_pieces() -> Array:
+func get_red_pieces() -> Array:
 	var result := []
 	for piece in pieces:
-		if piece.color == "yellow":
+		if piece.color == "red":
 			result.append({"x": piece.x, "y": piece.y})
 	return result
 

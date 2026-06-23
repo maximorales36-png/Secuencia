@@ -1,27 +1,24 @@
 extends Node
 
 const COLORES: Dictionary = {
-	"yellow":     Color(1.0, 1.0, 0.0),
-	"orange":     Color(1.0, 0.5, 0.0),
+	"red":        Color(1.0, 0.2, 0.2),
 	"pink":       Color(1.0, 0.75, 0.8),
-	"celeste":    Color(0.32, 0.82, 0.96),
-	"neon_green": Color(0.0, 1.0, 0.5),
+	"green":      Color(0.0, 1.0, 0.3),
+	"blue":       Color(0.2, 0.5, 1.0),
 	"violet":     Color(0.6, 0.2, 1.0),
 }
 
 const HTML_COLORS: Dictionary = {
-	"celeste":    { "col": [74, 240, 212], "drift": [30, 140, 255] },
-	"yellow":     { "col": [240, 215, 55], "drift": [255, 160, 30] },
-	"neon_green": { "col": [90, 240, 90],  "drift": [40, 200, 120] },
-	"orange":     { "col": [240, 65, 65],  "drift": [255, 130, 20] },
+	"blue":       { "col": [74, 240, 212], "drift": [30, 140, 255] },
+	"red":        { "col": [240, 215, 55], "drift": [255, 160, 30] },
+	"green":      { "col": [90, 240, 90],  "drift": [40, 200, 120] },
 	"violet":     { "col": [176, 74, 240], "drift": [220, 50, 180] },
 }
 
 const HTML_ATOM_DEFS: Dictionary = {
-	"celeste":    { "synth": "sine",     "freq": 528, "name": "ether",   "inst": "sine osc" },
-	"yellow":     { "synth": "triangle", "freq": 396, "name": "pulse",   "inst": "tri osc" },
-	"neon_green": { "synth": "sawtooth", "freq": 264, "name": "organic", "inst": "saw osc" },
-	"orange":     { "synth": "sine",     "freq": 132, "name": "deep",    "inst": "sub sine" },
+	"blue":       { "synth": "sine",     "freq": 528, "name": "ether",   "inst": "sine osc" },
+	"red":        { "synth": "triangle", "freq": 396, "name": "pulse",   "inst": "tri osc" },
+	"green":      { "synth": "sawtooth", "freq": 264, "name": "organic", "inst": "saw osc" },
 	"violet":     { "synth": "square",   "freq": 792, "name": "crystal", "inst": "sqr osc" },
 }
 
@@ -38,9 +35,9 @@ const FAMILIAS: Dictionary = {
 	"familia_1": {
 		"nombre": "Familia 1",
 		"colores": {
-			"celeste":    { "patron": "spiral",     "sonido": "Play_Celeste" },
-			"neon_green": { "patron": "labyrinth",  "sonido": "Play_Neon_Green" },
-			"yellow":     { "patron": "spots",      "sonido": "Play_Yellow" },
+			"blue":       { "patron": "spiral",     "sonido": "Play_Blue" },
+			"green":      { "patron": "labyrinth",  "sonido": "Play_Green" },
+			"red":        { "patron": "spots",      "sonido": "Play_Red" },
 			"pink":       { "patron": "pufferfish", "sonido": "Play_Pink" },
 			"violet":     { "patron": "",           "sonido": "" }
 		}
@@ -48,10 +45,9 @@ const FAMILIAS: Dictionary = {
 	"familia_2": {
 		"nombre": "Familia 2",
 		"colores": {
-			"celeste":    { "patron": "blob", "sonido": "Play_Celeste_F2" },
-			"neon_green": { "patron": "blob", "sonido": "Play_Neon_Green_F2" },
-			"yellow":     { "patron": "blob", "sonido": "Play_Yellow_F2" },
-			"orange":     { "patron": "blob", "sonido": "Play_Orange_F2" },
+			"blue":       { "patron": "blob", "sonido": "Play_Blue_F2" },
+			"green":      { "patron": "blob", "sonido": "Play_Green_F2" },
+			"red":        { "patron": "blob", "sonido": "Play_Red_F2" },
 			"violet":     { "patron": "blob", "sonido": "Play_Violet_F2" }
 		}
 	},
@@ -59,9 +55,9 @@ const FAMILIAS: Dictionary = {
 		"nombre": "Familia 4",
 		"colores": {
 			"pink":       { "patron": "balls", "sonido": "Play_F4_Pink" },
-			"yellow":     { "patron": "balls", "sonido": "Play_F4_Yellow" },
-			"neon_green": { "patron": "balls", "sonido": "Play_F4_N_Green" },
-			"celeste":    { "patron": "balls", "sonido": "Play_F4_Celeste" },
+			"red":        { "patron": "balls", "sonido": "Play_F4_Red" },
+			"green":      { "patron": "balls", "sonido": "Play_F4_Green" },
+			"blue":       { "patron": "balls", "sonido": "Play_F4_Blue" },
 			"violet":     { "patron": "balls", "sonido": "Play_F4_Violet" }
 		}
 	},

@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 5
+names: ['blue', 'green', 'pink', 'red', 'violet']
+
+roboflow:
+  workspace: maximilianos-workspace-7v5mi
+  project: object-detection-zyqsv
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/maximilianos-workspace-7v5mi/object-detection-zyqsv/dataset/1

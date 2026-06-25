@@ -42,6 +42,7 @@ DETECTION_MEMORY_TIMEOUT = 0.5
 DETECTION_STABILIZE_SNAP = 0.02
 SHAPE_MATCH_PERMISSIVE = True
 MIRROR_X = True
+MIRROR_Y = True
 DEBUG_MODE = False
 DETECTION_MODE = "hsv"  # "hsv" | "yolo"
 
@@ -228,7 +229,7 @@ class YOLODetector(BaseDetector):
             if r.boxes is None:
                 continue
             for box, cls_id, conf in zip(r.boxes.xyxy, r.boxes.cls, r.boxes.conf):
-                if conf < 0.5:
+                if conf < 0.85:
                     continue
                 x1, y1, x2, y2 = map(int, box.tolist())
                 cx = (x1 + x2) // 2
@@ -536,10 +537,13 @@ def format_data(detections, frame_w, frame_h):
             x_norm = round(cx / frame_w, 3) if frame_w > 0 else 0
             if MIRROR_X:
                 x_norm = round(1.0 - x_norm, 3)
+            y_norm = round(cy / frame_h, 3) if frame_h > 0 else 0
+            if MIRROR_Y:
+                y_norm = round(1.0 - y_norm, 3)
             data["piezas"].append({
                 "color": color_name,
                 "x": x_norm,
-                "y": round(cy / frame_h, 3) if frame_h > 0 else 0
+                "y": y_norm
             })
     return data
 
@@ -796,12 +800,12 @@ def print_usage():
     print("  C: Re-calibrar esquinas   B: Calibrar colores HSV", file=sys.stderr)
     print("  T: Toggle backend HSV/YOLO   V: Ver raw   Q: Salir", file=sys.stderr)
     print("  S: Alternar filtro de forma geometrica ON/OFF", file=sys.stderr)
-    print("  D: Debug de forma ON/OFF   M: Mirror X ON/OFF", file=sys.stderr)
+    print("  D: Debug de forma ON/OFF   M: Mirror X   N: Mirror Y", file=sys.stderr)
     print(file=sys.stderr)
 
 
 def main():
-    global CAMERA_INDEX, SHAPE_DETECTION_ENABLED, PX_PER_MM, MIRROR_X, DEBUG_MODE, DETECTION_MODE
+    global CAMERA_INDEX, SHAPE_DETECTION_ENABLED, PX_PER_MM, MIRROR_X, MIRROR_Y, DEBUG_MODE, DETECTION_MODE
 
     calibrate_mode = False
     calibrate_colors_mode = False
@@ -836,7 +840,7 @@ def main():
     print(f"Modo: {DETECTION_MODE.upper()}", file=sys.stderr)
     print(f"Shape detection: {'ON' if SHAPE_DETECTION_ENABLED else 'OFF'}", file=sys.stderr)
     print(f"Persistencia temporal: {MIN_CONSECUTIVE_FRAMES} frames", file=sys.stderr)
-    print(f"Mirror X: {'ON' if MIRROR_X else 'OFF'}", file=sys.stderr)
+    print(f"Mirror X: {'ON' if MIRROR_X else 'OFF'}  Mirror Y: {'ON' if MIRROR_Y else 'OFF'}", file=sys.stderr)
     if PX_PER_MM:
         print(f"px_per_mm: {PX_PER_MM:.4f}", file=sys.stderr)
     else:
@@ -947,7 +951,7 @@ def main():
             raw_count = sum(len(c) for c in warped_detections.values())
             mem_count = len(detection_memory)
             shape_status = "ON" if SHAPE_DETECTION_ENABLED else "OFF"
-            mirror_status = "MX" if MIRROR_X else ""
+            mirror_status = ("MX" if MIRROR_X else "") + (" MY" if MIRROR_Y else "")
 
             cv2.putText(display, f"v3 Frame: {frame_count} | {mode_label} | {backend_label} | S:{shape_status} {mirror_status}",
                        (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.50, (200, 200, 200), 1)
@@ -994,6 +998,9 @@ def main():
             elif key == ord('m') or key == ord('M'):
                 MIRROR_X = not MIRROR_X
                 print(f"\n[v3] Mirror X: {'ON' if MIRROR_X else 'OFF'}", file=sys.stderr)
+            elif key == ord('n') or key == ord('N'):
+                MIRROR_Y = not MIRROR_Y
+                print(f"\n[v3] Mirror Y: {'ON' if MIRROR_Y else 'OFF'}", file=sys.stderr)
             elif key == ord('d') or key == ord('D'):
                 DEBUG_MODE = not DEBUG_MODE
                 print(f"\n[v3] Debug: {'ON' if DEBUG_MODE else 'OFF'}", file=sys.stderr)

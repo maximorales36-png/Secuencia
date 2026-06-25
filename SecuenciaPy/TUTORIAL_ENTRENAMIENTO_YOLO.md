@@ -49,7 +49,7 @@ capturas/
 5. Generar dataset → Apply Preprocessing y Augmentation:
    - Preprocessing: Auto-orient, Resize (640x640)
    - Augmentation: Rotate (-15° a +15°), Brightness (-10% a +10%), Blur (2px), Noise (2px)
-6. Exportar en formato YOLOv8 → descargar .zip
+6. Exportar → formato **YOLOv8** (es el estándar Ultralytics, funciona con v8/v9/v10/v11/YOLO26) → descargar .zip
 
 ## 3. Entrenamiento
 

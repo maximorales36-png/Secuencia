@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{35461EA4-E9B7-11AB-D47F-298632316ECF}",
+    "Hash": "{BE6E2A96-654A-3590-16D5-33A64A9A81A8}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
@@ -796,9 +796,9 @@
       ]
      },
      {
-      "Id": "392139723",
-      "Name": "Play_celeste",
-      "ObjectPath": "\\Events\\Default Work Unit\\F1\\Play_celeste",
+      "Id": "1457744122",
+      "Name": "Play_blue",
+      "ObjectPath": "\\Events\\Default Work Unit\\F1\\Play_blue",
       "GUID": "{949737E8-77D8-4A07-8775-5102B43EA667}",
       "Color": "2",
       "DurationType": "Infinite",
@@ -828,9 +828,9 @@
       "DurationMax": "0"
      },
      {
-      "Id": "2542044052",
-      "Name": "Play_F4_Celeste",
-      "ObjectPath": "\\Events\\Default Work Unit\\F4\\Play_F4_Celeste",
+      "Id": "2629365651",
+      "Name": "Play_F4_Blue",
+      "ObjectPath": "\\Events\\Default Work Unit\\F4\\Play_F4_Blue",
       "GUID": "{48D613A4-7EAD-49C4-BBAA-1AE5326E5B64}",
       "Color": "2",
       "DurationType": "OneShot",
@@ -855,9 +855,9 @@
       ]
      },
      {
-      "Id": "1363114883",
-      "Name": "Play_F4_N_Green",
-      "ObjectPath": "\\Events\\Default Work Unit\\F4\\Play_F4_N_Green",
+      "Id": "3286383928",
+      "Name": "Play_F4_Green",
+      "ObjectPath": "\\Events\\Default Work Unit\\F4\\Play_F4_Green",
       "GUID": "{B7793B5D-7673-48AF-86B4-D9CD7A571944}",
       "Color": "4",
       "DurationType": "OneShot",
@@ -921,9 +921,9 @@
       ]
      },
      {
-      "Id": "2836426935",
-      "Name": "Play_F4_Yellow",
-      "ObjectPath": "\\Events\\Default Work Unit\\F4\\Play_F4_Yellow",
+      "Id": "46596872",
+      "Name": "Play_F4_Red",
+      "ObjectPath": "\\Events\\Default Work Unit\\F4\\Play_F4_Red",
       "GUID": "{ACEFE6D9-554E-4EA8-9767-ACC5A9F380FC}",
       "Color": "19",
       "DurationType": "OneShot",
@@ -954,9 +954,9 @@
       ]
      },
      {
-      "Id": "3153919642",
-      "Name": "Play_neon_green",
-      "ObjectPath": "\\Events\\Default Work Unit\\F1\\Play_neon_green",
+      "Id": "3434539291",
+      "Name": "Play_green",
+      "ObjectPath": "\\Events\\Default Work Unit\\F1\\Play_green",
       "GUID": "{02E44637-B6F9-495B-B0F3-B399710C56F2}",
       "Color": "4",
       "DurationType": "OneShot",
@@ -1100,9 +1100,9 @@
       "DurationMax": "0"
      },
      {
-      "Id": "3343818949",
-      "Name": "Stop_celeste",
-      "ObjectPath": "\\Events\\Default Work Unit\\F1\\Stop_celeste",
+      "Id": "3612515708",
+      "Name": "Stop_blue",
+      "ObjectPath": "\\Events\\Default Work Unit\\F1\\Stop_blue",
       "GUID": "{8962B4D5-07E5-4B59-A54E-A22FD807FA52}",
       "Color": "2",
       "MaxAttenuation": "0",
@@ -1219,6 +1219,6 @@
     ]
    }
   ],
-  "FileHash": "{CC41363D-82BE-B255-2BAD-79BFBB671B2F}"
+  "FileHash": "{37397E92-5A66-14B8-64B1-F06DC81E2F88}"
  }
 }

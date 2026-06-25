@@ -163,20 +163,20 @@ id = 2976310903
 [sub_resource type="WwiseTreeObjectEvent" id="WwiseTreeObjectEvent_i5cxa"]
 max_duration = 0.0
 min_duration = 0.0
-path = "\\Events\\Default Work Unit\\F1\\Play_celeste"
+path = "\\Events\\Default Work Unit\\F1\\Play_blue"
 type = 3
-name = "Play_celeste"
+name = "Play_blue"
 guid = "{949737E8-77D8-4A07-8775-5102B43EA667}"
-id = 392139723
+id = 1457744122
 
 [sub_resource type="WwiseTreeObjectEvent" id="WwiseTreeObjectEvent_ptp8y"]
 max_duration = 5.5172563
 min_duration = 5.5172563
-path = "\\Events\\Default Work Unit\\F1\\Play_neon_green"
+path = "\\Events\\Default Work Unit\\F1\\Play_green"
 type = 3
-name = "Play_neon_green"
+name = "Play_green"
 guid = "{02E44637-B6F9-495B-B0F3-B399710C56F2}"
-id = 3153919642
+id = 3434539291
 
 [sub_resource type="WwiseTreeObjectEvent" id="WwiseTreeObjectEvent_26l8v"]
 max_duration = 0.0
@@ -190,11 +190,11 @@ id = 1568289110
 [sub_resource type="WwiseTreeObjectEvent" id="WwiseTreeObjectEvent_hir8t"]
 max_duration = 0.0
 min_duration = 0.0
-path = "\\Events\\Default Work Unit\\F1\\Stop_celeste"
+path = "\\Events\\Default Work Unit\\F1\\Stop_blue"
 type = 3
-name = "Stop_celeste"
+name = "Stop_blue"
 guid = "{8962B4D5-07E5-4B59-A54E-A22FD807FA52}"
-id = 3343818949
+id = 3612515708
 
 [sub_resource type="WwiseTreeObjectEvent" id="WwiseTreeObjectEvent_viedb"]
 max_duration = 0.0
@@ -272,20 +272,20 @@ id = 1802970441
 [sub_resource type="WwiseTreeObjectEvent" id="WwiseTreeObjectEvent_0hqp2"]
 max_duration = 13.333333
 min_duration = 13.333333
-path = "\\Events\\Default Work Unit\\F4\\Play_F4_Celeste"
+path = "\\Events\\Default Work Unit\\F4\\Play_F4_Blue"
 type = 3
-name = "Play_F4_Celeste"
+name = "Play_F4_Blue"
 guid = "{48D613A4-7EAD-49C4-BBAA-1AE5326E5B64}"
-id = 2542044052
+id = 2629365651
 
 [sub_resource type="WwiseTreeObjectEvent" id="WwiseTreeObjectEvent_h61g6"]
 max_duration = 13.333333
 min_duration = 13.333333
-path = "\\Events\\Default Work Unit\\F4\\Play_F4_N_Green"
+path = "\\Events\\Default Work Unit\\F4\\Play_F4_Green"
 type = 3
-name = "Play_F4_N_Green"
+name = "Play_F4_Green"
 guid = "{B7793B5D-7673-48AF-86B4-D9CD7A571944}"
-id = 1363114883
+id = 3286383928
 
 [sub_resource type="WwiseTreeObjectEvent" id="WwiseTreeObjectEvent_q407k"]
 max_duration = 5.0
@@ -299,11 +299,11 @@ id = 2787262691
 [sub_resource type="WwiseTreeObjectEvent" id="WwiseTreeObjectEvent_o561g"]
 max_duration = 13.333333
 min_duration = 13.333333
-path = "\\Events\\Default Work Unit\\F4\\Play_F4_Yellow"
+path = "\\Events\\Default Work Unit\\F4\\Play_F4_Red"
 type = 3
-name = "Play_F4_Yellow"
+name = "Play_F4_Red"
 guid = "{ACEFE6D9-554E-4EA8-9767-ACC5A9F380FC}"
-id = 2836426935
+id = 46596872
 
 [sub_resource type="WwiseTreeObject" id="WwiseTreeObject_dipfp"]
 children = [SubResource("WwiseTreeObjectEvent_0hqp2"), SubResource("WwiseTreeObjectEvent_h61g6"), SubResource("WwiseTreeObjectEvent_q407k"), SubResource("WwiseTreeObjectEvent_o561g")]

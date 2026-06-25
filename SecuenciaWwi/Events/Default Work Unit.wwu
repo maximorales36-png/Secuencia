@@ -5,7 +5,7 @@
 			<ChildrenList>
 				<Folder Name="F1" ID="{0E18B33F-2FED-4A7B-B94C-85E1B965560A}" ShortID="1044582642">
 					<ChildrenList>
-						<Event Name="Play_celeste" ID="{949737E8-77D8-4A07-8775-5102B43EA667}">
+						<Event Name="Play_blue" ID="{949737E8-77D8-4A07-8775-5102B43EA667}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="2"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
@@ -78,7 +78,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_neon_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}">
+						<Event Name="Play_green" ID="{02E44637-B6F9-495B-B0F3-B399710C56F2}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="4"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
@@ -93,7 +93,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Stop_celeste" ID="{8962B4D5-07E5-4B59-A54E-A22FD807FA52}">
+						<Event Name="Stop_blue" ID="{8962B4D5-07E5-4B59-A54E-A22FD807FA52}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="2"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
@@ -125,7 +125,7 @@
 				</Folder>
 				<Folder Name="F4" ID="{1174F4FD-63CD-49A5-BBE3-57B541FBBD94}" ShortID="1058446659">
 					<ChildrenList>
-						<Event Name="Play_F4_Celeste" ID="{48D613A4-7EAD-49C4-BBAA-1AE5326E5B64}">
+						<Event Name="Play_F4_Blue" ID="{48D613A4-7EAD-49C4-BBAA-1AE5326E5B64}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="2"/>
 								<Property Name="InstanceLimit" Type="int16">
@@ -145,7 +145,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_F4_N_Green" ID="{B7793B5D-7673-48AF-86B4-D9CD7A571944}">
+						<Event Name="Play_F4_Green" ID="{B7793B5D-7673-48AF-86B4-D9CD7A571944}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="4"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
@@ -175,7 +175,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_F4_Yellow" ID="{ACEFE6D9-554E-4EA8-9767-ACC5A9F380FC}">
+						<Event Name="Play_F4_Red" ID="{ACEFE6D9-554E-4EA8-9767-ACC5A9F380FC}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="19"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>

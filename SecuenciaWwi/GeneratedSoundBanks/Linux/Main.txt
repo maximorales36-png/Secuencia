@@ -1,26 +1,25 @@
 Event	ID	Name			Wwise Object Path	Notes
 	46596872	Play_F4_Red			\Default Work Unit\F4\Play_F4_Red	
 	168358390	Play_Violet_F2			\Default Work Unit\F2\Play_Violet_F2	
-	384389037	Play_Neon_Green_F2			\Default Work Unit\F2\Play_Neon_Green_F2	
-	1259331539	Play_Orange_F2			\Default Work Unit\F2\Play_Orange_F2	
-	1341855576	Enter_F_01			\Default Work Unit\Enter_F_01	
-	1341855578	Enter_F_03			\Default Work Unit\Enter_F_03	
-	1341855579	Enter_F_02			\Default Work Unit\Enter_F_02	
-	1341855581	Enter_F_04			\Default Work Unit\Enter_F_04	
+	1203507238	Play_Green_F2			\Default Work Unit\F2\Play_Green_F2	
+	1341855576	Enter_F_01			\Default Work Unit\Menu\Enter_F_01	
+	1341855578	Enter_F_03			\Default Work Unit\Menu\Enter_F_03	
+	1341855579	Enter_F_02			\Default Work Unit\Menu\Enter_F_02	
+	1341855581	Enter_F_04			\Default Work Unit\Menu\Enter_F_04	
 	1457744122	Play_blue			\Default Work Unit\F1\Play_blue	
 	1568289110	Play_pink			\Default Work Unit\F1\Play_pink	
-	2374354589	Play_Yellow_F2			\Default Work Unit\F2\Play_Yellow_F2	
-	2421176694	Play_Celeste_F2			\Default Work Unit\F2\Play_Celeste_F2	
 	2629365651	Play_F4_Blue			\Default Work Unit\F4\Play_F4_Blue	
+	2719348818	Play_Red_F2			\Default Work Unit\F2\Play_Red_F2	
 	2787262691	Play_F4_Pink			\Default Work Unit\F4\Play_F4_Pink	
+	2823369421	Play_Blue_F2			\Default Work Unit\F2\Play_Blue_F2	
 	2976310903	Play_all			\Default Work Unit\F1\Play_all	
-	3073348995	mx_play_menu			\Default Work Unit\mx_play_menu	
+	3073348995	mx_play_menu			\Default Work Unit\Menu\mx_play_menu	
 	3286383928	Play_F4_Green			\Default Work Unit\F4\Play_F4_Green	
 	3434539291	Play_green			\Default Work Unit\F1\Play_green	
 	3593761409	Play_Pink_F2			\Default Work Unit\F2\Play_Pink_F2	
 	3612515708	Stop_blue			\Default Work Unit\F1\Stop_blue	
 	3839438860	Stop_pink			\Default Work Unit\F1\Stop_pink	
-	4057456165	mx_stop_menu			\Default Work Unit\mx_stop_menu	
+	4057456165	mx_stop_menu			\Default Work Unit\Menu\mx_stop_menu	
 
 Switch Group	ID	Name			Wwise Object Path	Notes
 	4133533608	yellow_switch			\Default Work Unit\yellow_switch	

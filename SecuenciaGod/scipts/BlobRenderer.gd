@@ -134,12 +134,11 @@ func _draw() -> void:
 
 	var sx: float = scan_progress * _viewport.x
 
-	_draw_background_trail()
+	_draw_background_fill()
+	_draw_background_noise()
 	_draw_waves()
 	_draw_trails()
-	_draw_connections()
-	_draw_blobs()
-	_draw_labels()
+	_draw_pieces_glow()
 	_draw_scanline(sx)
 
 
@@ -274,9 +273,25 @@ static func _fbm(x: float, y: float, t: float) -> float:
 	)
 
 
-func _draw_background_trail() -> void:
-	var bg_col := Color(0.3, 0.7, 0.94, TRAIL_BG_ALPHA)
-	draw_rect(Rect2(0, 0, _viewport.x, _viewport.y), bg_col)
+func _draw_background_fill() -> void:
+	draw_rect(Rect2(Vector2.ZERO, _viewport), Color(0.02, 0.02, 0.035, 1.0))
+	draw_rect(Rect2(Vector2.ZERO, _viewport), Color(0.024, 0.024, 0.039, 0.15))
+
+
+func _draw_background_noise() -> void:
+	var alpha := 0.025
+	var spacing := 16.0
+	var cx := 0.0
+
+	while cx < _viewport.x:
+		var cy := 0.0
+		while cy < _viewport.y:
+			var noise := _fbm(cx * 0.004, cy * 0.004, pattern_seed)
+			if noise > 0.2:
+				var c := Color(0.2, 0.25, 0.35, alpha * noise * 2.0)
+				draw_circle(Vector2(cx, cy), 1.5, c)
+			cy += spacing
+		cx += spacing
 
 
 func _draw_trails() -> void:
@@ -428,6 +443,38 @@ func _draw_blob(x: float, y: float, r: float, color_name: String, phase: float, 
 			t_poly.append(Vector2(px, py))
 		var t_col: Color = _rgb(bc, energy * 0.04)
 		draw_colored_polygon(t_poly, t_col)
+
+
+func _draw_pieces_glow() -> void:
+	for key in tracked_pieces:
+		var bp: BlobPiece = tracked_pieces[key]
+		var center := Vector2(bp.x * _viewport.x, bp.y * _viewport.y)
+		var base_color := GestorFamilias.get_color(bp.color)
+		var energy := bp.energy
+		var layers := [
+			{ "radius": 140.0, "alpha": 0.04, "segments": 20 },
+			{ "radius": 91.0,  "alpha": 0.07, "segments": 16 },
+			{ "radius": 49.0,  "alpha": 0.12, "segments": 12 },
+			{ "radius": 25.2,  "alpha": 0.25, "segments": 8 },
+		]
+
+		for layer in layers:
+			var pts = layer.segments
+			var r = layer.radius
+			var a = layer.alpha * (0.5 + energy * 0.5)
+			var poly := PackedVector2Array()
+
+			for j in range(pts + 1):
+				var ang := (float(j) / float(pts)) * TAU
+				var noise := _fbm(cos(ang) + pattern_seed, sin(ang) + pattern_seed * 0.7, pattern_seed * 0.5)
+				var deform := 1.0 + noise * 0.12
+				var px: float = center.x + cos(ang) * r * deform
+				var py: float = center.y + sin(ang) * r * deform
+				poly.append(Vector2(px, py))
+
+			var c := base_color
+			c.a = a
+			draw_colored_polygon(poly, c)
 
 
 func _draw_scanline(sx: float) -> void:

@@ -21,18 +21,17 @@ namespace AK
         static const AkUniqueID MX_STOP_MENU = 4057456165U;
         static const AkUniqueID PLAY_ALL = 2976310903U;
         static const AkUniqueID PLAY_BLUE = 1457744122U;
-        static const AkUniqueID PLAY_CELESTE_F2 = 2421176694U;
+        static const AkUniqueID PLAY_BLUE_F2 = 2823369421U;
         static const AkUniqueID PLAY_F4_BLUE = 2629365651U;
         static const AkUniqueID PLAY_F4_GREEN = 3286383928U;
         static const AkUniqueID PLAY_F4_PINK = 2787262691U;
         static const AkUniqueID PLAY_F4_RED = 46596872U;
         static const AkUniqueID PLAY_GREEN = 3434539291U;
-        static const AkUniqueID PLAY_NEON_GREEN_F2 = 384389037U;
-        static const AkUniqueID PLAY_ORANGE_F2 = 1259331539U;
+        static const AkUniqueID PLAY_GREEN_F2 = 1203507238U;
         static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID PLAY_PINK_F2 = 3593761409U;
+        static const AkUniqueID PLAY_RED_F2 = 2719348818U;
         static const AkUniqueID PLAY_VIOLET_F2 = 168358390U;
-        static const AkUniqueID PLAY_YELLOW_F2 = 2374354589U;
         static const AkUniqueID STOP_BLUE = 3612515708U;
         static const AkUniqueID STOP_PINK = 3839438860U;
     } // namespace EVENTS

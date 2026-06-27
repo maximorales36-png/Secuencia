@@ -635,18 +635,17 @@ def calibrate_corners(cap):
         corners_frac = [(x / w_f, y / h_f) for (x, y) in raw_corners]
 
         screen_width_mm = None
-        try:
-            inp = input(f"Ingrese el ancho REAL de la pantalla/TV en mm "
-                        f"(enter para omitir, ej: 1200): ").strip()
-            if inp:
-                screen_width_mm = float(inp)
-                if screen_width_mm > 0:
+        if os.path.exists(CROP_CONFIG_FILE):
+            try:
+                with open(CROP_CONFIG_FILE, 'r') as f:
+                    existing = json.load(f)
+                if "screen_width_mm" in existing and existing["screen_width_mm"] > 0:
+                    screen_width_mm = existing["screen_width_mm"]
                     global PX_PER_MM
                     PX_PER_MM = RECTIFIED_WIDTH / screen_width_mm
-                    print(f"[Crop] px_per_mm calibrado: {PX_PER_MM:.4f} "
-                          f"({RECTIFIED_WIDTH}px / {screen_width_mm}mm)", file=sys.stderr)
-        except (ValueError, EOFError):
-            print("[Crop] Ancho no ingresado, se usara deteccion sin filtro de tamaño", file=sys.stderr)
+                    print(f"[Crop] px_per_mm reutilizado: {PX_PER_MM:.4f} (screen_width={screen_width_mm}mm)", file=sys.stderr)
+            except Exception:
+                pass
 
         try:
             save_crop_config(corners_frac, screen_width_mm)

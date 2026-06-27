@@ -327,6 +327,8 @@ func _generate_organic_polygon(rect: Rect2, semilla: float) -> PackedVector2Arra
 # SECCIÓN 9: DIBUJADO (_draw)
 # ============================================================================
 func _draw() -> void:
+	if GestorFamilias.familia_activa != "familia_1":
+		return
 	_draw_trails()
 	_draw_sector_rectangles()
 	_draw_red_shadow()

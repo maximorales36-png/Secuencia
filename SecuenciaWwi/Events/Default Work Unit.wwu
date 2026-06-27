@@ -115,12 +115,11 @@
 				</Folder>
 				<Folder Name="F2" ID="{3D5B8CEB-6F00-417B-8F5A-07881D2A84BD}" ShortID="1030167000">
 					<ChildrenList>
-						<Event Name="Play_Yellow_F2" ID="{126CAAF2-762B-4F3C-9E4B-5A5411C15889}"/>
+						<Event Name="Play_Red_F2" ID="{126CAAF2-762B-4F3C-9E4B-5A5411C15889}"/>
 						<Event Name="Play_Pink_F2" ID="{3E3BF32C-50E8-498B-83BC-CC9B1AE40626}"/>
-						<Event Name="Play_Neon_Green_F2" ID="{2752E2B2-4865-4AFC-91A6-C3CF430407B4}"/>
-						<Event Name="Play_Celeste_F2" ID="{0C3F0FBD-879D-4D05-8A91-3C68BFC2FB1A}"/>
+						<Event Name="Play_Green_F2" ID="{2752E2B2-4865-4AFC-91A6-C3CF430407B4}"/>
+						<Event Name="Play_Blue_F2" ID="{0C3F0FBD-879D-4D05-8A91-3C68BFC2FB1A}"/>
 						<Event Name="Play_Violet_F2" ID="{045B31E3-8198-459B-B354-FCE0B17677BC}"/>
-						<Event Name="Play_Orange_F2" ID="{57C09648-30B8-4B22-81E0-9A356046D15F}"/>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="F4" ID="{1174F4FD-63CD-49A5-BBE3-57B541FBBD94}" ShortID="1058446659">
@@ -192,63 +191,67 @@
 						</Event>
 					</ChildrenList>
 				</Folder>
-				<Event Name="mx_play_menu" ID="{DB3A4F0A-FCD5-4A73-8C84-A20A2BCF8303}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="9"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
+				<Folder Name="Menu" ID="{F7D7CEAB-C4CA-4E3E-8F26-17A427D4A63B}" ShortID="237973051">
 					<ChildrenList>
-						<Action Name="" ID="{88FFAA70-5F3C-43C4-9F4A-C7379CEF93CC}" ShortID="980694300">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Mx_Menu_Pl" ID="{CD69816B-A4BD-4BDD-A3CE-E8A707583785}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Enter_F_01" ID="{B7A62C5B-1BEC-40D6-863E-F8CC705BEC3C}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="7"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-				</Event>
-				<Event Name="Enter_F_02" ID="{694DB9F1-A96E-40EB-B642-3BE3A8CF4984}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="7"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-				</Event>
-				<Event Name="Enter_F_03" ID="{14E7B600-7C9F-4745-A76E-4236FCD66E84}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="7"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-				</Event>
-				<Event Name="Enter_F_04" ID="{38023756-3E3C-4F2C-9A8E-5E37B2E913B6}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="7"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-				</Event>
-				<Event Name="mx_stop_menu" ID="{E32296A9-1468-4E6C-A85D-B5F1C2E8782C}">
-					<PropertyList>
-						<Property Name="Color" Type="int16" Value="9"/>
-						<Property Name="OverrideColor" Type="bool" Value="True"/>
-					</PropertyList>
-					<ChildrenList>
-						<Action Name="" ID="{3BC61CDA-275B-4B56-BBC1-DF3436C1B054}" ShortID="636479955">
+						<Event Name="mx_play_menu" ID="{DB3A4F0A-FCD5-4A73-8C84-A20A2BCF8303}">
 							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Color" Type="int16" Value="9"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Mx_Menu_Pl" ID="{CD69816B-A4BD-4BDD-A3CE-E8A707583785}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
+							<ChildrenList>
+								<Action Name="" ID="{88FFAA70-5F3C-43C4-9F4A-C7379CEF93CC}" ShortID="980694300">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Mx_Menu_Pl" ID="{CD69816B-A4BD-4BDD-A3CE-E8A707583785}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Enter_F_03" ID="{14E7B600-7C9F-4745-A76E-4236FCD66E84}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="7"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Event>
+						<Event Name="Enter_F_04" ID="{38023756-3E3C-4F2C-9A8E-5E37B2E913B6}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="7"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Event>
+						<Event Name="Enter_F_01" ID="{B7A62C5B-1BEC-40D6-863E-F8CC705BEC3C}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="7"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Event>
+						<Event Name="mx_stop_menu" ID="{E32296A9-1468-4E6C-A85D-B5F1C2E8782C}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="9"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{3BC61CDA-275B-4B56-BBC1-DF3436C1B054}" ShortID="636479955">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Mx_Menu_Pl" ID="{CD69816B-A4BD-4BDD-A3CE-E8A707583785}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Enter_F_02" ID="{694DB9F1-A96E-40EB-B642-3BE3A8CF4984}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="7"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Event>
 					</ChildrenList>
-				</Event>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

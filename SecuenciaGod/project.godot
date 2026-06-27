@@ -18,12 +18,128 @@ config/icon="res://icon.svg"
 [autoload]
 
 IPCManager="*res://scipts/IPCManager.gd"
+KeyboardTester="*res://scipts/KeyboardTester.gd"
 WwiseRuntimeManager="*res://addons/Wwise/runtime/wwise_runtime_manager.gd"
 GestorFamilias="*res://scipts/GestorFamilias.gd"
 
 [display]
 
 window/size/mode=3
+
+[input]
+
+toggle_test_mode={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_F12",
+"physical_keycode": "KEY_F12",
+"type": "InputEventKey"
+}]
+}
+family_1={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_1",
+"physical_keycode": "KEY_1",
+"type": "InputEventKey"
+}]
+}
+family_2={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_2",
+"physical_keycode": "KEY_2",
+"type": "InputEventKey"
+}]
+}
+family_3={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_3",
+"physical_keycode": "KEY_3",
+"type": "InputEventKey"
+}]
+}
+family_4={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_4",
+"physical_keycode": "KEY_4",
+"type": "InputEventKey"
+}]
+}
+add_red={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_A",
+"physical_keycode": "KEY_A",
+"type": "InputEventKey"
+}]
+}
+add_blue={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_S",
+"physical_keycode": "KEY_S",
+"type": "InputEventKey"
+}]
+}
+add_pink={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_D",
+"physical_keycode": "KEY_D",
+"type": "InputEventKey"
+}]
+}
+add_green={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_F",
+"physical_keycode": "KEY_F",
+"type": "InputEventKey"
+}]
+}
+add_violet={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_G",
+"physical_keycode": "KEY_G",
+"type": "InputEventKey"
+}]
+}
+move_up={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_UP",
+"physical_keycode": "KEY_UP",
+"type": "InputEventKey"
+}]
+}
+move_down={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_DOWN",
+"physical_keycode": "KEY_DOWN",
+"type": "InputEventKey"
+}]
+}
+move_left={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_LEFT",
+"physical_keycode": "KEY_LEFT",
+"type": "InputEventKey"
+}]
+}
+move_right={
+"deadzone": 0.5,
+"events": [{
+"keycode": "KEY_RIGHT",
+"physical_keycode": "KEY_RIGHT",
+"type": "InputEventKey"
+}]
+}
 
 [physics]
 

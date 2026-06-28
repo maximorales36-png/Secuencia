@@ -7,13 +7,12 @@ class_name BallsRenderer
 @export var ball_speed_factor: float = 0.25
 @export var background_noise_spacing: float = 16.0
 @export var piece_glow_radius: float = 140.0
-@export var trail_length: int = 6
+@export var trail_length: int = 0
 @export var speed_boost_per_hit: float = 50.0
 @export var max_ball_speed: float = 2000.0
 @export var max_violet_boosts: int = 8
 
 var balls: Array = []
-var trails: Array = []
 var _audio_manager: Node = null
 var pattern_seed: float = 0.0
 var frame: int = 0
@@ -26,6 +25,7 @@ var _hit_trails: Array = []
 var _fading_pieces: Dictionary = {}  # key -> {color, x, y, alpha}
 var _violet_boost_count: int = 0
 var _was_f4_active: bool = false
+var _piece_glows: Dictionary = {}
 
 
 func _ready() -> void:
@@ -73,7 +73,6 @@ func _init_balls() -> void:
 		var pos := Vector2(randf() * vp.x, randf() * vp.y)
 		var vel := Vector2(cos(angle), sin(angle)) * fixed_speed
 		balls.append({ pos = pos, vel = vel })
-		trails.append([])
 
 
 func _process(delta: float) -> void:
@@ -96,12 +95,14 @@ func _process(delta: float) -> void:
 
 	_update_hit_effects(delta)
 	_update_fading_pieces(delta)
+	_update_piece_glows(delta)
 
 	queue_redraw()
 
 
 func _update_ball(idx: int, delta: float) -> void:
 	var ball = balls[idx]
+	var old_pos: Vector2 = ball.pos
 	ball.pos += ball.vel * delta
 
 	if ball.pos.x < ball_radius:
@@ -120,14 +121,24 @@ func _update_ball(idx: int, delta: float) -> void:
 
 	var now: float = Time.get_ticks_msec() / 1000.0
 	var beat_interval: float = 60.0 / 72.0
+	var seg_vec: Vector2 = ball.pos - old_pos
+	var seg_len_sq: float = seg_vec.length_squared()
 
 	for piece in _pieces:
 		if not GestorFamilias.is_in_family(piece.color, "familia_4"):
 			continue
 
 		var piece_pos: Vector2 = Vector2(piece.x * _viewport.x, piece.y * _viewport.y)
-		var dist: float = ball.pos.distance_to(piece_pos)
 		var hit_radius: float = piece_hit_radius + ball_radius
+
+		var dist: float
+		if seg_len_sq > 0.0:
+			var to_piece: Vector2 = piece_pos - old_pos
+			var t: float = clampf(to_piece.dot(seg_vec) / seg_len_sq, 0.0, 1.0)
+			var closest: Vector2 = old_pos + seg_vec * t
+			dist = closest.distance_to(piece_pos)
+		else:
+			dist = ball.pos.distance_to(piece_pos)
 
 		if dist >= hit_radius:
 			continue
@@ -158,12 +169,6 @@ func _update_ball(idx: int, delta: float) -> void:
 				if len > 0.0:
 					b.vel = b.vel.normalized() * new_len
 
-	var trail = trails[idx]
-	trail.append({ pos = ball.pos, time = now })
-	while trail.size() > trail_length:
-		trail.pop_front()
-
-
 func _draw() -> void:
 	if GestorFamilias.familia_activa != "familia_4":
 		return
@@ -176,6 +181,7 @@ func _draw() -> void:
 	_draw_background_noise()
 	_draw_hit_trails()
 	_draw_hit_waves()
+	_draw_border()
 	for piece in _pieces:
 		if GestorFamilias.is_in_family(piece.color, "familia_4"):
 			_draw_piece(piece, 1.0)
@@ -183,22 +189,23 @@ func _draw() -> void:
 		var f = _fading_pieces[key]
 		_draw_piece(f, f.alpha)
 	for i in range(balls.size()):
-		_draw_trail(i)
 		_draw_ball(i)
+	_draw_piece_glows()
 
 
 func _draw_background_noise() -> void:
 	var alpha := 0.025
-	var spacing := background_noise_spacing
+	var spacing := background_noise_spacing * 1.8
 	var cx := 0.0
+	var offset := pattern_seed * 100.0
 
 	while cx < _viewport.x:
 		var cy := 0.0
 		while cy < _viewport.y:
-			var noise := _fbm(cx * 0.004, cy * 0.004, pattern_seed)
-			if noise > 0.2:
-				var c := Color(0.2, 0.25, 0.35, alpha * noise * 2.0)
-				draw_circle(Vector2(cx, cy), 1.5, c)
+			var noise := _fbm((cx + offset) * 0.003, (cy + offset * 0.7) * 0.003, pattern_seed * 0.3)
+			if noise > 0.3:
+				var c := Color(0.25, 0.3, 0.4, alpha * noise * 1.5)
+				draw_circle(Vector2(cx, cy), 2.0, c)
 			cy += spacing
 		cx += spacing
 
@@ -249,18 +256,6 @@ func _draw_ball(idx: int) -> void:
 	draw_circle(ball.pos, ball_radius * 0.45, highlight)
 
 
-func _draw_trail(idx: int) -> void:
-	var trail = trails[idx]
-
-	for i in range(trail.size()):
-		var t = trail[i]
-		var age := float(i) / float(trail.size())
-		var alpha := (1.0 - age) * 0.06
-		var r := ball_radius * (0.3 + age * 0.7)
-		var c := Color(1.0, 1.0, 1.0, alpha)
-		draw_circle(t.pos, r, c)
-
-
 func _draw_background_fill() -> void:
 	var bg := Color(0.024, 0.024, 0.039, 0.15)
 	draw_rect(Rect2(Vector2.ZERO, _viewport), Color(0.02, 0.02, 0.035, 1.0))
@@ -293,18 +288,20 @@ func _spawn_hit_effect(center: Vector2, color_name: String) -> void:
 		phase = randf() * TAU,
 	})
 
+	_piece_glows[center] = { center = center, color = color_name, life = 1.0 }
+
 
 func _update_hit_effects(delta: float) -> void:
 	var keep_trails: Array = []
 	for t in _hit_trails:
-		t.life -= 0.008
+		t.life -= delta * 0.5
 		if t.life > 0:
 			keep_trails.append(t)
 	_hit_trails = keep_trails
 
 	var keep_waves: Array = []
 	for w in _hit_waves:
-		w.r += w.speed * (1.0 + w.r / w.max_r * 0.9)
+		w.r += w.speed * (1.0 + w.r / w.max_r * 0.9) * delta * 60.0
 		var prog: float = w.r / w.max_r
 		w.life = maxf(0.0, 1.0 - pow(prog, 0.6))
 		if w.life > 0 and w.r < w.max_r * 1.1:
@@ -320,6 +317,15 @@ func _update_fading_pieces(delta: float) -> void:
 		if f.alpha > 0.0:
 			keep[key] = f
 	_fading_pieces = keep
+
+func _update_piece_glows(delta: float) -> void:
+	var keep: Dictionary = {}
+	for key in _piece_glows:
+		var g = _piece_glows[key]
+		g.life -= delta * 2.5
+		if g.life > 0.0:
+			keep[key] = g
+	_piece_glows = keep
 
 
 func _draw_hit_trails() -> void:
@@ -340,6 +346,20 @@ func _draw_hit_trails() -> void:
 			poly.append(Vector2(px, py))
 		draw_colored_polygon(poly, col)
 
+func _draw_border() -> void:
+	var color := Color(1.0, 1.0, 1.0, 0.25)
+	var width := 8
+	draw_rect(Rect2(Vector2.ZERO, _viewport), color, false, width)
+
+func _draw_piece_glows() -> void:
+	for key in _piece_glows:
+		var g = _piece_glows[key]
+		var life: float = g.life
+		var center: Vector2 = g.center
+		var base_color: Color = GestorFamilias.get_color(g.color)
+		base_color.a = life * 0.12
+		var r: float = piece_glow_radius * (1.0 + (1.0 - life) * 0.5)
+		draw_circle(center, r, base_color)
 
 func _draw_hit_waves() -> void:
 	for w in _hit_waves:

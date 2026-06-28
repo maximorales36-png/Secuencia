@@ -61,6 +61,7 @@ namespace AK
         static const AkUniqueID F2_GREEN = 3645076093U;
         static const AkUniqueID F2_PINK = 2730183760U;
         static const AkUniqueID F2_RED = 4204748281U;
+        static const AkUniqueID F2_VIOLET = 1928399917U;
         static const AkUniqueID RTPC_F4_BLUE = 2222567948U;
         static const AkUniqueID RTPC_F4_GREEN = 1459285929U;
         static const AkUniqueID RTPC_F4_PINK = 3534726620U;

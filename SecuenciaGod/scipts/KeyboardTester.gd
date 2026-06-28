@@ -5,6 +5,9 @@ var color_keys: Array[String] = ["red", "blue", "pink", "green", "violet"]
 func _ready() -> void:
 	print("[KeyboardTester] Listo. F12 para activar/desactivar modo test.")
 func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("return_to_menu"):
+		print("[KeyboardTester] Volviendo al menu principal...")
+		get_tree().change_scene_to_file("res://main_menu.tscn")
 	if Input.is_action_just_pressed("toggle_test_mode"):
 		test_mode = not test_mode
 		print("[KeyboardTester] Modo test: %s" % ("ON" if test_mode else "OFF"))

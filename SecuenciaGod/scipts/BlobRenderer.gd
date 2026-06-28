@@ -107,7 +107,7 @@ func _process(delta: float) -> void:
 
 	var keep_trails: Array = []
 	for t in _trails:
-		t.life -= 0.002
+		t.life -= 0.02
 		if t.life > 0:
 			keep_trails.append(t)
 	_trails = keep_trails
@@ -136,6 +136,7 @@ func _draw() -> void:
 
 	_draw_background_fill()
 	_draw_background_noise()
+	_draw_border()
 	_draw_waves()
 	_draw_trails()
 	_draw_pieces_glow()
@@ -475,6 +476,12 @@ func _draw_pieces_glow() -> void:
 			var c := base_color
 			c.a = a
 			draw_colored_polygon(poly, c)
+
+
+func _draw_border() -> void:
+	var color := Color(1.0, 1.0, 1.0, 0.25)
+	var width := 8
+	draw_rect(Rect2(Vector2.ZERO, _viewport), color, false, width)
 
 
 func _draw_scanline(sx: float) -> void:

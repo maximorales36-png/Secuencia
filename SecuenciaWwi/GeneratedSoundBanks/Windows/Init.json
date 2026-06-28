@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{24038A1B-963F-9833-8889-8A8B088A1A53}",
+    "Hash": "{3E2377A4-E2F9-54B1-E016-1E157A3B80AF}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -164,6 +164,13 @@
       "Name": "RTPC_F4_Green",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Green",
       "GUID": "{4D1D4E12-4FF4-4975-B027-7A3335A26143}"
+     },
+     {
+      "Id": "1928399917",
+      "Name": "F2_Violet",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F2\\F2_Violet",
+      "GUID": "{CAE6F60A-83D5-445B-89EE-CD11EBE3EC9D}",
+      "Color": "13"
      },
      {
       "Id": "2005540895",
@@ -813,6 +820,6 @@
     ]
    }
   ],
-  "FileHash": "{3D881EB4-DD94-6117-487C-EF7977FC0F94}"
+  "FileHash": "{F2CD22FE-C91E-6D09-A871-18CBB51A95EC}"
  }
 }

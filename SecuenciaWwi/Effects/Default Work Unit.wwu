@@ -11,11 +11,46 @@
 				<Effect Name="New_Parametric_EQ" ID="{F72D4E86-A39C-4831-AA91-8E387E6B57C3}" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
 					<PropertyList>
 						<Property Name="FilterTypeBand1" Type="int32" Value="7"/>
-						<Property Name="FrequencyBand1" Type="Real32" Value="5696.072"/>
+						<Property Name="FrequencyBand1" Type="Real32" Value="605.7779"/>
 						<Property Name="FrequencyBand2" Type="Real32" Value="1454.421"/>
 						<Property Name="GainBand2" Type="Real32" Value="-0.3779528"/>
-						<Property Name="QFactorBand1" Type="Real32" Value="0.9347435"/>
+						<Property Name="QFactorBand1" Type="Real32" Value="1.449411"/>
 					</PropertyList>
+					<ObjectLists>
+						<ObjectList Name="RTPC">
+							<RTPC Name="" ID="{3BE51CEE-5C5A-40E5-BE6B-F8C7F9C51733}" ShortID="467356245">
+								<PropertyList>
+									<Property Name="PropertyName" Type="string" Value="FrequencyBand1"/>
+								</PropertyList>
+								<ReferenceList>
+									<Reference Name="ControlInput">
+										<ObjectRef Name="F2_Green" ID="{69F52731-B896-44F9-AE29-41A95FF81D0A}" WorkUnitID="{0A35F0BA-6389-4AB7-A442-2F1D644DEF18}"/>
+									</Reference>
+									<Reference Name="Curve">
+										<Custom>
+											<Curve Name="" ID="{FAE76C4B-9828-4CA5-B0DA-AF2655CE4D6C}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="5"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>209.98713</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>789.44565</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</Custom>
+									</Reference>
+								</ReferenceList>
+							</RTPC>
+						</ObjectList>
+					</ObjectLists>
 				</Effect>
 			</ChildrenList>
 		</WorkUnit>

@@ -118,6 +118,8 @@ func _on_pieces_updated(new_pieces: Array) -> void:
 
 func _update_sector_colors() -> void:
 	sector_colors.clear()
+	if GestorFamilias.familia_activa == "familia_2":
+		return
 	for piece in pieces:
 		if piece.color in SECTOR_BASED_COLORS:
 			var sector = int(piece.x * sector_count)
@@ -130,7 +132,7 @@ func _update_sector_colors() -> void:
 
 func _detect_crossings() -> void:
 	for piece in pieces:
-		if piece.color in SECTOR_BASED_COLORS:
+		if GestorFamilias.familia_activa != "familia_2" and piece.color in SECTOR_BASED_COLORS:
 			continue
 		if not prev_scan_position < piece.x or not scan_position >= piece.x:
 			continue
@@ -145,11 +147,11 @@ func _detect_crossings() -> void:
 			if skip:
 				continue
 
-		var key: String = str(piece.color, "_", snapped(piece.x, 0.01))
-		if triggered_keys.has(key):
-			continue
-
-		triggered_keys[key] = true
+		if GestorFamilias.familia_activa != "familia_2":
+			var key: String = str(piece.color, "_", snapped(piece.x, 0.01))
+			if triggered_keys.has(key):
+				continue
+			triggered_keys[key] = true
 		print("[ScanlineLogic] CRUCE: %s en x=%.2f, y=%.2f (ciclo %.1f%%)" % [piece.color, piece.x, piece.y, scan_position * 100])
 		crossing_detected.emit(piece)
 

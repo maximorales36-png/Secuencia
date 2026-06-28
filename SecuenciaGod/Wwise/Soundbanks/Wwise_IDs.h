@@ -20,7 +20,6 @@ namespace AK
         static const AkUniqueID MX_PLAY_MENU = 3073348995U;
         static const AkUniqueID MX_STOP_MENU = 4057456165U;
         static const AkUniqueID PLAY_ALL = 2976310903U;
-        static const AkUniqueID PLAY_BLUE = 1457744122U;
         static const AkUniqueID PLAY_BLUE_F2 = 2823369421U;
         static const AkUniqueID PLAY_F4_BLUE = 2629365651U;
         static const AkUniqueID PLAY_F4_GREEN = 3286383928U;
@@ -28,7 +27,6 @@ namespace AK
         static const AkUniqueID PLAY_F4_RED = 46596872U;
         static const AkUniqueID PLAY_GREEN = 3434539291U;
         static const AkUniqueID PLAY_GREEN_F2 = 1203507238U;
-        static const AkUniqueID PLAY_PINK = 1568289110U;
         static const AkUniqueID PLAY_PINK_F2 = 3593761409U;
         static const AkUniqueID PLAY_RED_F2 = 2719348818U;
         static const AkUniqueID PLAY_VIOLET_F2 = 168358390U;
@@ -38,9 +36,9 @@ namespace AK
 
     namespace SWITCHES
     {
-        namespace YELLOW_SWITCH
+        namespace RED_SWITCH
         {
-            static const AkUniqueID GROUP = 4133533608U;
+            static const AkUniqueID GROUP = 1292329721U;
 
             namespace SWITCH
             {
@@ -53,21 +51,25 @@ namespace AK
                 static const AkUniqueID VII = 510138863U;
                 static const AkUniqueID VIII = 3437286228U;
             } // namespace SWITCH
-        } // namespace YELLOW_SWITCH
+        } // namespace RED_SWITCH
 
     } // namespace SWITCHES
 
     namespace GAME_PARAMETERS
     {
-        static const AkUniqueID RTPC_F4_CELESTE = 3483819669U;
-        static const AkUniqueID RTPC_F4_N_GREEN = 1272335850U;
+        static const AkUniqueID F2_BLUE = 890307312U;
+        static const AkUniqueID F2_GREEN = 3645076093U;
+        static const AkUniqueID F2_PINK = 2730183760U;
+        static const AkUniqueID F2_RED = 4204748281U;
+        static const AkUniqueID RTPC_F4_BLUE = 2222567948U;
+        static const AkUniqueID RTPC_F4_GREEN = 1459285929U;
         static const AkUniqueID RTPC_F4_PINK = 3534726620U;
-        static const AkUniqueID RTPC_F4_YELLOW = 1381600912U;
-        static const AkUniqueID RTPC_N_GREEN = 3400130303U;
+        static const AkUniqueID RTPC_F4_RED = 652642405U;
+        static const AkUniqueID RTPC_GREEN = 276214388U;
         static const AkUniqueID RTPC_PINK = 2005540895U;
-        static const AkUniqueID RTPC_V_CELESTE = 1094048063U;
+        static const AkUniqueID RTPC_V_BLUE = 4235986214U;
         static const AkUniqueID RTPC_V_PINK = 2699784114U;
-        static const AkUniqueID RTPC_V_YELLOW = 189860390U;
+        static const AkUniqueID RTPC_V_RED = 4252616139U;
         static const AkUniqueID RTPC_VIOLET = 3862788774U;
         static const AkUniqueID SS_AIR_FEAR = 1351367891U;
         static const AkUniqueID SS_AIR_FREEFALL = 3002758120U;

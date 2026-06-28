@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{849B3B37-18B5-2A0C-B63F-F9D67803B884}",
+    "Hash": "{9156DE59-C7D6-36A3-27DC-F3A2B494D406}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -122,11 +122,17 @@
     ],
     "GameParameters": [
      {
-      "Id": "189860390",
-      "Name": "RTPC_V_Yellow",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Yellow",
-      "GUID": "{2EEE9933-FB10-45F5-9425-EC35634A4D4B}",
-      "Color": "6"
+      "Id": "276214388",
+      "Name": "RTPC_Green",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_Green",
+      "GUID": "{775EB99E-20BD-4B98-92A5-5EB73EFA9783}",
+      "Color": "4"
+     },
+     {
+      "Id": "652642405",
+      "Name": "RTPC_F4_Red",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Red",
+      "GUID": "{81D55804-CD0D-44D2-9B0C-B6D3B495B240}"
      },
      {
       "Id": "822163944",
@@ -135,23 +141,17 @@
       "GUID": "{A34890AB-B9D5-4526-A64D-5290C43EF2DC}"
      },
      {
+      "Id": "890307312",
+      "Name": "F2_Blue",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F2\\F2_Blue",
+      "GUID": "{02804341-C090-4063-923B-F44602BBBF45}",
+      "Color": "2"
+     },
+     {
       "Id": "1029930033",
       "Name": "SS_Air_Fury",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Fury",
       "GUID": "{A2AE79DC-CA3A-46BA-9652-9986C322A87B}"
-     },
-     {
-      "Id": "1094048063",
-      "Name": "RTPC_V_Celeste",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Celeste",
-      "GUID": "{0D98EEB3-65D0-4037-9EC1-AFF842A89486}",
-      "Color": "15"
-     },
-     {
-      "Id": "1272335850",
-      "Name": "RTPC_F4_N_Green",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_N_Green",
-      "GUID": "{4D1D4E12-4FF4-4975-B027-7A3335A26143}"
      },
      {
       "Id": "1351367891",
@@ -160,10 +160,10 @@
       "GUID": "{F72E0659-4346-4E1C-A1B1-DAB46A05101E}"
      },
      {
-      "Id": "1381600912",
-      "Name": "RTPC_F4_Yellow",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Yellow",
-      "GUID": "{81D55804-CD0D-44D2-9B0C-B6D3B495B240}"
+      "Id": "1459285929",
+      "Name": "RTPC_F4_Green",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Green",
+      "GUID": "{4D1D4E12-4FF4-4975-B027-7A3335A26143}"
      },
      {
       "Id": "2005540895",
@@ -171,6 +171,12 @@
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_Pink",
       "GUID": "{2B441A2F-2D08-4ABE-8272-1C94B50150AE}",
       "Color": "24"
+     },
+     {
+      "Id": "2222567948",
+      "Name": "RTPC_F4_Blue",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Blue",
+      "GUID": "{EEB932A9-AEFF-49D6-A547-1449C7741688}"
      },
      {
       "Id": "2648548617",
@@ -183,6 +189,13 @@
       "Name": "RTPC_V_Pink",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Pink",
       "GUID": "{66E92814-0C9B-4677-848A-C0AE9F9CB27F}",
+      "Color": "24"
+     },
+     {
+      "Id": "2730183760",
+      "Name": "F2_Pink",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F2\\F2_Pink",
+      "GUID": "{F5AED394-F55D-43FD-B5A0-BAAD87F0CFDF}",
       "Color": "24"
      },
      {
@@ -204,23 +217,17 @@
       "GUID": "{536FA72C-8C7E-4C8B-AE03-EF34FDADC314}"
      },
      {
-      "Id": "3400130303",
-      "Name": "RTPC_N_Green",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_N_Green",
-      "GUID": "{775EB99E-20BD-4B98-92A5-5EB73EFA9783}",
-      "Color": "4"
-     },
-     {
-      "Id": "3483819669",
-      "Name": "RTPC_F4_Celeste",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Celeste",
-      "GUID": "{EEB932A9-AEFF-49D6-A547-1449C7741688}"
-     },
-     {
       "Id": "3534726620",
       "Name": "RTPC_F4_Pink",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\F4\\RTPC_F4_Pink",
       "GUID": "{6F467136-1851-4A93-B2E2-6EFB00DDC05C}"
+     },
+     {
+      "Id": "3645076093",
+      "Name": "F2_Green",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F2\\F2_Green",
+      "GUID": "{69F52731-B896-44F9-AE29-41A95FF81D0A}",
+      "Color": "5"
      },
      {
       "Id": "3715662592",
@@ -246,61 +253,82 @@
       "Name": "SS_Air_Turbulence",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Turbulence",
       "GUID": "{EDA87B19-73AA-40A0-9F19-2073606DB710}"
+     },
+     {
+      "Id": "4204748281",
+      "Name": "F2_Red",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F2\\F2_Red",
+      "GUID": "{34023A1F-8F23-4BF4-BB4C-89EAEB8ED50B}",
+      "Color": "10"
+     },
+     {
+      "Id": "4235986214",
+      "Name": "RTPC_V_Blue",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Blue",
+      "GUID": "{0D98EEB3-65D0-4037-9EC1-AFF842A89486}",
+      "Color": "15"
+     },
+     {
+      "Id": "4252616139",
+      "Name": "RTPC_V_Red",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Red",
+      "GUID": "{2EEE9933-FB10-45F5-9425-EC35634A4D4B}",
+      "Color": "6"
      }
     ],
     "SwitchGroups": [
      {
-      "Id": "4133533608",
-      "Name": "yellow_switch",
-      "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch",
+      "Id": "1292329721",
+      "Name": "red_switch",
+      "ObjectPath": "\\Switches\\Default Work Unit\\red_switch",
       "GUID": "{4878B015-0DF9-484A-A176-0B70F2CE8009}",
       "Switches": [
        {
         "Id": "84696425",
         "Name": "V",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\V",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\V",
         "GUID": "{A2F78C76-2404-4B8F-9F74-98143393E8A5}"
        },
        {
         "Id": "84696438",
         "Name": "I",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\I",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\I",
         "GUID": "{2B86FF34-C690-48E2-A33C-A509BB674F94}"
        },
        {
         "Id": "510138863",
         "Name": "VII",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VII",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\VII",
         "GUID": "{4707DFE0-C196-40C0-BD1D-16E11EBE95BD}"
        },
        {
         "Id": "512257368",
         "Name": "III",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\III",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\III",
         "GUID": "{4D75717F-6B79-4081-BA7D-53B820D1E8DB}"
        },
        {
         "Id": "1534528546",
         "Name": "VI",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VI",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\VI",
         "GUID": "{BC3CE909-3247-4709-9A42-8D5672F6F395}"
        },
        {
         "Id": "1752637611",
         "Name": "II",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\II",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\II",
         "GUID": "{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"
        },
        {
         "Id": "1752637620",
         "Name": "IV",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\IV",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\IV",
         "GUID": "{45FCA14E-C811-4BB0-B897-8EA07E23A5E0}"
        },
        {
         "Id": "3437286228",
         "Name": "VIII",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VIII",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\VIII",
         "GUID": "{98573E9C-D27F-47D5-9AD5-7DFF79316DE9}"
        }
       ]
@@ -785,6 +813,6 @@
     ]
    }
   ],
-  "FileHash": "{E9872A31-2EBB-1FCA-B119-54651F40715F}"
+  "FileHash": "{34401554-1EB0-2E74-87D1-EFF1EBD0C1C0}"
  }
 }

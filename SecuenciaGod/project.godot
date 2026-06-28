@@ -34,7 +34,8 @@ toggle_test_mode={
 "keycode": "KEY_F12",
 "physical_keycode": "KEY_F12",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194343,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
 }
 family_1={
 "deadzone": 0.5,
@@ -42,7 +43,8 @@ family_1={
 "keycode": "KEY_1",
 "physical_keycode": "KEY_1",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":49,"key_label":0,"unicode":49,"location":0,"echo":false,"script":null)
+]
 }
 family_2={
 "deadzone": 0.5,
@@ -50,7 +52,8 @@ family_2={
 "keycode": "KEY_2",
 "physical_keycode": "KEY_2",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":50,"key_label":0,"unicode":50,"location":0,"echo":false,"script":null)
+]
 }
 family_3={
 "deadzone": 0.5,
@@ -58,7 +61,8 @@ family_3={
 "keycode": "KEY_3",
 "physical_keycode": "KEY_3",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":51,"key_label":0,"unicode":51,"location":0,"echo":false,"script":null)
+]
 }
 family_4={
 "deadzone": 0.5,
@@ -66,7 +70,8 @@ family_4={
 "keycode": "KEY_4",
 "physical_keycode": "KEY_4",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":52,"key_label":0,"unicode":52,"location":0,"echo":false,"script":null)
+]
 }
 add_red={
 "deadzone": 0.5,
@@ -74,7 +79,8 @@ add_red={
 "keycode": "KEY_A",
 "physical_keycode": "KEY_A",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":97,"location":0,"echo":false,"script":null)
+]
 }
 add_blue={
 "deadzone": 0.5,
@@ -82,7 +88,8 @@ add_blue={
 "keycode": "KEY_S",
 "physical_keycode": "KEY_S",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"key_label":0,"unicode":115,"location":0,"echo":false,"script":null)
+]
 }
 add_pink={
 "deadzone": 0.5,
@@ -90,7 +97,8 @@ add_pink={
 "keycode": "KEY_D",
 "physical_keycode": "KEY_D",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":100,"location":0,"echo":false,"script":null)
+]
 }
 add_green={
 "deadzone": 0.5,
@@ -98,7 +106,8 @@ add_green={
 "keycode": "KEY_F",
 "physical_keycode": "KEY_F",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":102,"location":0,"echo":false,"script":null)
+]
 }
 add_violet={
 "deadzone": 0.5,
@@ -106,7 +115,8 @@ add_violet={
 "keycode": "KEY_G",
 "physical_keycode": "KEY_G",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":71,"key_label":0,"unicode":103,"location":0,"echo":false,"script":null)
+]
 }
 move_up={
 "deadzone": 0.5,
@@ -114,7 +124,8 @@ move_up={
 "keycode": "KEY_UP",
 "physical_keycode": "KEY_UP",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194320,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
 }
 move_down={
 "deadzone": 0.5,
@@ -122,7 +133,8 @@ move_down={
 "keycode": "KEY_DOWN",
 "physical_keycode": "KEY_DOWN",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194322,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
 }
 move_left={
 "deadzone": 0.5,
@@ -130,7 +142,8 @@ move_left={
 "keycode": "KEY_LEFT",
 "physical_keycode": "KEY_LEFT",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194319,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
 }
 move_right={
 "deadzone": 0.5,
@@ -138,7 +151,8 @@ move_right={
 "keycode": "KEY_RIGHT",
 "physical_keycode": "KEY_RIGHT",
 "type": "InputEventKey"
-}]
+}, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194321,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
 }
 
 [physics]

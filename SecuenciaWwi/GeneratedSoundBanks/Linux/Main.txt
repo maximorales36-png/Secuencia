@@ -6,8 +6,6 @@ Event	ID	Name			Wwise Object Path	Notes
 	1341855578	Enter_F_03			\Default Work Unit\Menu\Enter_F_03	
 	1341855579	Enter_F_02			\Default Work Unit\Menu\Enter_F_02	
 	1341855581	Enter_F_04			\Default Work Unit\Menu\Enter_F_04	
-	1457744122	Play_blue			\Default Work Unit\F1\Play_blue	
-	1568289110	Play_pink			\Default Work Unit\F1\Play_pink	
 	2629365651	Play_F4_Blue			\Default Work Unit\F4\Play_F4_Blue	
 	2719348818	Play_Red_F2			\Default Work Unit\F2\Play_Red_F2	
 	2787262691	Play_F4_Pink			\Default Work Unit\F4\Play_F4_Pink	
@@ -22,33 +20,45 @@ Event	ID	Name			Wwise Object Path	Notes
 	4057456165	mx_stop_menu			\Default Work Unit\Menu\mx_stop_menu	
 
 Switch Group	ID	Name			Wwise Object Path	Notes
-	4133533608	yellow_switch			\Default Work Unit\yellow_switch	
+	1292329721	red_switch			\Default Work Unit\red_switch	
 
 Switch	ID	Name	Switch Group			Notes
-	84696425	V	yellow_switch			
-	84696438	I	yellow_switch			
-	510138863	VII	yellow_switch			
-	512257368	III	yellow_switch			
-	1534528546	VI	yellow_switch			
-	1752637611	II	yellow_switch			
-	1752637620	IV	yellow_switch			
-	3437286228	VIII	yellow_switch			
+	84696425	V	red_switch			
+	84696438	I	red_switch			
+	510138863	VII	red_switch			
+	512257368	III	red_switch			
+	1534528546	VI	red_switch			
+	1752637611	II	red_switch			
+	1752637620	IV	red_switch			
+	3437286228	VIII	red_switch			
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
-	189860390	RTPC_V_Yellow			\Default Work Unit\F1\RTPC_V_Yellow	
-	1094048063	RTPC_V_Celeste			\Default Work Unit\F1\RTPC_V_Celeste	
+	276214388	RTPC_Green			\Default Work Unit\F1\RTPC_Green	
+	890307312	F2_Blue			\Default Work Unit\F2\F2_Blue	
 	2005540895	RTPC_Pink			\Default Work Unit\F1\RTPC_Pink	
 	2699784114	RTPC_V_Pink			\Default Work Unit\F1\RTPC_V_Pink	
-	3400130303	RTPC_N_Green			\Default Work Unit\F1\RTPC_N_Green	
+	2730183760	F2_Pink			\Default Work Unit\F2\F2_Pink	
+	3645076093	F2_Green			\Default Work Unit\F2\F2_Green	
+	4204748281	F2_Red			\Default Work Unit\F2\F2_Red	
+	4235986214	RTPC_V_Blue			\Default Work Unit\F1\RTPC_V_Blue	
+	4252616139	RTPC_V_Red			\Default Work Unit\F1\RTPC_V_Red	
 
 Modulator Envelope	ID	Name			Wwise Object Path	Notes
+	631719404	Modulator Envelope (Custom)				
 	687605534	Modulator Envelope (Custom)				
+	947757140	Modulator Envelope (Custom)				
+	997548086	Modulator Envelope (Custom)				
+	1043834900	Modulator Envelope (Custom)				
 
 Effect plug-ins	ID	Name	Type				Notes
 	3657550167	New_Parametric_EQ	Wwise Parametric EQ			
 
 Source plug-ins	ID	Name	Type		Wwise Object Path	Notes
 	103395564	Synth One	Wwise Synth One		\Containers\Default Work Unit\New Synth One\Synth One	
+	227704801	Synth One	Wwise Synth One		\Containers\Default Work Unit\F2\F2_Pink\Synth One	
+	366138255	Synth One	Wwise Synth One		\Containers\Default Work Unit\F2\F2_Green\Synth One	
+	652176094	Synth One	Wwise Synth One		\Containers\Default Work Unit\F2\F2_Blue_Sin\Synth One	
+	906341429	Synth One	Wwise Synth One		\Containers\Default Work Unit\F2\F2_Red_Sub\Synth One	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	22529526	707-2-1	.cache\D6\{D649BC69-7208-D35E-0213-A8EAA01A1A49}.wem		\Containers\Default Work Unit\F1\707\707-1\707-2-1		486716

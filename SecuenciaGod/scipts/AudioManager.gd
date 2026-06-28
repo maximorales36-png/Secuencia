@@ -30,6 +30,13 @@ const F4_RED_RTPC: String = "RTPC_F4_Red"
 const F4_GREEN_RTPC: String = "RTPC_F4_Green"
 const F4_BLUE_RTPC: String = "RTPC_F4_Blue"
 
+# F2 RTPCs
+const F2_BLUE_RTPC: String = "F2_Blue"
+const F2_PINK_RTPC: String = "F2_Pink"
+const F2_RED_RTPC: String = "F2_Red"
+const F2_GREEN_RTPC: String = "F2_Green"
+const F2_VIOLET_RTPC: String = "F2_Violet"
+
 
 # F4 beat clock & queue
 var _f4_hit_queue: Array = []
@@ -55,6 +62,7 @@ func _ready() -> void:
 
 	if GestorFamilias.familia_activa == "familia_1":
 		Wwise.post_event("Play_all", self)
+		print("playall")
 
 
 func _exit_tree() -> void:
@@ -65,6 +73,8 @@ func _exit_tree() -> void:
 func _process(delta: float) -> void:
 	if GestorFamilias.familia_activa == "familia_4":
 		_process_f4(delta)
+		return
+	if GestorFamilias.familia_activa == "familia_2":
 		return
 	_update_violet_rtpc(delta)
 	_update_presence_rtpcs(delta)
@@ -144,6 +154,9 @@ func _on_cycle_reset() -> void:
 
 
 func _on_crossing_detected(piece: IPCManager.Piece) -> void:
+	if GestorFamilias.familia_activa == "familia_2":
+		_play_sound(piece.color, piece.y)
+		return
 	if GestorFamilias.familia_activa != "familia_1":
 		return
 	if piece.color == "red":
@@ -185,7 +198,7 @@ func _play_sound(color: String, y_position: float, sector_index: int = -1) -> vo
 		return
 
 	var now := Time.get_ticks_msec() / 1000.0
-	var cooldown_key: String = color if sector_index < 0 else str(sector_index) + "_" + color
+	var cooldown_key: String = str(sector_index) + "_" + color if sector_index >= 0 else color + "_" + str(y_position)
 	if color_cooldowns.has(cooldown_key) and now < color_cooldowns[cooldown_key]:
 		return
 
@@ -201,6 +214,20 @@ func _play_sound(color: String, y_position: float, sector_index: int = -1) -> vo
 
 	if color == "green":
 		Wwise.set_rtpc_value(GREEN_RTPC_NAME, (1.0 - y_position) * 100.0, self)
+
+	if GestorFamilias.familia_activa == "familia_2":
+		var rtpc_val := (1.0 - y_position) * 100.0
+		match color:
+			"blue":
+				Wwise.set_rtpc_value(F2_BLUE_RTPC, rtpc_val, self)
+			"pink":
+				Wwise.set_rtpc_value(F2_PINK_RTPC, rtpc_val, self)
+			"red":
+				Wwise.set_rtpc_value(F2_RED_RTPC, rtpc_val, self)
+			"green":
+				Wwise.set_rtpc_value(F2_GREEN_RTPC, rtpc_val, self)
+			"violet":
+				Wwise.set_rtpc_value(F2_VIOLET_RTPC, rtpc_val, self)
 
 	color_cooldowns[cooldown_key] = now + scanline_logic.get_sector_duration()
 

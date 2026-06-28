@@ -4,38 +4,37 @@ var last_color_index: int = 0
 var color_keys: Array[String] = ["red", "blue", "pink", "green", "violet"]
 func _ready() -> void:
 	print("[KeyboardTester] Listo. F12 para activar/desactivar modo test.")
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("toggle_test_mode"):
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("toggle_test_mode"):
 		test_mode = not test_mode
 		print("[KeyboardTester] Modo test: %s" % ("ON" if test_mode else "OFF"))
-		get_viewport().set_input_as_handled()
 	if not test_mode:
 		return
-	if event.is_action_pressed("family_1"):
+	if Input.is_action_just_pressed("family_1"):
 		_select_family("familia_1")
-	elif event.is_action_pressed("family_2"):
+	elif Input.is_action_just_pressed("family_2"):
 		_select_family("familia_2")
-	elif event.is_action_pressed("family_3"):
+	elif Input.is_action_just_pressed("family_3"):
 		_select_family("familia_3")
-	elif event.is_action_pressed("family_4"):
+	elif Input.is_action_just_pressed("family_4"):
 		_select_family("familia_4")
-	elif event.is_action_pressed("add_red"):
+	elif Input.is_action_just_pressed("add_red"):
 		_add_piece("red")
-	elif event.is_action_pressed("add_blue"):
+	elif Input.is_action_just_pressed("add_blue"):
 		_add_piece("blue")
-	elif event.is_action_pressed("add_pink"):
+	elif Input.is_action_just_pressed("add_pink"):
 		_add_piece("pink")
-	elif event.is_action_pressed("add_green"):
+	elif Input.is_action_just_pressed("add_green"):
 		_add_piece("green")
-	elif event.is_action_pressed("add_violet"):
+	elif Input.is_action_just_pressed("add_violet"):
 		_add_piece("violet")
-	elif event.is_action_pressed("move_up"):
+	elif Input.is_action_just_pressed("move_up"):
 		_move_last_piece(0.0, -0.02)
-	elif event.is_action_pressed("move_down"):
+	elif Input.is_action_just_pressed("move_down"):
 		_move_last_piece(0.0, 0.02)
-	elif event.is_action_pressed("move_left"):
+	elif Input.is_action_just_pressed("move_left"):
 		_move_last_piece(-0.02, 0.0)
-	elif event.is_action_pressed("move_right"):
+	elif Input.is_action_just_pressed("move_right"):
 		_move_last_piece(0.02, 0.0)
 func _select_family(family: String) -> void:
 	var menu = get_tree().root.find_child("FamilyMenu", true, false)

@@ -19,7 +19,7 @@
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
 						</GameParameter>
-						<GameParameter Name="RTPC_N_Green" ID="{775EB99E-20BD-4B98-92A5-5EB73EFA9783}">
+						<GameParameter Name="RTPC_Green" ID="{775EB99E-20BD-4B98-92A5-5EB73EFA9783}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="4"/>
 								<Property Name="InitialValue" Type="Real64" Value="0"/>
@@ -33,14 +33,14 @@
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
 						</GameParameter>
-						<GameParameter Name="RTPC_V_Celeste" ID="{0D98EEB3-65D0-4037-9EC1-AFF842A89486}">
+						<GameParameter Name="RTPC_V_Blue" ID="{0D98EEB3-65D0-4037-9EC1-AFF842A89486}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="15"/>
 								<Property Name="InitialValue" Type="Real64" Value="0"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
 						</GameParameter>
-						<GameParameter Name="RTPC_V_Yellow" ID="{2EEE9933-FB10-45F5-9425-EC35634A4D4B}">
+						<GameParameter Name="RTPC_V_Red" ID="{2EEE9933-FB10-45F5-9425-EC35634A4D4B}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="6"/>
 								<Property Name="InitialValue" Type="Real64" Value="0"/>
@@ -56,19 +56,58 @@
 								<Property Name="InitialValue" Type="Real64" Value="0"/>
 							</PropertyList>
 						</GameParameter>
-						<GameParameter Name="RTPC_F4_Celeste" ID="{EEB932A9-AEFF-49D6-A547-1449C7741688}">
+						<GameParameter Name="RTPC_F4_Blue" ID="{EEB932A9-AEFF-49D6-A547-1449C7741688}">
 							<PropertyList>
 								<Property Name="InitialValue" Type="Real64" Value="0"/>
 							</PropertyList>
 						</GameParameter>
-						<GameParameter Name="RTPC_F4_N_Green" ID="{4D1D4E12-4FF4-4975-B027-7A3335A26143}">
+						<GameParameter Name="RTPC_F4_Green" ID="{4D1D4E12-4FF4-4975-B027-7A3335A26143}">
 							<PropertyList>
 								<Property Name="InitialValue" Type="Real64" Value="0"/>
 							</PropertyList>
 						</GameParameter>
-						<GameParameter Name="RTPC_F4_Yellow" ID="{81D55804-CD0D-44D2-9B0C-B6D3B495B240}">
+						<GameParameter Name="RTPC_F4_Red" ID="{81D55804-CD0D-44D2-9B0C-B6D3B495B240}">
 							<PropertyList>
 								<Property Name="InitialValue" Type="Real64" Value="0"/>
+							</PropertyList>
+						</GameParameter>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="F2" ID="{9A7ADBBB-1CC5-430D-BF2B-58B84E78B294}" ShortID="527692365">
+					<ChildrenList>
+						<GameParameter Name="F2_Red" ID="{34023A1F-8F23-4BF4-BB4C-89EAEB8ED50B}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="10"/>
+								<Property Name="InitialValue" Type="Real64" Value="0"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</GameParameter>
+						<GameParameter Name="F2_Blue" ID="{02804341-C090-4063-923B-F44602BBBF45}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="2"/>
+								<Property Name="InitialValue" Type="Real64" Value="0"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</GameParameter>
+						<GameParameter Name="F2_Green" ID="{69F52731-B896-44F9-AE29-41A95FF81D0A}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="5"/>
+								<Property Name="InitialValue" Type="Real64" Value="0"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</GameParameter>
+						<GameParameter Name="F2_Pink" ID="{F5AED394-F55D-43FD-B5A0-BAAD87F0CFDF}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="24"/>
+								<Property Name="InitialValue" Type="Real64" Value="0"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</GameParameter>
+						<GameParameter Name="F2_Violet" ID="{CAE6F60A-83D5-445B-89EE-CD11EBE3EC9D}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="13"/>
+								<Property Name="InitialValue" Type="Real64" Value="0"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
 						</GameParameter>
 					</ChildrenList>

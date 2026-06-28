@@ -8,6 +8,7 @@
 						<Event Name="Play_blue" ID="{949737E8-77D8-4A07-8775-5102B43EA667}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="2"/>
+								<Property Name="Inclusion" Type="bool" Value="False"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
 							<ChildrenList>
@@ -66,6 +67,7 @@
 						<Event Name="Play_pink" ID="{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="11"/>
+								<Property Name="Inclusion" Type="bool" Value="False"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
 							<ChildrenList>
@@ -115,11 +117,72 @@
 				</Folder>
 				<Folder Name="F2" ID="{3D5B8CEB-6F00-417B-8F5A-07881D2A84BD}" ShortID="1030167000">
 					<ChildrenList>
-						<Event Name="Play_Red_F2" ID="{126CAAF2-762B-4F3C-9E4B-5A5411C15889}"/>
-						<Event Name="Play_Pink_F2" ID="{3E3BF32C-50E8-498B-83BC-CC9B1AE40626}"/>
-						<Event Name="Play_Green_F2" ID="{2752E2B2-4865-4AFC-91A6-C3CF430407B4}"/>
-						<Event Name="Play_Blue_F2" ID="{0C3F0FBD-879D-4D05-8A91-3C68BFC2FB1A}"/>
-						<Event Name="Play_Violet_F2" ID="{045B31E3-8198-459B-B354-FCE0B17677BC}"/>
+						<Event Name="Play_Red_F2" ID="{126CAAF2-762B-4F3C-9E4B-5A5411C15889}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="10"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{AE019196-D129-4536-91EB-2B38DE426A6D}" ShortID="979794659">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="F2_Red_Sub" ID="{2EE3C84D-2901-4C7D-ADE4-3AE01B50200F}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_Pink_F2" ID="{3E3BF32C-50E8-498B-83BC-CC9B1AE40626}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="24"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{AA1DD603-C41D-48DE-920A-0DBD3203514B}" ShortID="214301857">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="F2_Pink" ID="{76400FC5-3E88-42A4-A2D4-A9A214FCDF77}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_Green_F2" ID="{2752E2B2-4865-4AFC-91A6-C3CF430407B4}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="4"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{FB594CAA-5B85-44B9-A0B5-AB03860A3416}" ShortID="86247819">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="F2_Green" ID="{0AB561FE-EED5-4456-B665-DFD40A88A81A}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_Blue_F2" ID="{0C3F0FBD-879D-4D05-8A91-3C68BFC2FB1A}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="2"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Action Name="" ID="{0A2FF037-E35A-4F29-8842-8DD41B4A9929}" ShortID="840185491">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="F2_Blue_Sin" ID="{54C5B13E-E2AD-42E9-BD40-537FA681B097}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_Violet_F2" ID="{045B31E3-8198-459B-B354-FCE0B17677BC}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="13"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="F4" ID="{1174F4FD-63CD-49A5-BBE3-57B541FBBD94}" ShortID="1058446659">

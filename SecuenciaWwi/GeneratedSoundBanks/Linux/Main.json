@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{860671AA-36AB-D957-FCFD-0A5443543D52}",
+    "Hash": "{DDC14651-681F-9CE7-494C-5C76BC93E4E6}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
@@ -506,6 +506,42 @@
        "Color": "19",
        "LibName": "Wwise Synth One",
        "LibId": "9699330"
+      },
+      {
+       "Id": "227704801",
+       "Name": "Synth One",
+       "ObjectPath": "\\Containers\\Default Work Unit\\F2\\F2_Pink\\Synth One",
+       "GUID": "{1D1AB70D-A994-4D91-BDE8-D91AEE1936CE}",
+       "Color": "24",
+       "LibName": "Wwise Synth One",
+       "LibId": "9699330"
+      },
+      {
+       "Id": "366138255",
+       "Name": "Synth One",
+       "ObjectPath": "\\Containers\\Default Work Unit\\F2\\F2_Green\\Synth One",
+       "GUID": "{3CA70296-07DF-417A-8ACB-5F20D317F9B0}",
+       "Color": "4",
+       "LibName": "Wwise Synth One",
+       "LibId": "9699330"
+      },
+      {
+       "Id": "652176094",
+       "Name": "Synth One",
+       "ObjectPath": "\\Containers\\Default Work Unit\\F2\\F2_Blue_Sin\\Synth One",
+       "GUID": "{FB1A15DA-A669-4B21-86D7-BC3E7E591ACC}",
+       "Color": "2",
+       "LibName": "Wwise Synth One",
+       "LibId": "9699330"
+      },
+      {
+       "Id": "906341429",
+       "Name": "Synth One",
+       "ObjectPath": "\\Containers\\Default Work Unit\\F2\\F2_Red_Sub\\Synth One",
+       "GUID": "{B1E16F57-407C-454A-84D3-1A7957A0CCD2}",
+       "Color": "10",
+       "LibName": "Wwise Synth One",
+       "LibId": "9699330"
       }
      ],
      "ShareSets": [
@@ -680,7 +716,7 @@
        {
         "SwitchValue": {
          "GroupType": "Switch",
-         "GroupId": "4133533608",
+         "GroupId": "1292329721",
          "Id": "84696438",
          "GUID": "{2B86FF34-C690-48E2-A33C-A509BB674F94}"
         },
@@ -705,7 +741,7 @@
        {
         "SwitchValue": {
          "GroupType": "Switch",
-         "GroupId": "4133533608",
+         "GroupId": "1292329721",
          "Id": "1752637611",
          "GUID": "{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"
         },
@@ -718,7 +754,7 @@
        {
         "SwitchValue": {
          "GroupType": "Switch",
-         "GroupId": "4133533608",
+         "GroupId": "1292329721",
          "Id": "512257368",
          "GUID": "{4D75717F-6B79-4081-BA7D-53B820D1E8DB}"
         },
@@ -731,7 +767,7 @@
        {
         "SwitchValue": {
          "GroupType": "Switch",
-         "GroupId": "4133533608",
+         "GroupId": "1292329721",
          "Id": "1752637620",
          "GUID": "{45FCA14E-C811-4BB0-B897-8EA07E23A5E0}"
         },
@@ -744,7 +780,7 @@
        {
         "SwitchValue": {
          "GroupType": "Switch",
-         "GroupId": "4133533608",
+         "GroupId": "1292329721",
          "Id": "84696425",
          "GUID": "{A2F78C76-2404-4B8F-9F74-98143393E8A5}"
         },
@@ -757,7 +793,7 @@
        {
         "SwitchValue": {
          "GroupType": "Switch",
-         "GroupId": "4133533608",
+         "GroupId": "1292329721",
          "Id": "1534528546",
          "GUID": "{BC3CE909-3247-4709-9A42-8D5672F6F395}"
         },
@@ -770,7 +806,7 @@
        {
         "SwitchValue": {
          "GroupType": "Switch",
-         "GroupId": "4133533608",
+         "GroupId": "1292329721",
          "Id": "3437286228",
          "GUID": "{98573E9C-D27F-47D5-9AD5-7DFF79316DE9}"
         },
@@ -783,7 +819,7 @@
        {
         "SwitchValue": {
          "GroupType": "Switch",
-         "GroupId": "4133533608",
+         "GroupId": "1292329721",
          "Id": "510138863",
          "GUID": "{4707DFE0-C196-40C0-BD1D-16E11EBE95BD}"
         },
@@ -796,36 +832,38 @@
       ]
      },
      {
-      "Id": "1457744122",
-      "Name": "Play_blue",
-      "ObjectPath": "\\Events\\Default Work Unit\\F1\\Play_blue",
-      "GUID": "{949737E8-77D8-4A07-8775-5102B43EA667}",
-      "Color": "2",
-      "DurationType": "Infinite",
-      "MediaRefs": [
-       {
-        "Id": "78081258"
-       },
-       {
-        "Id": "585049492"
-       },
-       {
-        "Id": "768119798"
-       },
-       {
-        "Id": "903860181"
-       }
-      ]
-     },
-     {
       "Id": "2823369421",
       "Name": "Play_Blue_F2",
       "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_Blue_F2",
       "GUID": "{0C3F0FBD-879D-4D05-8A91-3C68BFC2FB1A}",
-      "MaxAttenuation": "0",
-      "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
+      "Color": "2",
+      "DurationType": "Unknown",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "652176094"
+        }
+       ],
+       "ShareSets": [
+        {
+         "Id": "3657550167"
+        }
+       ]
+      },
+      "AuxBusRefs": [
+       {
+        "Id": "378875104",
+        "Name": "Del",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del",
+        "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}"
+       },
+       {
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
+       }
+      ]
      },
      {
       "Id": "2629365651",
@@ -1002,60 +1040,32 @@
       "Name": "Play_Green_F2",
       "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_Green_F2",
       "GUID": "{2752E2B2-4865-4AFC-91A6-C3CF430407B4}",
-      "MaxAttenuation": "0",
-      "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
-     },
-     {
-      "Id": "1568289110",
-      "Name": "Play_pink",
-      "ObjectPath": "\\Events\\Default Work Unit\\F1\\Play_pink",
-      "GUID": "{3D27C9AF-0BBC-482E-8686-0BBA1C14132C}",
-      "Color": "11",
-      "DurationType": "Infinite",
-      "MediaRefs": [
+      "Color": "4",
+      "DurationType": "Unknown",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "366138255"
+        }
+       ],
+       "ShareSets": [
+        {
+         "Id": "3657550167"
+        }
+       ]
+      },
+      "AuxBusRefs": [
        {
-        "Id": "22529526"
+        "Id": "378875104",
+        "Name": "Del",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del",
+        "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}"
        },
        {
-        "Id": "75870889"
-       },
-       {
-        "Id": "130499625"
-       },
-       {
-        "Id": "150619875"
-       },
-       {
-        "Id": "224751434"
-       },
-       {
-        "Id": "295558765"
-       },
-       {
-        "Id": "505471656"
-       },
-       {
-        "Id": "517232673"
-       },
-       {
-        "Id": "533691421"
-       },
-       {
-        "Id": "743979071"
-       },
-       {
-        "Id": "779203198"
-       },
-       {
-        "Id": "804058050"
-       },
-       {
-        "Id": "987452775"
-       },
-       {
-        "Id": "992317781"
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
        }
       ]
      },
@@ -1064,26 +1074,75 @@
       "Name": "Play_Pink_F2",
       "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_Pink_F2",
       "GUID": "{3E3BF32C-50E8-498B-83BC-CC9B1AE40626}",
-      "MaxAttenuation": "0",
-      "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
+      "Color": "24",
+      "DurationType": "Unknown",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "227704801"
+        }
+       ],
+       "ShareSets": [
+        {
+         "Id": "3657550167"
+        }
+       ]
+      },
+      "AuxBusRefs": [
+       {
+        "Id": "378875104",
+        "Name": "Del",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del",
+        "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}"
+       },
+       {
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
+       }
+      ]
      },
      {
       "Id": "2719348818",
       "Name": "Play_Red_F2",
       "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_Red_F2",
       "GUID": "{126CAAF2-762B-4F3C-9E4B-5A5411C15889}",
-      "MaxAttenuation": "0",
-      "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
+      "Color": "10",
+      "DurationType": "Unknown",
+      "PluginRefs": {
+       "Custom": [
+        {
+         "Id": "906341429"
+        }
+       ],
+       "ShareSets": [
+        {
+         "Id": "3657550167"
+        }
+       ]
+      },
+      "AuxBusRefs": [
+       {
+        "Id": "378875104",
+        "Name": "Del",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Del",
+        "GUID": "{190CB217-4CAA-4C95-8ED4-757A21CE42FC}"
+       },
+       {
+        "Id": "980603520",
+        "Name": "Rev",
+        "ObjectPath": "\\Busses\\Default Work Unit\\Main Audio Bus\\Rev",
+        "GUID": "{2B90D86D-65E1-48DA-B4A6-06A9ADEDF354}"
+       }
+      ]
      },
      {
       "Id": "168358390",
       "Name": "Play_Violet_F2",
       "ObjectPath": "\\Events\\Default Work Unit\\F2\\Play_Violet_F2",
       "GUID": "{045B31E3-8198-459B-B354-FCE0B17677BC}",
+      "Color": "13",
       "MaxAttenuation": "0",
       "DurationType": "OneShot",
       "DurationMin": "0",
@@ -1114,18 +1173,18 @@
     ],
     "GameParameters": [
      {
-      "Id": "189860390",
-      "Name": "RTPC_V_Yellow",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Yellow",
-      "GUID": "{2EEE9933-FB10-45F5-9425-EC35634A4D4B}",
-      "Color": "6"
+      "Id": "276214388",
+      "Name": "RTPC_Green",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_Green",
+      "GUID": "{775EB99E-20BD-4B98-92A5-5EB73EFA9783}",
+      "Color": "4"
      },
      {
-      "Id": "1094048063",
-      "Name": "RTPC_V_Celeste",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Celeste",
-      "GUID": "{0D98EEB3-65D0-4037-9EC1-AFF842A89486}",
-      "Color": "15"
+      "Id": "890307312",
+      "Name": "F2_Blue",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F2\\F2_Blue",
+      "GUID": "{02804341-C090-4063-923B-F44602BBBF45}",
+      "Color": "2"
      },
      {
       "Id": "2005540895",
@@ -1142,66 +1201,94 @@
       "Color": "24"
      },
      {
-      "Id": "3400130303",
-      "Name": "RTPC_N_Green",
-      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_N_Green",
-      "GUID": "{775EB99E-20BD-4B98-92A5-5EB73EFA9783}",
-      "Color": "4"
+      "Id": "2730183760",
+      "Name": "F2_Pink",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F2\\F2_Pink",
+      "GUID": "{F5AED394-F55D-43FD-B5A0-BAAD87F0CFDF}",
+      "Color": "24"
+     },
+     {
+      "Id": "3645076093",
+      "Name": "F2_Green",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F2\\F2_Green",
+      "GUID": "{69F52731-B896-44F9-AE29-41A95FF81D0A}",
+      "Color": "5"
+     },
+     {
+      "Id": "4204748281",
+      "Name": "F2_Red",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F2\\F2_Red",
+      "GUID": "{34023A1F-8F23-4BF4-BB4C-89EAEB8ED50B}",
+      "Color": "10"
+     },
+     {
+      "Id": "4235986214",
+      "Name": "RTPC_V_Blue",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Blue",
+      "GUID": "{0D98EEB3-65D0-4037-9EC1-AFF842A89486}",
+      "Color": "15"
+     },
+     {
+      "Id": "4252616139",
+      "Name": "RTPC_V_Red",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\F1\\RTPC_V_Red",
+      "GUID": "{2EEE9933-FB10-45F5-9425-EC35634A4D4B}",
+      "Color": "6"
      }
     ],
     "SwitchGroups": [
      {
-      "Id": "4133533608",
-      "Name": "yellow_switch",
-      "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch",
+      "Id": "1292329721",
+      "Name": "red_switch",
+      "ObjectPath": "\\Switches\\Default Work Unit\\red_switch",
       "GUID": "{4878B015-0DF9-484A-A176-0B70F2CE8009}",
       "Switches": [
        {
         "Id": "84696425",
         "Name": "V",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\V",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\V",
         "GUID": "{A2F78C76-2404-4B8F-9F74-98143393E8A5}"
        },
        {
         "Id": "84696438",
         "Name": "I",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\I",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\I",
         "GUID": "{2B86FF34-C690-48E2-A33C-A509BB674F94}"
        },
        {
         "Id": "510138863",
         "Name": "VII",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VII",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\VII",
         "GUID": "{4707DFE0-C196-40C0-BD1D-16E11EBE95BD}"
        },
        {
         "Id": "512257368",
         "Name": "III",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\III",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\III",
         "GUID": "{4D75717F-6B79-4081-BA7D-53B820D1E8DB}"
        },
        {
         "Id": "1534528546",
         "Name": "VI",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VI",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\VI",
         "GUID": "{BC3CE909-3247-4709-9A42-8D5672F6F395}"
        },
        {
         "Id": "1752637611",
         "Name": "II",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\II",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\II",
         "GUID": "{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"
        },
        {
         "Id": "1752637620",
         "Name": "IV",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\IV",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\IV",
         "GUID": "{45FCA14E-C811-4BB0-B897-8EA07E23A5E0}"
        },
        {
         "Id": "3437286228",
         "Name": "VIII",
-        "ObjectPath": "\\Switches\\Default Work Unit\\yellow_switch\\VIII",
+        "ObjectPath": "\\Switches\\Default Work Unit\\red_switch\\VIII",
         "GUID": "{98573E9C-D27F-47D5-9AD5-7DFF79316DE9}"
        }
       ]
@@ -1209,6 +1296,6 @@
     ]
    }
   ],
-  "FileHash": "{9D2A3F67-5624-9DBD-85E9-EAC995272C29}"
+  "FileHash": "{4AD236BE-06C4-7055-477C-2CBC8BDC5082}"
  }
 }

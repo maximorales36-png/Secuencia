@@ -3,7 +3,7 @@
 	<Switches>
 		<WorkUnit Name="Default Work Unit" ID="{43AF88BE-581B-4B5B-BFFE-5DBAFD31828E}" PersistMode="Standalone">
 			<ChildrenList>
-				<SwitchGroup Name="yellow_switch" ID="{4878B015-0DF9-484A-A176-0B70F2CE8009}">
+				<SwitchGroup Name="red_switch" ID="{4878B015-0DF9-484A-A176-0B70F2CE8009}">
 					<ChildrenList>
 						<Switch Name="I" ID="{2B86FF34-C690-48E2-A33C-A509BB674F94}"/>
 						<Switch Name="II" ID="{58F41E9E-80F4-49AE-AC05-B64ADEBA9F15}"/>

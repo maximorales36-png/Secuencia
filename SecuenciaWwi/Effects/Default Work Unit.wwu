@@ -11,10 +11,10 @@
 				<Effect Name="New_Parametric_EQ" ID="{F72D4E86-A39C-4831-AA91-8E387E6B57C3}" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
 					<PropertyList>
 						<Property Name="FilterTypeBand1" Type="int32" Value="7"/>
-						<Property Name="FrequencyBand1" Type="Real32" Value="889.7159"/>
+						<Property Name="FrequencyBand1" Type="Real32" Value="5696.072"/>
 						<Property Name="FrequencyBand2" Type="Real32" Value="1454.421"/>
 						<Property Name="GainBand2" Type="Real32" Value="-0.3779528"/>
-						<Property Name="QFactorBand1" Type="Real32" Value="2.24969"/>
+						<Property Name="QFactorBand1" Type="Real32" Value="0.9347435"/>
 					</PropertyList>
 				</Effect>
 			</ChildrenList>

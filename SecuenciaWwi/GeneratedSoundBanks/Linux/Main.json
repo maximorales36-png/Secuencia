@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{F0F3F756-82CD-4CD6-9551-7A3C93334FD1}",
     "Language": "SFX",
-    "Hash": "{CEDC7C17-CF72-D0E2-A52F-116769CF13BB}",
+    "Hash": "{5E167525-0F9B-FB7E-CABC-F141918F4273}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
     "ShortName": "Main",
     "Path": "Main.bnk",
@@ -494,6 +494,14 @@
       "Location": "Memory",
       "ShortName": "F4_Glock_4.wav",
       "CachePath": "79/{798075F2-A609-D002-A31B-4AD8FF9D38C4}.wem"
+     },
+     {
+      "Id": "1063797266",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Menu.wav",
+      "CachePath": "23/{235EB74F-7697-9086-CFA1-9C7FD4E7CD3E}.wem"
      }
     ],
     "Plugins": {
@@ -609,7 +617,7 @@
       "DurationType": "Infinite",
       "MediaRefs": [
        {
-        "Id": "256795899"
+        "Id": "1063797266"
        }
       ]
      },
@@ -1296,6 +1304,6 @@
     ]
    }
   ],
-  "FileHash": "{ADA9309A-F360-C594-E777-07EEEA6234B3}"
+  "FileHash": "{9AA36295-08C4-7123-27A3-05F569108C36}"
  }
 }

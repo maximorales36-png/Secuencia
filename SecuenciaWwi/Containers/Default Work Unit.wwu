@@ -6357,13 +6357,14 @@
 										<Property Name="LoopCount" Type="int16" Value="0"/>
 									</PropertyList>
 									<ChildrenList>
-										<MusicPlaylistItem Name="" ID="{71773980-35C2-4471-9326-C7D2541C373A}" ShortID="1029033861">
+										<MusicPlaylistItem Name="" ID="{8EDC6C1D-B6EC-45D9-AB94-699417533825}" ShortID="441533921">
 											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
 												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Segment">
-													<ObjectRef Name="F4_Aco_3" ID="{23F62FD0-95A1-42B0-914B-F3FAA440CCE2}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
+													<ObjectRef Name="Menu" ID="{782FA0C2-2F20-4118-9E11-8D8F65827E0A}" WorkUnitID="{C494838F-7095-4021-B123-11CE3CB0C6C5}"/>
 												</Reference>
 											</ReferenceList>
 										</MusicPlaylistItem>
@@ -6388,9 +6389,9 @@
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
-						<MusicSegment Name="F4_Aco_3" ID="{23F62FD0-95A1-42B0-914B-F3FAA440CCE2}" ShortID="246599137">
+						<MusicSegment Name="Menu" ID="{782FA0C2-2F20-4118-9E11-8D8F65827E0A}" ShortID="112450108">
 							<PropertyList>
-								<Property Name="EndPosition" Type="Real64" Value="13333.3333333333"/>
+								<Property Name="EndPosition" Type="Real64" Value="44166.6666666667"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -6401,14 +6402,14 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<MusicTrack Name="F4_Aco_3" ID="{0890EB25-F8F3-4482-B9E3-F87B67BCC6FC}" ShortID="1047932012">
+								<MusicTrack Name="Menu" ID="{E903B42B-87CA-4767-9D5A-8C9A9A0640A0}" ShortID="861387056">
 									<ReferenceList>
 										<Reference Name="OutputBus">
 											<ObjectRef Name="Main Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E42B54C-DF21-4DF8-AAB4-475405DCFB5A}"/>
 										</Reference>
 										<Reference Name="TransitionRoot">
 											<Custom>
-												<MusicTransition Name="Root" ID="{D5FCCE22-C29D-42C4-882A-EF1E2615DD9A}">
+												<MusicTransition Name="Root" ID="{0D4C6915-A390-40A3-A4A0-CB8968FE70C3}">
 													<PropertyList>
 														<Property Name="IsFolder" Type="bool" Value="True"/>
 													</PropertyList>
@@ -6418,26 +6419,26 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="F4_Aco_3" ID="{6875FAEC-7BB9-4F31-AF2F-4DCB4F04EDEC}">
+										<AudioFileSource Name="Menu" ID="{953F271A-5FC8-4F79-B77E-79B7D71EC324}">
 											<Language>SFX</Language>
-											<AudioFile>F4_Aco_3.wav</AudioFile>
+											<AudioFile>Menu.wav</AudioFile>
 											<MediaIDList>
-												<MediaID ID="256795899"/>
+												<MediaID ID="1063797266"/>
 											</MediaIDList>
 										</AudioFileSource>
 									</ChildrenList>
 									<ObjectLists>
 										<ObjectList Name="Sequences">
-											<MusicTrackSequence Name="" ID="{D48751EE-7D40-470C-9AEF-275DB5FA19E4}">
+											<MusicTrackSequence Name="" ID="{F5D184B3-3E2C-466B-A32B-8DEEF5A95F84}">
 												<ObjectLists>
 													<ObjectList Name="Clips">
-														<MusicClip Name="F4_Aco_3" ID="{FA99C2AD-BE83-40D7-B56C-F28D349C0031}">
+														<MusicClip Name="Menu" ID="{DA5C4BAE-93B3-48C3-A826-BB95CBF0F7C4}">
 															<PropertyList>
-																<Property Name="EndTrimOffset" Type="Real64" Value="13333.3333333333"/>
+																<Property Name="EndTrimOffset" Type="Real64" Value="44166.6666666667"/>
 																<Property Name="FadeInMode" Type="int16" Value="0"/>
 																<Property Name="FadeOutMode" Type="int16" Value="0"/>
 															</PropertyList>
-															<AudioSourceRef Name="F4_Aco_3" ID="{6875FAEC-7BB9-4F31-AF2F-4DCB4F04EDEC}"/>
+															<AudioSourceRef Name="Menu" ID="{953F271A-5FC8-4F79-B77E-79B7D71EC324}"/>
 														</MusicClip>
 													</ObjectList>
 												</ObjectLists>
@@ -6448,11 +6449,11 @@
 							</ChildrenList>
 							<ObjectLists>
 								<ObjectList Name="Cues">
-									<MusicCue Name="Entry Cue" ID="{C5A1BCF9-EB30-4F4B-9120-B530A5FDFDC9}"/>
-									<MusicCue Name="Exit Cue" ID="{DB528ACF-3956-4143-BA50-62A4A7F05C9C}">
+									<MusicCue Name="Entry Cue" ID="{C6370020-CDF1-45A9-A4D4-F7B4ADD8D411}"/>
+									<MusicCue Name="Exit Cue" ID="{71AA7875-E684-4FFC-A163-9DB214479CC2}">
 										<PropertyList>
 											<Property Name="CueType" Type="int16" Value="1"/>
-											<Property Name="TimeMs" Type="Real64" Value="13333.3333333333"/>
+											<Property Name="TimeMs" Type="Real64" Value="44166.6666666667"/>
 										</PropertyList>
 									</MusicCue>
 								</ObjectList>

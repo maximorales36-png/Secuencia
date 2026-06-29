@@ -125,7 +125,7 @@ func _draw() -> void:
 
 	var display_name := label_text if not label_text.is_empty() else family_name.replace("_", " ").capitalize()
 	var font := ThemeDB.fallback_font
-	var font_size := 14
+	var font_size := 30
 	draw_string(font, Vector2(0, s.y - 10), display_name, HORIZONTAL_ALIGNMENT_CENTER, s.x, font_size, Color(1, 1, 1, 0.7))
 
 	var stable := _get_most_stable()
@@ -157,6 +157,7 @@ func _draw_turing_pattern(s: Vector2) -> void:
 		var pos := center + Vector2(cos(angle), sin(angle)) * dist
 		var radius := 8.0 + 14.0 * (0.5 + 0.5 * sin(_time * 0.55 + i * 2.1))
 		var col: Color = cols[i % cols.size()]
+		col = col.lerp(Color(col.v, col.v, col.v), 0.4)
 		col.a = 0.35 + 0.5 * (0.5 + 0.5 * sin(_time * 0.6 + i * 1.7))
 		draw_circle(pos, radius, col)
 
@@ -177,6 +178,7 @@ func _draw_blob_pattern(s: Vector2) -> void:
 		var pos := center + Vector2(cos(angle), sin(angle)) * dist
 		var radius := 12.0 + 14.0 * (0.5 + 0.5 * sin(_time * 0.65 + i * 2.0))
 		var col: Color = cols[i % cols.size()]
+		col = col.lerp(Color(col.v, col.v, col.v), 0.4)
 		col.a = 0.55 + 0.2 * sin(_time * 0.4 + i * 1.5)
 		draw_circle(pos, radius, col)
 
@@ -186,6 +188,7 @@ func _draw_blob_pattern(s: Vector2) -> void:
 		var pos := center + Vector2(cos(angle), sin(angle)) * dist
 		var radius := 6.0 + 8.0 * (0.5 + 0.5 * sin(_time * 0.3 + i * 2.7))
 		var col: Color = cols[(i + 2) % cols.size()]
+		col = col.lerp(Color(col.v, col.v, col.v), 0.4)
 		col.a = 0.3
 		draw_circle(pos, radius, col)
 

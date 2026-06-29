@@ -121,4 +121,5 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	1044433227	F4_ArpCh_2	.cache\B8\{B86FC246-7352-183D-C2AF-4ED43BA934E8}.wem		\Containers\Default Work Unit\F4\New Music Switch Container\ArpCh\F4_ArpCh_2\F4_ArpCh_2		2352096
 	1061011625	F4_Tabla_5	.cache\3A\{3A4D90C6-CA51-8CBC-AAB1-8918B4EB442B}.wem		\Containers\Default Work Unit\F4\New Music Switch Container\Tabla\F4_Tabla_5\F4_Tabla_5		882096
 	1061070778	F4_Glock_4	.cache\79\{798075F2-A609-D002-A31B-4AD8FF9D38C4}.wem		\Containers\Default Work Unit\F4\New Music Switch Container\Glock\F4_Glock_4\F4_Glock_4		2352096
+	1063797266	Menu	.cache\23\{235EB74F-7697-9086-CFA1-9C7FD4E7CD3E}.wem		\Containers\Default Work Unit\Mx_Menu_Pl\Menu\Menu		7791096
 

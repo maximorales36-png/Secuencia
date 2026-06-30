@@ -202,7 +202,9 @@ def main():
     fill = False
     dual_mode = True
     invert_bottom = True
-    for arg in sys.argv[1:]:
+    i = 1
+    while i < len(sys.argv):
+        arg = sys.argv[i]
         if arg == "--help" or arg == "-h":
             print_usage()
             return
@@ -214,29 +216,29 @@ def main():
             dual_mode = False
         elif arg == "--no-invert":
             invert_bottom = False
-        elif arg.startswith("--monitor"):
+        elif arg == "--monitor":
             try:
-                idx = sys.argv.index(arg)
-                MONITOR_INDEX = int(sys.argv[idx + 1])
+                MONITOR_INDEX = int(sys.argv[i + 1])
+                i += 1
             except (ValueError, IndexError):
                 pass
-        elif arg.startswith("--decay"):
+        elif arg == "--decay":
             try:
-                idx = sys.argv.index(arg)
-                DECAY_FACTOR = float(sys.argv[idx + 1])
+                DECAY_FACTOR = float(sys.argv[i + 1])
                 DECAY_FACTOR = max(0.0, min(1.0, DECAY_FACTOR))
+                i += 1
             except (ValueError, IndexError):
                 pass
-        elif arg.startswith("--cam-width"):
+        elif arg == "--cam-width":
             try:
-                idx = sys.argv.index(arg)
-                CAPTURE_WIDTH = int(sys.argv[idx + 1])
+                CAPTURE_WIDTH = int(sys.argv[i + 1])
+                i += 1
             except (ValueError, IndexError):
                 pass
-        elif arg.startswith("--cam-height"):
+        elif arg == "--cam-height":
             try:
-                idx = sys.argv.index(arg)
-                CAPTURE_HEIGHT = int(sys.argv[idx + 1])
+                CAPTURE_HEIGHT = int(sys.argv[i + 1])
+                i += 1
             except (ValueError, IndexError):
                 pass
         else:
@@ -245,7 +247,8 @@ def main():
                 CAMERA_AUTO_DETECT = False
                 print(f"[Video] Indice de camara forzado a {CAMERA_INDEX}", file=sys.stderr)
             except ValueError:
-                pass
+                print(f"[Warning] Argumento ignorado: {arg}", file=sys.stderr)
+        i += 1
 
     print("[SECUENCIA HSV] Iniciando visualizador HSV", file=sys.stderr)
     print(f"Resolucion: {CAPTURE_WIDTH}x{CAPTURE_HEIGHT}", file=sys.stderr)

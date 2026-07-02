@@ -44,6 +44,12 @@ var _f4_next_beat_time: float = 0.0
 var _f4_beat_interval: float = 60.0 / 72.0
 var _f4_initialized: bool = false
 
+# F2 voice limiting (voice starvation prevention)
+var _f2_voice_queue: Array = []  # timestamps of active F2 voices
+const F2_MAX_VOICES: int = 3
+const F2_VOICE_DURATION: float = 0.25  # assumed sound length in seconds
+const F2_COOLDOWN: float = 0.5  # per-piece cooldown to prevent re-trigger
+
 
 func _ready() -> void:
 	Wwise.register_game_obj(self, "AudioManager")
@@ -112,6 +118,15 @@ func _ramp(current: float, target: float, delta: float) -> float:
 		return min(current + RTPC_RAMP_SPEED * delta, target)
 	else:
 		return max(current - RTPC_RAMP_SPEED * delta, target)
+
+
+func _can_play_f2() -> bool:
+	var now := Time.get_ticks_msec() / 1000.0
+	_f2_voice_queue = _f2_voice_queue.filter(func(t): return now - t < F2_VOICE_DURATION)
+	if _f2_voice_queue.size() >= F2_MAX_VOICES:
+		return false
+	_f2_voice_queue.append(now)
+	return true
 
 
 func _update_red_rtpc(delta: float) -> void:
@@ -204,6 +219,12 @@ func _play_sound(color: String, y_position: float, sector_index: int = -1) -> vo
 
 	y_position = clampf(y_position, 0.0, 1.0)
 
+	var cooldown_duration := F2_COOLDOWN if GestorFamilias.familia_activa == "familia_2" else scanline_logic.get_sector_duration()
+	color_cooldowns[cooldown_key] = now + cooldown_duration
+
+	if GestorFamilias.familia_activa == "familia_2" and not _can_play_f2():
+		return
+
 	var event_name: String = GestorFamilias.get_sound(color)
 	if event_name.is_empty():
 		print("[AudioManager] No hay evento Wwise configurado para '%s'" % color)
@@ -228,8 +249,6 @@ func _play_sound(color: String, y_position: float, sector_index: int = -1) -> vo
 				Wwise.set_rtpc_value(F2_GREEN_RTPC, rtpc_val, self)
 			"violet":
 				Wwise.set_rtpc_value(F2_VIOLET_RTPC, rtpc_val, self)
-
-	color_cooldowns[cooldown_key] = now + scanline_logic.get_sector_duration()
 
 
 func schedule_f4_hit(color: String, y: float) -> void:

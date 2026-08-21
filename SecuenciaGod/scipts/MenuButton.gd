@@ -2,14 +2,18 @@ extends Control
 class_name FamilyButton
 
 @export var family_name: String = "familia_1"
-@export var hold_time: float = 3.0
-@export var movement_threshold: float = 20.0
+@export var select_time: float = 1.0
+@export var visual_ratio: float = 0.55
+@export var circle_ratio: float = 0.36
 @export var label_text: String = ""
 
 signal family_selected(family_name: String)
 
+const PIECE_HIT_TOLERANCE := 1.15
+
 var _time: float = 0.0
-var _tracked: Dictionary = {}
+var _fill_time: float = 0.0
+var _piece_present: bool = false
 var _is_selected: bool = false
 var _flash_timer: float = 0.0
 var _bouncing_balls: Array = []
@@ -27,7 +31,7 @@ func _process(delta: float) -> void:
 		return
 
 	_time += delta
-	_check_pieces()
+	_update_presence(delta)
 
 	if family_name == "familia_4":
 		if not _balls_initialized:
@@ -37,65 +41,42 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 
-func _check_pieces() -> void:
-	var rect := get_global_rect()
-	var now := Time.get_ticks_msec() / 1000.0
+func _update_presence(delta: float) -> void:
+	var geo := _get_circle_geometry(size)
+	var center_local: Vector2 = geo.center
+	var hit_radius: float = geo.radius * PIECE_HIT_TOLERANCE
+	var hit_sq: float = hit_radius * hit_radius
+	var center_global := get_global_position() + center_local
 	var vp_size := get_viewport_rect().size
-	var pieces := IPCManager.pieces
-	var new_tracked: Dictionary = {}
 
-	for piece in pieces:
+	_piece_present = false
+	for piece in IPCManager.pieces:
 		var sx := piece.x * vp_size.x
 		var sy := piece.y * vp_size.y
+		var d := Vector2(sx, sy) - center_global
+		if d.length_squared() <= hit_sq:
+			_piece_present = true
+			break
 
-		if not rect.has_point(Vector2(sx, sy)):
-			continue
+	if _piece_present:
+		_fill_time += delta
+	else:
+		_fill_time = 0.0
 
-		var matched_key := ""
-		for key in _tracked:
-			if matched_key != "":
-				break
-			var t = _tracked[key]
-			if abs(sx - t.last_x) < movement_threshold * 2 and abs(sy - t.last_y) < movement_threshold * 2:
-				matched_key = key
+	if _fill_time >= select_time:
+		_select()
 
-		var tracker: Dictionary
-		if matched_key != "" and _tracked.has(matched_key):
-			tracker = _tracked[matched_key]
-			var dx = sx - tracker.last_x
-			var dy = sy - tracker.last_y
-			tracker.last_x = sx
-			tracker.last_y = sy
-			if sqrt(dx * dx + dy * dy) > movement_threshold:
-				tracker.stable_since = now
-		else:
-			tracker = { stable_since = now, last_x = sx, last_y = sy }
 
-		new_tracked[matched_key if matched_key != "" else str(randi())] = tracker
-
-	_tracked = new_tracked
-
-	for key in _tracked:
-		if now - _tracked[key].stable_since >= hold_time:
-			_select()
+func _get_circle_geometry(s: Vector2) -> Dictionary:
+	var avail := s.y * (1.0 - visual_ratio)
+	var radius: float = minf(s.x * circle_ratio, avail * 0.42)
+	var center := Vector2(s.x * 0.5, s.y - avail * 0.5)
+	return { center = center, radius = radius }
 
 
 func _select() -> void:
 	_is_selected = true
 	family_selected.emit(family_name)
-
-
-func _get_most_stable() -> Dictionary:
-	var now := Time.get_ticks_msec() / 1000.0
-	var best: Dictionary = {}
-	var best_time: float = 0.0
-	for key in _tracked:
-		var t = _tracked[key]
-		var stable = now - t.stable_since
-		if stable > best_time:
-			best_time = stable
-			best = t
-	return best
 
 
 func _draw() -> void:
@@ -111,33 +92,48 @@ func _draw() -> void:
 		border_col = Color(0.0, 1.0, 0.5, 0.6 + 0.4 * glow)
 		draw_rect(Rect2(Vector2.ZERO, s), Color(0.0, 1.0, 0.5, 0.08 * glow), true)
 
+	var visual_size := Vector2(s.x, s.y * visual_ratio)
 	match family_name:
 		"familia_1":
-			_draw_turing_pattern(s)
+			_draw_turing_pattern(visual_size)
 		"familia_2":
-			_draw_blob_pattern(s)
+			_draw_blob_pattern(visual_size)
 		"familia_4":
-			_draw_familia4_pattern(s)
+			_draw_familia4_pattern(visual_size)
 		_:
-			_draw_abstract_pattern(s)
+			_draw_abstract_pattern(visual_size)
 
 	draw_rect(Rect2(Vector2.ZERO, s), border_col, false, 2.0)
 
 	var display_name := label_text if not label_text.is_empty() else family_name.replace("_", " ").capitalize()
 	var font := ThemeDB.fallback_font
 	var font_size := 30
-	draw_string(font, Vector2(0, s.y - 10), display_name, HORIZONTAL_ALIGNMENT_CENTER, s.x, font_size, Color(1, 1, 1, 0.7))
+	draw_string(font, Vector2(0, 40), display_name, HORIZONTAL_ALIGNMENT_CENTER, s.x, font_size, Color(1, 1, 1, 0.7))
 
-	var stable := _get_most_stable()
-	if not stable.is_empty() and not _is_selected:
-		var now := Time.get_ticks_msec() / 1000.0
-		var progress := clampf((now - stable.stable_since) / hold_time, 0.0, 1.0)
-		if progress > 0.01:
-			var center := s * 0.5
-			var ring_r := minf(s.x, s.y) * 0.3
-			var ring_w := 6.0
-			draw_arc(center, ring_r, 0, TAU, 48, Color(1, 1, 1, 0.1), ring_w, true)
-			draw_arc(center, ring_r, -PI / 2.0, -PI / 2.0 + progress * TAU, 48, border_col, ring_w, true)
+	_draw_target_circle(s, border_col)
+
+
+func _draw_target_circle(s: Vector2, border_col: Color) -> void:
+	var geo := _get_circle_geometry(s)
+	var center: Vector2 = geo.center
+	var radius: float = geo.radius
+	var ring_w := 6.0
+
+	if _is_selected:
+		draw_circle(center, radius, Color(0.0, 1.0, 0.5, 0.12))
+		draw_arc(center, radius, 0, TAU, 48, border_col, ring_w, true)
+		return
+
+	var outline_col := Color(0.85, 0.9, 1.0, 0.95) if _piece_present else Color(0.45, 0.45, 0.55, 0.8)
+	draw_circle(center, radius, Color(1, 1, 1, 0.04))
+	if _piece_present:
+		draw_arc(center, radius, 0, TAU, 48, Color(0.7, 0.8, 1.0, 0.18), ring_w * 2.5, true)
+	draw_arc(center, radius, 0, TAU, 48, outline_col, 2.0, true)
+
+	if _fill_time > 0.01:
+		var progress := clampf(_fill_time / select_time, 0.0, 1.0)
+		draw_arc(center, radius, 0, TAU, 48, Color(1, 1, 1, 0.1), ring_w, true)
+		draw_arc(center, radius, -PI / 2.0, -PI / 2.0 + progress * TAU, 48, border_col, ring_w, true)
 
 
 func _draw_turing_pattern(s: Vector2) -> void:
@@ -227,7 +223,7 @@ func _draw_abstract_pattern(s: Vector2) -> void:
 
 func _init_bouncing_balls() -> void:
 	_balls_initialized = true
-	var s := size
+	var s := Vector2(size.x, size.y * visual_ratio)
 	var colors: Array[Color] = [
 		Color(0.3, 0.7, 1.0, 0.9),
 		Color(0.6, 0.8, 1.0, 0.9),
@@ -247,7 +243,7 @@ func _init_bouncing_balls() -> void:
 
 
 func _update_bouncing_balls(delta: float) -> void:
-	var s := size
+	var s := Vector2(size.x, size.y * visual_ratio)
 	if s.x <= 0 or s.y <= 0:
 		return
 	for ball in _bouncing_balls:

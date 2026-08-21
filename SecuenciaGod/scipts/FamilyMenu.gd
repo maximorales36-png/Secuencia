@@ -14,7 +14,7 @@ func _ready() -> void:
 
 	var vp := get_viewport_rect().size
 	var btn_w := vp.x * 0.18
-	var btn_h := vp.y * 0.42
+	var btn_h := vp.y * 0.62
 	var gap := vp.x * 0.05
 
 	var visible_families: Array[Dictionary] = [
@@ -25,7 +25,7 @@ func _ready() -> void:
 	var count := visible_families.size()
 	var total_w := float(count) * btn_w + float(count - 1) * gap
 	var start_x := (vp.x - total_w) * 0.5
-	var y := vp.y * 0.5 - btn_h * 0.5
+	var y := vp.y * 0.55 - btn_h * 0.5
 
 	for i in count:
 		var fam := visible_families[i]
@@ -53,7 +53,8 @@ func _draw() -> void:
 	var font := ThemeDB.fallback_font
 	var title := "Seleccioná una familia"
 	var title_size := 60
-	draw_string(font, Vector2(0, vp.y * 0.25), title, HORIZONTAL_ALIGNMENT_CENTER, vp.x, title_size, Color(1, 1, 1, 0.7))
+	draw_string(font, Vector2(0, vp.y * 0.15
+	), title, HORIZONTAL_ALIGNMENT_CENTER, vp.x, title_size, Color(1, 1, 1, 0.7))
 
 #	var subtitle := "Coloca un objeto sobre un boton y mantenlo quieto 3 segundos"
 #	var sub_size := 14

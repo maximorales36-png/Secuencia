@@ -112,6 +112,7 @@ def update_detection_memory(raw_detections, memory, now):
         for cx, cy in centers:
             snapped_x = round(cx / RECTIFIED_WIDTH, 2)
             key = f"{color_name}_{snapped_x}"
+            print(f"{color_name}_{snapped_x}", file=sys.stderr)
 
             if key in memory:
                 mem = memory[key]

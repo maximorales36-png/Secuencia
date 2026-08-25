@@ -45,10 +45,21 @@ var _f4_beat_interval: float = 60.0 / 72.0
 var _f4_initialized: bool = false
 
 # F2 voice limiting (voice starvation prevention)
-var _f2_voice_queue: Array = []  # timestamps of active F2 voices
+# CAUSA RAÍZ: los sonidos F2 son Wwise Synth One y nunca se envía Note Off -> cada voz queda
+# activa en el motor (silenciosa por su envolvente Sustain=0) indefinidamente -> se acumulan
+# sesión tras sesión hasta saturar el motor -> Voice Starvation + glitches (~5 min).
+# FIX: note off programado (_process_f2 detiene cada voz al expirar F2_VOICE_DURATION)
+# + steal oldest al superar F2_MAX_VOICES.
+# NOTA Wwise (red de seguridad): replicar el patrón ya usado en F4 -> propiedad
+# InstanceLimit=4 con Kill oldest en cada evento Play_*_F2.
+var _f2_active_voices: Array = []  # [{playing_id: int, start_time: float}] voces F2 activas
+var _f2_last_trigger_time: Dictionary = {}  # color -> tiempo del último trigger (anti-jitter global)
 const F2_MAX_VOICES: int = 3
-const F2_VOICE_DURATION: float = 0.25  # assumed sound length in seconds
+const F2_VOICE_DURATION: float = 0.25  # duración de nota: al cumplirse se postea note off explícito. El envolvente del synth silencia a ~0.19s, así que cortar acá no es audible
+const F2_STOP_FADE_MS: int = 120  # release del note off explícito (steal oldest)
+const F2_MIN_RETRIGGER_INTERVAL: float = 0.06  # mínimo entre triggers del mismo color (anti-jitter por borde de bucket)
 const F2_COOLDOWN: float = 0.5  # per-piece cooldown to prevent re-trigger
+const F2_DEBUG_LOGS: bool = false  # logs de diagnóstico (triggers, steals, note offs)
 
 
 func _ready() -> void:
@@ -77,6 +88,7 @@ func _exit_tree() -> void:
 
 
 func _process(delta: float) -> void:
+	_process_f2()
 	if GestorFamilias.familia_activa == "familia_4":
 		_process_f4(delta)
 		return
@@ -120,13 +132,40 @@ func _ramp(current: float, target: float, delta: float) -> float:
 		return max(current - RTPC_RAMP_SPEED * delta, target)
 
 
-func _can_play_f2() -> bool:
+func _has_f2_voice_slot() -> bool:
 	var now := Time.get_ticks_msec() / 1000.0
-	_f2_voice_queue = _f2_voice_queue.filter(func(t): return now - t < F2_VOICE_DURATION)
-	if _f2_voice_queue.size() >= F2_MAX_VOICES:
-		return false
-	_f2_voice_queue.append(now)
-	return true
+	_f2_active_voices = _f2_active_voices.filter(func(v): return now - v.start_time < F2_VOICE_DURATION)
+	return _f2_active_voices.size() < F2_MAX_VOICES
+
+
+func _register_f2_voice(playing_id: int) -> void:
+	if playing_id == 0 or playing_id == 0xFFFFFFFF:  # AK_INVALID_PLAYING_ID
+		return
+	var now := Time.get_ticks_msec() / 1000.0
+	_f2_active_voices = _f2_active_voices.filter(func(v): return now - v.start_time < F2_VOICE_DURATION)
+	if _f2_active_voices.size() >= F2_MAX_VOICES:
+		var oldest: Dictionary = _f2_active_voices.pop_front()
+		Wwise.stop_event(oldest.playing_id, F2_STOP_FADE_MS, AkUtils.AK_CURVE_LINEAR)
+		if F2_DEBUG_LOGS:
+			print("[AudioManager][F2] steal oldest pid=%d" % oldest.playing_id)
+	_f2_active_voices.append({ playing_id = playing_id, start_time = now })
+
+
+## Note off programado: detiene explícitamente cada voz F2 al expirar su tiempo de vida.
+## Synth One jamás recibe Note Off: sin esto las voces quedan activas (silenciosas) para siempre.
+func _process_f2() -> void:
+	if _f2_active_voices.is_empty():
+		return
+	var now := Time.get_ticks_msec() / 1000.0
+	var remaining: Array = []
+	for v in _f2_active_voices:
+		if now - v.start_time >= F2_VOICE_DURATION:
+			Wwise.stop_event(v.playing_id, F2_STOP_FADE_MS, AkUtils.AK_CURVE_LINEAR)
+			if F2_DEBUG_LOGS:
+				print("[AudioManager][F2] note off pid=%d (%.2fs)" % [v.playing_id, now - v.start_time])
+		else:
+			remaining.append(v)
+	_f2_active_voices = remaining
 
 
 func _update_red_rtpc(delta: float) -> void:
@@ -213,16 +252,29 @@ func _play_sound(color: String, y_position: float, sector_index: int = -1) -> vo
 		return
 
 	var now := Time.get_ticks_msec() / 1000.0
-	var cooldown_key: String = str(sector_index) + "_" + color if sector_index >= 0 else color + "_" + str(y_position)
+	var cooldown_key: String
+	if sector_index >= 0:
+		cooldown_key = str(sector_index) + "_" + color
+	else:
+		var y_bucket: int = int(clampf(y_position, 0.0, 1.0) * 20.0)
+		cooldown_key = color + "_" + str(y_bucket)
 	if color_cooldowns.has(cooldown_key) and now < color_cooldowns[cooldown_key]:
 		return
+
+	if GestorFamilias.familia_activa == "familia_2":
+		var last_t: float = _f2_last_trigger_time.get(color, -1.0e9)
+		if now - last_t < F2_MIN_RETRIGGER_INTERVAL:
+			return
+		_f2_last_trigger_time[color] = now
+		if F2_DEBUG_LOGS:
+			print("[AudioManager][F2] trigger %s bucket=%d t=%.2f" % [color, int(clampf(y_position, 0.0, 1.0) * 20.0), now])
 
 	y_position = clampf(y_position, 0.0, 1.0)
 
 	var cooldown_duration := F2_COOLDOWN if GestorFamilias.familia_activa == "familia_2" else scanline_logic.get_sector_duration()
 	color_cooldowns[cooldown_key] = now + cooldown_duration
 
-	if GestorFamilias.familia_activa == "familia_2" and not _can_play_f2():
+	if GestorFamilias.familia_activa == "familia_2" and not _has_f2_voice_slot():
 		return
 
 	var event_name: String = GestorFamilias.get_sound(color)
@@ -230,13 +282,14 @@ func _play_sound(color: String, y_position: float, sector_index: int = -1) -> vo
 		print("[AudioManager] No hay evento Wwise configurado para '%s'" % color)
 		return
 
-	Wwise.post_event(event_name, self)
+	var playing_id := Wwise.post_event(event_name, self)
 	Wwise.set_rtpc_value("Timbre", y_position * 100.0, self)
 
 	if color == "green":
 		Wwise.set_rtpc_value(GREEN_RTPC_NAME, (1.0 - y_position) * 100.0, self)
 
 	if GestorFamilias.familia_activa == "familia_2":
+		_register_f2_voice(playing_id)
 		var rtpc_val := (1.0 - y_position) * 100.0
 		match color:
 			"blue":

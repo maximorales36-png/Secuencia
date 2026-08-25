@@ -6472,6 +6472,11 @@
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="10"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
 								<Property Name="UserAuxSendHPF1" Type="int16">
 									<ValueList>
 										<Value>19</Value>
@@ -6614,7 +6619,13 @@
 						<Sound Name="F2_Blue_Sin" ID="{54C5B13E-E2AD-42E9-BD40-537FA681B097}" ShortID="1048326248">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="2"/>
+								<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
 								<Property Name="UserAuxSendHPF1" Type="int16">
 									<ValueList>
 										<Value>19</Value>
@@ -6757,6 +6768,11 @@
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="4"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
 								<Property Name="UserAuxSendHPF1" Type="int16">
 									<ValueList>
 										<Value>19</Value>
@@ -6900,6 +6916,11 @@
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="24"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
 								<Property Name="UserAuxSendHPF1" Type="int16">
 									<ValueList>
 										<Value>19</Value>
